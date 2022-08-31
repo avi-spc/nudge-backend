@@ -5,6 +5,7 @@ const { check, validationResult } = require('express-validator/check');
 const auth = require('../../middlewares/auth');
 
 const Profile = require('../../models/Profile');
+const User = require('../../models/User');
 
 router.get('/me', auth, async (req, res) => {
 	try {
@@ -83,6 +84,17 @@ router.get('/user/:user_id', async (req, res) => {
 			return res.status(400).json({ errors: [{ msg: 'profile not found' }] });
 		}
 
+		res.status(500).send('Server error');
+	}
+});
+
+router.delete('/', auth, async (req, res) => {
+	try {
+		await Profile.findOneAndRemove({ user: req.user.id });
+		await User.findOneAndRemove({ _id: req.user.id });
+
+		res.status(200).json({ msg: 'User deleted' });
+	} catch (err) {
 		res.status(500).send('Server error');
 	}
 });
