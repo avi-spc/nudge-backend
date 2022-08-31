@@ -10,7 +10,6 @@ const User = require('../../models/User');
 router.post(
 	'/',
 	[
-		check('name', 'name is required').not().isEmpty(),
 		check('email', 'valid email is required').isEmail(),
 		check('password', 'password must be of 6 or more characters').isLength({ min: 6 })
 	],
@@ -20,16 +19,10 @@ router.post(
 			return res.status(400).json({ errors: errors.array() });
 		}
 
-		const { name, email, password } = req.body;
+		const { email, password } = req.body;
 
 		try {
-			let user = await User.findOne({ email });
-			if (user) {
-				return res.status(400).json({ errors: [{ msg: 'user already exists' }] });
-			}
-
-			user = new User({
-				name,
+			let user = new User({
 				email,
 				password
 			});
@@ -48,6 +41,10 @@ router.post(
 				res.status(200).json({ token });
 			});
 		} catch (err) {
+			if (err.code === 11000 && 'email' in err.keyPattern) {
+				return res.status(400).json({ errors: [{ msg: 'user already exists' }] });
+			}
+
 			res.status(500).send('Server error');
 		}
 	}
