@@ -62,10 +62,29 @@ router.post(
 			if (err.code === 11000 && 'username' in err.keyPattern) {
 				return res.status(400).json({ errors: [{ msg: 'username already exists' }] });
 			}
-			
+
 			res.status(500).send('Server error');
 		}
 	}
 );
+
+router.get('/user/:user_id', async (req, res) => {
+	try {
+		const user_id = req.params.user_id;
+
+		const profile = await Profile.findOne({ user: user_id });
+		if (!profile) {
+			return res.status(400).json({ msg: 'profile not found' });
+		}
+
+		res.status(200).json(profile);
+	} catch (err) {
+		if (err.kind === 'ObjectId') {
+			return res.status(400).json({ errors: [{ msg: 'profile not found' }] });
+		}
+
+		res.status(500).send('Server error');
+	}
+});
 
 module.exports = router;
