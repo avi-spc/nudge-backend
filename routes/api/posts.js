@@ -51,7 +51,7 @@ router.get('/:post_id', auth, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.post_id);
 		if (!post) {
-			return res.status(400).json({ msg: 'profile not found' });
+			return res.status(400).json({ msg: 'post not found' });
 		}
 
 		res.status(200).json(post);
@@ -59,6 +59,29 @@ router.get('/:post_id', auth, async (req, res) => {
 		if (err.kind === 'ObjectId') {
 			return res.status(400).json({ errors: [{ msg: 'post not found' }] });
 		}
+		res.status(500).send('Server error');
+	}
+});
+
+router.delete('/:post_id', auth, async (req, res) => {
+	try {
+		const post = await Post.findById(req.params.post_id);
+		if (!post) {
+			return res.status(400).json({ msg: 'post not found' });
+		}
+
+		if (post.user.toString() !== req.user.id) {
+			return res.status(401).json({ msg: 'user not authorized' });
+		}
+
+		await post.deleteOne();
+
+		res.status(200).json({ msg: 'post deleted', post });
+	} catch (err) {
+		if (err.kind === 'ObjectId') {
+			return res.status(400).json({ errors: [{ msg: 'post not found' }] });
+		}
+
 		res.status(500).send('Server error');
 	}
 });
