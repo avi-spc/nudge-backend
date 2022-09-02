@@ -216,4 +216,133 @@ router.delete('/comment/:post_id/:comment_id', auth, async (req, res) => {
 	}
 });
 
+router.post('/comment/like/:post_id/:comment_id', auth, async (req, res) => {
+	try {
+		const post = await Post.findById(req.params.post_id);
+		if (!post) {
+			return res.status(400).json({ msg: 'post not found' });
+		}
+
+		const commentIndex = post.comments.findIndex((comment) => {
+			return comment._id.toString() === req.params.comment_id;
+		});
+		if (commentIndex === -1) {
+			return res.status(400).json({ msg: 'comment not found' });
+		}
+
+		let msg = '';
+		const removeIndex = post.comments[commentIndex].likes.findIndex((like) => {
+			return like.user.toString() === req.user.id;
+		});
+
+		if (removeIndex >= 0) {
+			post.comments[commentIndex].likes.splice(removeIndex, 1);
+			msg = 'comment unliked';
+		} else {
+			post.comments[commentIndex].likes.unshift({ user: req.user.id });
+			msg = 'comment liked';
+		}
+
+		await post.save();
+
+		res.status(200).json({ msg, post });
+	} catch (err) {
+		if (err.kind === 'ObjectId') {
+			return res.status(400).json({ errors: [{ msg: 'post not found' }] });
+		}
+
+		res.status(500).send('Server error');
+	}
+});
+
+router.post(
+	'/comment/reply/:post_id/:comment_id',
+	[
+		auth,
+		[
+			check('reply', 'reply is required').not().isEmpty()
+		]
+	],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+
+		const { reply } = req.body;
+
+		try {
+			const post = await Post.findById(req.params.post_id);
+			if (!post) {
+				return res.status(400).json({ msg: 'post not found' });
+			}
+
+			const commentIndex = post.comments.findIndex((comment) => {
+				return comment._id.toString() === req.params.comment_id;
+			});
+			if (commentIndex === -1) {
+				return res.status(400).json({ msg: 'comment not found' });
+			}
+
+			const replyObject = {
+				user: req.user.id,
+				reply
+			};
+
+			post.comments[commentIndex].replies.unshift(replyObject);
+			await post.save();
+
+			res.status(200).json({ msg: 'reply added', post });
+		} catch (err) {
+			if (err.kind === 'ObjectId') {
+				return res.status(400).json({ errors: [{ msg: 'post not found' }] });
+			}
+
+			res.status(500).send('Server error');
+		}
+	}
+);
+
+router.delete('/comment/reply/:post_id/:comment_id/:reply_id', auth, async (req, res) => {
+	try {
+		const post = await Post.findById(req.params.post_id);
+		if (!post) {
+			return res.status(400).json({ msg: 'post not found' });
+		}
+
+		const commentIndex = post.comments.findIndex((comment) => {
+			return comment._id.toString() === req.params.comment_id;
+		});
+		if (commentIndex === -1) {
+			return res.status(400).json({ msg: 'comment not found' });
+		}
+
+		const reply = post.comments[commentIndex].replies.find((reply) => {
+			return reply._id.toString() === req.params.reply_id;
+		});
+		if (!reply) {
+			return res.status(400).json({ msg: 'reply not found' });
+		}
+
+		if (reply.user.toString() !== req.user.id) {
+			return res.status(401).json({ msg: 'user not authorized' });
+		}
+
+		const removeIndex = post.comments[commentIndex].replies.findIndex((reply) => {
+			return reply._id.toString() === req.params.reply_id;
+		});
+
+		post.comments[commentIndex].replies.splice(removeIndex, 1);
+		await post.save();
+
+		res.status(200).json({ msg: 'reply deleted', post });
+	} catch (err) {
+		if (err.kind === 'ObjectId') {
+			return res.status(400).json({ errors: [{ msg: 'post not found' }] });
+		}
+
+		res.status(500).send('Server error');
+	}
+});
+
 module.exports = router;
