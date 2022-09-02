@@ -7,6 +7,9 @@ const auth = require('../../middlewares/auth');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
+// @route		GET: api/profile/me
+// @desc		Retrieve current user profile
+// @access		Private
 router.get('/me', auth, async (req, res) => {
 	try {
 		const profile = await Profile.findOne({ user: req.user.id });
@@ -20,6 +23,9 @@ router.get('/me', auth, async (req, res) => {
 	}
 });
 
+// @route		POST: api/profile
+// @desc		Create/Update current user's profile
+// @access		Private
 router.post(
 	'/',
 	[
@@ -69,6 +75,9 @@ router.post(
 	}
 );
 
+// @route		GET: api/profile/user/:user_id
+// @desc		Retrieve profile of a user
+// @access		Public
 router.get('/user/:user_id', async (req, res) => {
 	try {
 		const user_id = req.params.user_id;
@@ -88,6 +97,9 @@ router.get('/user/:user_id', async (req, res) => {
 	}
 });
 
+// @route		DELETE: api/profile
+// @desc		Delete current user's account
+// @access		Private
 router.delete('/', auth, async (req, res) => {
 	try {
 		await Profile.findOneAndRemove({ user: req.user.id });
