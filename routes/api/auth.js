@@ -5,6 +5,9 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 
+const ErrorTypes = require('../../utils/errorTypes');
+const ResponseTypes = require('../../utils/responseTypes');
+
 const auth = require('../../middlewares/auth');
 
 const User = require('../../models/User');
@@ -15,9 +18,9 @@ const User = require('../../models/User');
 router.get('/', auth, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id).select('-password');
-		res.status(200).json(user);
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { user } });
 	} catch (err) {
-		res.status(500).send('Server error');
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });
 
@@ -33,7 +36,7 @@ router.post(
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
+			return res.status(400).json({ type: ResponseTypes.ERROR, errors: errors.array() });
 		}
 
 		const { email, password } = req.body;
@@ -41,12 +44,16 @@ router.post(
 		try {
 			const user = await User.findOne({ email });
 			if (!user) {
-				return res.status(400).json({ errors: [{ msg: 'invalid credentials' }] });
+				return res
+					.status(400)
+					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.INVALID_CREDENTIALS }] });
 			}
 
 			const passwordHasMatched = await bcrypt.compare(password, user.password);
 			if (!passwordHasMatched) {
-				return res.status(400).json({ errors: [{ msg: 'invalid credentials' }] });
+				return res
+					.status(400)
+					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.INVALID_CREDENTIALS }] });
 			}
 
 			const payload = {
@@ -55,10 +62,10 @@ router.post(
 
 			jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
 				if (err) throw err;
-				res.status(200).json({ token });
+				res.status(200).json({ type: ResponseTypes.SUCCESS, data: { token } });
 			});
 		} catch (err) {
-			res.status(500).send('Server error');
+			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );

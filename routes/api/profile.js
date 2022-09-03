@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 
+const ErrorTypes = require('../../utils/errorTypes');
+const ResponseTypes = require('../../utils/responseTypes');
+
 const auth = require('../../middlewares/auth');
 
 const Profile = require('../../models/Profile');
@@ -14,12 +17,14 @@ router.get('/me', auth, async (req, res) => {
 	try {
 		const profile = await Profile.findOne({ user: req.user.id });
 		if (!profile) {
-			return res.status(400).json({ msg: 'profile not found' });
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }] });
 		}
 
-		res.status(200).json(profile);
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { profile } });
 	} catch (err) {
-		res.status(500).send('Server error');
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });
 
@@ -38,7 +43,7 @@ router.post(
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
+			return res.status(400).json({ type: ResponseTypes.ERROR, errors: errors.array() });
 		}
 
 		const { name, username, bio } = req.body;
@@ -52,7 +57,9 @@ router.post(
 					{ new: true }
 				);
 
-				return res.status(200).json({ msg: 'profile updated', profile });
+				return res
+					.status(200)
+					.json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile updated', profile } });
 			}
 
 			profile = new Profile({
@@ -64,13 +71,15 @@ router.post(
 
 			await profile.save();
 
-			res.status(200).json({ msg: 'profile created', profile });
+			res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile created', profile } });
 		} catch (err) {
 			if (err.code === 11000 && 'username' in err.keyPattern) {
-				return res.status(400).json({ errors: [{ msg: 'username already exists' }] });
+				return res
+					.status(400)
+					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USERNAME_ALREADY_EXISTS }] });
 			}
 
-			res.status(500).send('Server error');
+			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );
@@ -84,16 +93,20 @@ router.get('/user/:user_id', async (req, res) => {
 
 		const profile = await Profile.findOne({ user: user_id });
 		if (!profile) {
-			return res.status(400).json({ msg: 'profile not found' });
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }] });
 		}
 
-		res.status(200).json(profile);
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { profile } });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
-			return res.status(400).json({ errors: [{ msg: 'profile not found' }] });
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }] });
 		}
 
-		res.status(500).send('Server error');
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });
 
@@ -105,9 +118,9 @@ router.delete('/', auth, async (req, res) => {
 		await Profile.findOneAndRemove({ user: req.user.id });
 		await User.findOneAndRemove({ _id: req.user.id });
 
-		res.status(200).json({ msg: 'User deleted' });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'User deleted' } });
 	} catch (err) {
-		res.status(500).send('Server error');
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });
 

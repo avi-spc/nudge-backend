@@ -5,6 +5,9 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
+const ErrorTypes = require('../../utils/errorTypes');
+const ResponseTypes = require('../../utils/responseTypes');
+
 const User = require('../../models/User');
 
 // @route		POST: api/users
@@ -19,7 +22,7 @@ router.post(
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
+			return res.status(400).json({ type: ResponseTypes.ERROR, errors: errors.array() });
 		}
 
 		const { email, password } = req.body;
@@ -41,14 +44,16 @@ router.post(
 
 			jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
 				if (err) throw err;
-				res.status(200).json({ token });
+				res.status(200).json({ type: ResponseTypes.SUCCESS, data: { token } });
 			});
 		} catch (err) {
 			if (err.code === 11000 && 'email' in err.keyPattern) {
-				return res.status(400).json({ errors: [{ msg: 'user already exists' }] });
+				return res
+					.status(400)
+					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_ALREADY_EXISTS }] });
 			}
 
-			res.status(500).send('Server error');
+			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );
