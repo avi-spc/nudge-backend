@@ -10,6 +10,19 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	savedPosts: [
+		{
+			post: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'post'
+			},
+			date: {
+				type: Date,
+				default: Date.now
+			},
+			_id: false
+		}
+	],
 	date: {
 		type: Date,
 		default: Date.now

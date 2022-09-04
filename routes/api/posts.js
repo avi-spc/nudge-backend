@@ -433,4 +433,69 @@ router.delete('/comment/reply/:post_id/:comment_id/:reply_id', auth, async (req,
 	}
 });
 
+// @route		GET: api/posts/save/me
+// @desc		Retrieve saved posts for current user
+// @access		Private
+router.get('/save/me', auth, async (req, res) => {
+	try {
+		const savedPosts = await User.findById(req.user.id).select(['-_id', 'savedPosts']);
+
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: savedPosts });
+	} catch (err) {
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		POST: api/posts/save/:post_id
+// @desc		Adding/Removing post from saves
+// @access		Private
+router.post('/save/:post_id', auth, async (req, res) => {
+	try {
+		const post = await Post.findById(req.params.post_id);
+		if (!post) {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+		}
+
+		let user = await User.findById(req.user.id).select('-password');
+		let savedPost = user.savedPosts.find((savedPost) => {
+			return savedPost.post.toString() === req.params.post_id;
+		});
+
+		if (savedPost) {
+			user = await User.findByIdAndUpdate(
+				req.user.id,
+				{ $pull: { savedPosts: { post: req.params.post_id } } },
+				{ new: true, returnDocument: true }
+			);
+
+			return res.status(200).json({
+				type: ResponseTypes.SUCCESS,
+				data: { msg: 'post removed from saves', savedPosts: user.savedPosts }
+			});
+		}
+
+		user = await User.findByIdAndUpdate(
+			req.user.id,
+			{ $push: { savedPosts: { $each: [{ post }], $position: 0 } } },
+			{ new: true, returnDocument: true }
+		);
+
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			data: { msg: 'post added to saves', savedPosts: user.savedPosts }
+		});
+	} catch (err) {
+		console.log(err);
+		if (err.kind === 'ObjectId') {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+		}
+
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
 module.exports = router;
