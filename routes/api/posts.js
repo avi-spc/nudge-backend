@@ -248,7 +248,7 @@ router.delete('/comment/:post_id/:comment_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
 		}
 
-		if (comment.user.toString() !== req.user.id) {
+		if (comment.user.toString() !== req.user.id && post.user.toString() !== req.user.id) {
 			return res
 				.status(401)
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }] });
@@ -408,7 +408,7 @@ router.delete('/comment/reply/:post_id/:comment_id/:reply_id', auth, async (req,
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.REPLY_NOT_FOUND }] });
 		}
 
-		if (reply.user.toString() !== req.user.id) {
+		if (reply.user.toString() !== req.user.id && post.user.toString() !== req.user.id) {
 			return res
 				.status(401)
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }] });
