@@ -36,10 +36,6 @@ const UserSchema = new mongoose.Schema({
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'post'
 			},
-			date: {
-				type: Date,
-				default: Date.now
-			},
 			_id: false
 		}
 	],

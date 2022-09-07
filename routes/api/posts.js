@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
@@ -140,33 +141,52 @@ router.delete('/:post_id', auth, async (req, res) => {
 });
 
 // @route		POST: api/posts/like/:post_id
-// @desc		Like/Unlike a post
+// @desc		Like a post
 // @access		Private
 router.post('/like/:post_id', auth, async (req, res) => {
 	try {
-		const post = await Post.findById(req.params.post_id);
+		const post = await Post.findByIdAndUpdate(
+			req.params.post_id,
+			{ $addToSet: { likes: { user: req.user.id } } },
+			{ new: true }
+		);
+
 		if (!post) {
 			return res
 				.status(400)
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		let msg = '';
-		const removeIndex = post.likes.findIndex((like) => {
-			return like.user.toString() === req.user.id;
-		});
-
-		if (removeIndex >= 0) {
-			post.likes.splice(removeIndex, 1);
-			msg = 'post unliked';
-		} else {
-			post.likes.unshift({ user: req.user.id });
-			msg = 'post liked';
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'post liked', post } });
+	} catch (err) {
+		if (err.kind === 'ObjectId') {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		await post.save();
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg, post } });
+// @route		DELETE: api/posts/unlike/:post_id
+// @desc		Unlika a post
+// @access		Private
+router.delete('/unlike/:post_id', auth, async (req, res) => {
+	try {
+		const post = await Post.findByIdAndUpdate(
+			req.params.post_id,
+			{ $pull: { likes: { user: req.user.id } } },
+			{ new: true }
+		);
+
+		if (!post) {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+		}
+
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'post unliked', post } });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -274,9 +294,21 @@ router.delete('/comment/:post_id/:comment_id', auth, async (req, res) => {
 });
 
 // @route		POST: api/posts/comment/like/:post_id/:comment_id
-// @desc		Like/Unlike comment on a post
+// @desc		Like comment on a post
 // @access		Private
 router.post('/comment/like/:post_id/:comment_id', auth, async (req, res) => {
+	if (!mongoose.isObjectIdOrHexString(req.params.post_id)) {
+		return res
+			.status(400)
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+	}
+
+	if (!mongoose.isObjectIdOrHexString(req.params.comment_id)) {
+		return res
+			.status(400)
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
+	}
+
 	try {
 		const post = await Post.findById(req.params.post_id);
 		if (!post) {
@@ -285,38 +317,62 @@ router.post('/comment/like/:post_id/:comment_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		const commentIndex = post.comments.findIndex((comment) => {
-			return comment._id.toString() === req.params.comment_id;
-		});
-		if (commentIndex === -1) {
+		const comments = await Post.findOneAndUpdate(
+			{ _id: req.params.post_id, 'comments._id': req.params.comment_id },
+			{ $addToSet: { 'comments.$.likes': { user: req.user.id } } },
+			{ new: true }
+		).select('comments');
+
+		if (!comments) {
 			return res
 				.status(400)
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
 		}
 
-		let msg = '';
-		const removeIndex = post.comments[commentIndex].likes.findIndex((like) => {
-			return like.user.toString() === req.user.id;
-		});
-
-		if (removeIndex >= 0) {
-			post.comments[commentIndex].likes.splice(removeIndex, 1);
-			msg = 'comment unliked';
-		} else {
-			post.comments[commentIndex].likes.unshift({ user: req.user.id });
-			msg = 'comment liked';
-		}
-
-		await post.save();
-
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg, post } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'comment liked', comments } });
 	} catch (err) {
-		if (err.kind === 'ObjectId') {
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		DELETE: api/posts/comment/unlike/:post_id/:comment_id
+// @desc		Unlike comment on a post
+// @access		Private
+router.delete('/comment/unlike/:post_id/:comment_id', auth, async (req, res) => {
+	if (!mongoose.isObjectIdOrHexString(req.params.post_id)) {
+		return res
+			.status(400)
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+	}
+
+	if (!mongoose.isObjectIdOrHexString(req.params.comment_id)) {
+		return res
+			.status(400)
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
+	}
+
+	try {
+		const post = await Post.findById(req.params.post_id);
+		if (!post) {
 			return res
 				.status(400)
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
+		const comments = await Post.findOneAndUpdate(
+			{ _id: req.params.post_id, 'comments._id': req.params.comment_id },
+			{ $pull: { 'comments.$.likes': { user: req.user.id } } },
+			{ new: true }
+		).select('comments');
+
+		if (!comments) {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
+		}
+
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'comment unliked', comments } });
+	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });
@@ -447,7 +503,7 @@ router.get('/save/me', auth, async (req, res) => {
 });
 
 // @route		POST: api/posts/save/:post_id
-// @desc		Adding/Removing post from saves
+// @desc		Adding post to saves
 // @access		Private
 router.post('/save/:post_id', auth, async (req, res) => {
 	try {
@@ -458,28 +514,10 @@ router.post('/save/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		let user = await User.findById(req.user.id).select('-password');
-		let savedPost = user.savedPosts.find((savedPost) => {
-			return savedPost.post.toString() === req.params.post_id;
-		});
-
-		if (savedPost) {
-			user = await User.findByIdAndUpdate(
-				req.user.id,
-				{ $pull: { savedPosts: { post: req.params.post_id } } },
-				{ new: true, returnDocument: true }
-			);
-
-			return res.status(200).json({
-				type: ResponseTypes.SUCCESS,
-				data: { msg: 'post removed from saves', savedPosts: user.savedPosts }
-			});
-		}
-
-		user = await User.findByIdAndUpdate(
+		const user = await User.findByIdAndUpdate(
 			req.user.id,
-			{ $push: { savedPosts: { $each: [{ post }], $position: 0 } } },
-			{ new: true, returnDocument: true }
+			{ $addToSet: { savedPosts: { post: req.params.post_id } } },
+			{ new: true }
 		);
 
 		res.status(200).json({
@@ -487,7 +525,39 @@ router.post('/save/:post_id', auth, async (req, res) => {
 			data: { msg: 'post added to saves', savedPosts: user.savedPosts }
 		});
 	} catch (err) {
-		console.log(err);
+		if (err.kind === 'ObjectId') {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+		}
+
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		DELETE: api/posts/unsave/:post_id
+// @desc		Removing post from saves
+// @access		Private
+router.delete('/unsave/:post_id', auth, async (req, res) => {
+	try {
+		const post = await Post.findById(req.params.post_id);
+		if (!post) {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+		}
+
+		const user = await User.findByIdAndUpdate(
+			req.user.id,
+			{ $pull: { savedPosts: { post: req.params.post_id } } },
+			{ new: true }
+		);
+
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			data: { msg: 'post removed from saves', savedPosts: user.savedPosts }
+		});
+	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
 				.status(400)
