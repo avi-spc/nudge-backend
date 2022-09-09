@@ -11,11 +11,11 @@ const database = require('../config/db');
 
 let gfs;
 
-if (database.connection) {
-	database.connection.once('open', () => {
-		gfs = Grid(mongoose.connection.db, mongoose.mongo);
-	});
-}
+// if (database.connection) {
+// 	database.connection.once('open', () => {
+// 		gfs = Grid(mongoose.connection.db, mongoose.mongo);
+// 	});
+// }
 
 const storage = new GridFsStorage({
 	url: config.get('mongoURI'),
@@ -47,15 +47,18 @@ const storage = new GridFsStorage({
 const upload = multer({
 	storage,
 	fileFilter: (req, file, callback) => {
-		if (req.body.caption === '' || !req.body.caption) {
-			callback(new Error('caption is required'));
-		}
-		if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg')
+		if (
+			(req.body.caption && req.body.caption !== '' && file.mimetype === 'image/png') ||
+			file.mimetype === 'image/jpg' ||
+			file.mimetype === 'image/jpeg'
+		) {
 			callback(null, true);
-		else {
+		} else if (!req.body.caption || req.body.caption === '') {
+			callback(new Error('caption is required'), false);
+		} else {
 			callback(new Error('Only images are required'), false);
 		}
 	}
-});
+}).single('file');
 
 module.exports = upload;
