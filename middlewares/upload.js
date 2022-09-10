@@ -59,16 +59,6 @@ const areFormFieldsValid = (req) => {
 
 			break;
 		case 'profile':
-			if (!req.body.name || req.body.name === '') {
-				obj.isValid = false;
-				obj.errMsg = 'name is required';
-			}
-
-			if (!req.body.username || req.body.username === '') {
-				obj.isValid = false;
-				obj.errMsg = 'username is required';
-			}
-
 			break;
 		default:
 			obj.isValid = false;

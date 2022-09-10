@@ -116,7 +116,7 @@ router.delete('/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }] });
 		}
 
-		await PostStream().delete(mongoose.Types.ObjectId(post.imageId), (err, result) => {
+		await PostStream().delete(post.imageId, (err, result) => {
 			if (err) throw err;
 		});
 

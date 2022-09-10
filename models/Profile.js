@@ -14,6 +14,9 @@ const ProfileSchema = new mongoose.Schema({
 		required: true,
 		unique: true
 	},
+	imageId: {
+		type: mongoose.Schema.Types.ObjectId
+	},
 	bio: {
 		type: String
 	}
