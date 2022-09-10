@@ -1,24 +1,18 @@
 const express = require('express');
+const { default: mongoose } = require('mongoose');
 const router = express.Router();
-const upload = require('../../middlewares/upload');
+const { PostStream } = require('../../config/db');
 
-const handler = (req, res, next) => {
-	upload(req, res, (err) => {
-		if (err) {
-			return res.json({ msg: err.message });
-		}
-
-		req.body.file = req.file;
-		next();
-	});
-};
-
-router.post('/upload', handler, async (req, res) => {
+router.delete('/upload/:id', async (req, res) => {
 	try {
-		console.log(req.body);
-		res.json({ file: req.body.file });
+		PostStream().delete(mongoose.Types.ObjectId(req.params.id), (err, result) => {
+			if (err) throw err;
+			console.log(result);
+			res.json({ msg: 'file removed' });
+		});
 	} catch (err) {
-		console.log(err);
+		console.log(err.message);
+		res.json({ err: err.message });
 	}
 });
 

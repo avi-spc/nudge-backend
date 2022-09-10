@@ -1,14 +1,14 @@
 const express = require('express');
 const methodOverride = require('method-override');
 
-const database = require('./config/db');
+const { ConnectDB } = require('./config/db');
 
 const app = express();
 
 app.use(express.json({ extended: false }));
 app.use(methodOverride('_method'));
 
-database.ConnectDB();
+ConnectDB();
 
 app.get('/', (req, res) => res.send('API running'));
 

@@ -3,10 +3,13 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 
+const { PostStream } = require('../../config/db');
+
 const ErrorTypes = require('../../utils/errorTypes');
 const ResponseTypes = require('../../utils/responseTypes');
 
 const auth = require('../../middlewares/auth');
+const imageUploadHandler = require('../../middlewares/upload');
 
 const Post = require('../../models/Post');
 const User = require('../../models/User');
@@ -14,36 +17,23 @@ const User = require('../../models/User');
 // @route		POST: api/posts
 // @desc		Create new post
 // @access		Private
-router.post(
-	'/',
-	[
-		auth,
-		[
-			check('caption').not().isEmpty()
-		]
-	],
-	async (req, res) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ type: ResponseTypes.ERROR, errors: errors.array() });
-		}
+router.post('/', [auth, imageUploadHandler], async (req, res) => {
+	const { caption } = req.body;
 
-		const { caption } = req.body;
+	try {
+		const post = new Post({
+			user: req.user.id,
+			imageId: req.file.id,
+			caption
+		});
 
-		try {
-			const post = new Post({
-				user: req.user.id,
-				caption
-			});
+		await post.save();
 
-			await post.save();
-
-			res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'post created', post } });
-		} catch (err) {
-			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
-		}
+		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'post created', post } });
+	} catch (err) {
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
-);
+});
 
 // @route		GET: api/posts
 // @desc		Retrieve all posts
@@ -125,6 +115,10 @@ router.delete('/:post_id', auth, async (req, res) => {
 				.status(401)
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }] });
 		}
+
+		await PostStream().delete(mongoose.Types.ObjectId(post.imageId), (err, result) => {
+			if (err) throw err;
+		});
 
 		await post.deleteOne();
 

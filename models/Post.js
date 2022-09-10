@@ -5,6 +5,10 @@ const PostSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'user'
 	},
+	imageId: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true
+	},
 	caption: {
 		type: String,
 		required: true
