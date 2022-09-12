@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap");
 *,
 *::before,
 *::after {
@@ -10,6 +11,12 @@ html {
   font-size: 50%; }
 
 body {
+  font-family: 'Fredoka', sans-serif;
+  background-color: #121212; }
+
+input,
+input::placeholder,
+button {
   font-family: 'Fredoka', sans-serif; }
 
 .text-small-R {
@@ -35,3 +42,55 @@ body {
 .text-large-M {
   font-size: 4rem;
   font-weight: 500; }
+
+.btn {
+  color: #1e1e1e;
+  background-color: #6cb6ff;
+  cursor: pointer; }
+  .btn:hover {
+    background-color: #96d0ff; }
+  .btn--rect {
+    border-radius: 2rem;
+    padding: 2.5rem 5rem; }
+
+.sign-in {
+  max-width: 65rem;
+  margin: 8rem auto; }
+  .sign-in__logo-p-form {
+    padding: 8rem 8rem 5rem 8rem;
+    text-align: center;
+    background-color: #1e1e1e;
+    border-radius: 3rem; }
+  .sign-in__logo {
+    font-family: 'Libre Barcode 39 Text', cursive;
+    font-size: 12.8rem;
+    color: #d9d9d9; }
+  .sign-in__form {
+    margin-top: 8rem;
+    margin-bottom: 5rem; }
+    .sign-in__form > :not(:last-child) {
+      margin-bottom: 2rem; }
+    .sign-in__form input {
+      display: block;
+      padding: 2.8rem;
+      width: 100%;
+      color: #d9d9d9;
+      background-color: #121212;
+      border-radius: 2rem;
+      border-style: none; }
+    .sign-in__form input::placeholder {
+      color: #5a5a5e; }
+  .sign-in__btn-alternate {
+    margin-top: 2rem;
+    padding: 3.3rem 0;
+    width: 100%;
+    color: #989899;
+    text-align: center;
+    background-color: #121212;
+    border-radius: 2.5rem;
+    border: thin solid #383838;
+    cursor: pointer; }
+    .sign-in__btn-alternate:hover {
+      background-color: #242424; }
+    .sign-in__btn-alternate span {
+      color: #d9d9d9; }

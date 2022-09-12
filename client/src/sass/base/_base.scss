@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap');
 
 *,
 *::before,
@@ -13,5 +14,12 @@ html {
 }
 
 body {
+	font-family: 'Fredoka', sans-serif;
+	background-color: $color-background;
+}
+
+input,
+input::placeholder,
+button {
 	font-family: 'Fredoka', sans-serif;
 }

@@ -1,0 +1,14 @@
+.btn {
+	color: $color-text-accent;
+	background-color: $color-accent-primary;
+    cursor: pointer;
+
+	&:hover {
+        background-color: $color-accent-secondary;
+	}
+
+    &--rect {
+        border-radius: $border-radius-normal;
+        padding: 2.5rem 5rem;
+    }
+}

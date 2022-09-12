@@ -1,7 +1,9 @@
+import SignIn from "./components/signIn/SignIn";
+
 const App = () => {
 	return (
 		<div className="App">
-			<div>app</div>
+			<SignIn />
 		</div>
 	);
 };
