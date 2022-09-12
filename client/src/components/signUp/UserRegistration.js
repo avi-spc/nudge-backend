@@ -1,8 +1,7 @@
-const RegisterUser = () => {
+const UserRegistration = () => {
 	return (
 		<div>
 			<div>
-				<img src="" alt="" />
 				<form>
 					<input type="email" placeholder="email" />
 					<input type="password" placeholder="password" />
@@ -10,9 +9,8 @@ const RegisterUser = () => {
 				</form>
 				<button>Sign Up</button>
 			</div>
-			<button>Already have an account? Log In</button>
 		</div>
 	);
 };
 
-export default RegisterUser;
+export default UserRegistration;

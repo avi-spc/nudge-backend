@@ -1,4 +1,4 @@
-const ProfileImage = () => {
+const ProfileImageUpload = () => {
 	return (
 		<div>
 			<img src="" alt="" />
@@ -8,4 +8,4 @@ const ProfileImage = () => {
 	);
 };
 
-export default ProfileImage;
+export default ProfileImageUpload;
