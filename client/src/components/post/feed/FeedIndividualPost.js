@@ -1,10 +1,12 @@
+import UserHeaderBar from '../headerBars/UserHeaderBar';
 import PostActions from './PostActions';
 import PostDetails from './PostDetails';
 import PostVisual from './PostVisual';
 
-const IndividualPost = () => {
+const FeedIndividualPost = () => {
 	return (
 		<div>
+			<UserHeaderBar />
 			<PostVisual />
 			<PostActions />
 			<PostDetails />
@@ -12,4 +14,4 @@ const IndividualPost = () => {
 	);
 };
 
-export default IndividualPost;
+export default FeedIndividualPost;

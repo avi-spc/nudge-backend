@@ -1,3 +1,5 @@
+import CommentInput from "../CommentInput";
+
 const PostDetails = () => {
 	return (
 		<div>
@@ -12,10 +14,7 @@ const PostDetails = () => {
 					<div>MARCH 15, 2020</div>
 				</div>
 			</div>
-			<form>
-				<input type="text" placeholder="Add a comment ..." />
-				<button>POST</button>
-			</form>
+			<CommentInput />
 		</div>
 	);
 };

@@ -3,7 +3,7 @@ import PostActions from './PostActions';
 import PostCaption from './PostCaption';
 import PostDetails from './PostDetails';
 
-const PostView = () => {
+const IndividualPost = () => {
 	return (
 		<div>
 			<img src="" alt="" />
@@ -19,4 +19,4 @@ const PostView = () => {
 	);
 };
 
-export default PostView;
+export default IndividualPost;

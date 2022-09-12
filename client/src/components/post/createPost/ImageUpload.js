@@ -1,10 +1,9 @@
+import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
+
 const ImageUpload = () => {
 	return (
 		<div>
-			<div>
-				<div>Create new post</div>
-				<button>Next</button>
-			</div>
+			<TitleHeaderBar />
 			<button>Select from device</button>
 		</div>
 	);

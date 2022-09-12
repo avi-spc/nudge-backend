@@ -1,3 +1,5 @@
+import CommentInput from '../CommentInput';
+
 const PostDetails = () => {
 	return (
 		<div>
@@ -8,10 +10,7 @@ const PostDetails = () => {
 			</div>
 			<div>View all 102 comments</div>
 			<div>22 HOURS AGO</div>
-			<form>
-				<input type="text" placeholder="Add a comment ..." />
-				<button>POST</button>
-			</form>
+			<CommentInput />
 		</div>
 	);
 };

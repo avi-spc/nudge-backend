@@ -1,10 +1,9 @@
+import TitleHeaderBar from '../headerBars/TitleHeaderBar';
+
 const EditProfile = () => {
 	return (
 		<div>
-			<div>
-				<div>Edit Profile</div>
-				<button>Save</button>
-			</div>
+			<TitleHeaderBar />
 			<div>
 				<form>
 					<label htmlFor="">Name</label>
@@ -22,6 +21,7 @@ const EditProfile = () => {
 					<button>Change profile picture</button>
 				</div>
 			</div>
+			<button>Save</button>
 		</div>
 	);
 };
