@@ -1,11 +1,11 @@
 const UserDetails = () => {
 	return (
 		<div>
-			<form>
-				<input type="text" placeholder="name" />
-				<input type="text" placeholder="username" />
+			<form className="sign-up__form">
+				<input type="text" placeholder="name" className="text-normal-R" />
+				<input type="text" placeholder="username" className="text-normal-R" />
 			</form>
-			<button>Confirm</button>
+			<button className="btn btn--rect text-medium-SB">Confirm</button>
 		</div>
 	);
 };

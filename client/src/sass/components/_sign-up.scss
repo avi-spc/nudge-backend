@@ -1,4 +1,4 @@
-.sign-in {
+.sign-up {
 	max-width: 65rem;
 	margin: 8rem auto;
 
@@ -38,6 +38,17 @@
 
 		input::placeholder {
 			color: $color-text-tertiary;
+		}
+	}
+
+	&__image-upload {
+		div {
+			margin: 8rem auto 5rem auto;
+			width: 15rem;
+			height: 15rem;
+
+			background-color: $color-accent-primary;
+			border-radius: 50%;
 		}
 	}
 }

@@ -1,9 +1,11 @@
-import SignIn from "./components/signIn/SignIn";
+import PublishPost from './components/post/createPost/PublishPost';
+import SignIn from './components/signIn/SignIn';
+import SignUp from './components/signUp/SignUp';
 
 const App = () => {
 	return (
 		<div className="App">
-			<SignIn />
+			<PublishPost />
 		</div>
 	);
 };
