@@ -63,6 +63,10 @@ textarea {
   .btn--rect-sm {
     border-radius: 2rem;
     padding: 1.5rem 3rem; }
+  .btn--rect-es {
+    margin-top: 1.2rem;
+    border-radius: 1.5rem;
+    padding: 1rem 2rem; }
   .btn--cir {
     border-radius: 10rem;
     padding: 1.5rem; }
@@ -125,6 +129,55 @@ textarea {
 .create-post__btn-publish {
   margin-top: 2rem;
   align-self: end; }
+
+.image-upload__buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  height: 53rem; }
+
+.image-upload__btn-next {
+  margin-top: 3rem;
+  padding: 3rem; }
+
+.edit-profile {
+  color: #d9d9d9; }
+  .edit-profile__form-p-image {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 6.3rem;
+    padding: 4rem; }
+  .edit-profile__form {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-gap: 1.5rem 4.4rem;
+    justify-items: right;
+    align-items: center; }
+  .edit-profile__image {
+    width: 10rem;
+    height: 10rem;
+    background-color: #f7d047;
+    border-radius: 50%; }
+  .edit-profile__image-p-username {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-column-gap: 4rem; }
+  .edit-profile__btn-save {
+    grid-column: 2/-1;
+    justify-self: end;
+    align-self: end; }
+  .edit-profile input,
+  .edit-profile textarea {
+    width: 100%;
+    padding: 2rem;
+    color: #d9d9d9;
+    background-color: #121212;
+    border-radius: 2rem;
+    border-style: none; }
+  .edit-profile textarea {
+    resize: none; }
 
 .header-bar {
   display: flex;

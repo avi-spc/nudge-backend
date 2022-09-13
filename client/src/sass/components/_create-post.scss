@@ -64,3 +64,20 @@
 		align-self: end;
 	}
 }
+
+.image-upload {
+	&__buttons {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		margin-top: 1rem;
+		height: 53rem;
+	}
+
+	&__btn-next {
+		margin-top: 3rem;
+		padding: 3rem;
+	}
+}
