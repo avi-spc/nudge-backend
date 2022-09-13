@@ -142,6 +142,78 @@ textarea {
   margin-top: 3rem;
   padding: 3rem; }
 
+.user-profile {
+  padding: 4rem;
+  color: #d9d9d9; }
+  .user-profile__image-p-details {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-gap: 0 7.5rem;
+    align-items: center; }
+  .user-profile__image {
+    width: 25rem;
+    height: 25rem;
+    background-color: #f7d047;
+    border-radius: 50%; }
+  .user-profile__details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center; }
+  .user-profile__follow-numbers {
+    display: flex;
+    justify-content: space-between;
+    grid-column: 1/-1;
+    margin: 4rem 0 4rem 0;
+    padding: 3.5rem;
+    background-color: #242424;
+    border-radius: 3rem; }
+  .user-profile .name,
+  .user-profile .bio {
+    grid-column: 1/-1; }
+  .user-profile .bio {
+    margin-top: 1.5rem; }
+  .user-profile__btn-edit {
+    padding: 2.5rem;
+    justify-self: start; }
+
+.user-post-gallery {
+  display: flex;
+  flex-direction: column;
+  margin: 8rem auto;
+  max-width: 100rem; }
+  .user-post-gallery__tabs {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin: 4rem auto;
+    padding: 1rem;
+    background-color: #1e1e1e;
+    border-radius: 3rem; }
+    .user-post-gallery__tabs > div {
+      display: grid;
+      grid-template-columns: min-content 1fr;
+      grid-gap: 0 1.6rem;
+      align-items: center;
+      padding: 1.6rem;
+      color: #d9d9d9;
+      background-color: #121212;
+      border-radius: 2rem; }
+      .user-post-gallery__tabs > div:not(:first-child) {
+        margin-left: 1rem; }
+  .user-post-gallery__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 2rem; }
+    .user-post-gallery__gallery .gallery-post {
+      height: 31.3rem;
+      background-color: #242424;
+      border-radius: 2rem; }
+  .user-post-gallery .icon {
+    width: 4.8rem;
+    height: 4.8rem;
+    background-color: #d9d9d9;
+    border-radius: 2rem; }
+
 .edit-profile {
   color: #d9d9d9; }
   .edit-profile__form-p-image {

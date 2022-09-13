@@ -1,23 +1,23 @@
 const UserPostGallery = () => {
 	return (
-		<div>
-			<div>
+		<div className="user-post-gallery">
+			<div className="user-post-gallery__tabs text-medium-SB">
 				<div>
-					<img src="" alt="" />
+					<div className="icon"></div>
 					<span>POSTS</span>
 				</div>
 				<div>
-					<img src="" alt="" />
+					<div className="icon"></div>
 					<span>SAVED</span>
 				</div>
 			</div>
-			<div>
-				<img src="" alt="" />
-				<img src="" alt="" />
-				<img src="" alt="" />
-				<img src="" alt="" />
-				<img src="" alt="" />
-				<img src="" alt="" />
+			<div className="user-post-gallery__gallery">
+				<div className="gallery-post"></div>
+				<div className="gallery-post"></div>
+				<div className="gallery-post"></div>
+				<div className="gallery-post"></div>
+				<div className="gallery-post"></div>
+				<div className="gallery-post"></div>
 			</div>
 		</div>
 	);

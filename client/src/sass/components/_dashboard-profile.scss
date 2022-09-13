@@ -1,0 +1,111 @@
+.user-profile {
+	padding: 4rem;
+
+	color: $color-text-primary;
+
+	&__image-p-details {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		grid-gap: 0 7.5rem;
+		align-items: center;
+	}
+
+	&__image {
+		width: 25rem;
+		height: 25rem;
+
+		background-color: #f7d047;
+		border-radius: 50%;
+	}
+
+	&__details {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		align-items: center;
+	}
+
+	&__follow-numbers {
+		display: flex;
+		justify-content: space-between;
+
+		grid-column: 1/-1;
+		margin: 4rem 0 4rem 0;
+		padding: 3.5rem;
+
+		background-color: $color-surface-secondary;
+		border-radius: $border-radius-large;
+	}
+
+	.name,
+	.bio {
+		grid-column: 1/-1;
+	}
+
+	.bio {
+		margin-top: 1.5rem;
+	}
+
+	&__btn-edit {
+		padding: 2.5rem;
+		justify-self: start;
+	}
+}
+
+.user-post-gallery {
+	display: flex;
+	flex-direction: column;
+	// display: inline-block;
+	margin: 8rem auto;
+
+	max-width: 100rem;
+
+	&__tabs {
+		display: flex;
+		justify-content: center;
+
+		align-self: center;
+        margin: 4rem auto;
+		padding: 1rem;
+
+		background-color: $color-surface-primary;
+		border-radius: $border-radius-large;
+
+		& > div {
+			display: grid;
+			grid-template-columns: min-content 1fr;
+			grid-gap: 0 1.6rem;
+			align-items: center;
+
+			padding: 1.6rem;
+
+			color: $color-text-primary;
+
+			background-color: $color-surface-quarternary;
+			border-radius: $border-radius-normal;
+
+			&:not(:first-child) {
+				margin-left: 1rem;
+			}
+		}
+	}
+
+	&__gallery {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-gap: 2rem;
+
+		.gallery-post {
+            height: 31.3rem;
+            background-color: $color-surface-secondary;
+            border-radius: $border-radius-normal;
+		}
+	}
+
+	.icon {
+		width: 4.8rem;
+		height: 4.8rem;
+
+		background-color: $color-text-primary;
+		border-radius: $border-radius-normal;
+	}
+}
