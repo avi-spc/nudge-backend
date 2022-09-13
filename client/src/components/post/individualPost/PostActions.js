@@ -1,19 +1,11 @@
 const PostActions = () => {
 	return (
-		<div>
+		<div className="individual-post__post-actions">
 			<ul>
-				<button>
-					<img src="" alt="" />
-				</button>
-				<button>
-					<img src="" alt="" />
-				</button>
-				<button>
-					<img src="" alt="" />
-				</button>
-				<button>
-					<img src="" alt="" />
-				</button>
+				<button className="btn btn--cir text-medium-SB"></button>
+				<button className="btn btn--cir text-medium-SB"></button>
+				<button className="btn btn--cir text-medium-SB"></button>
+				<button className="btn btn--cir text-medium-SB btn-save"></button>
 			</ul>
 		</div>
 	);

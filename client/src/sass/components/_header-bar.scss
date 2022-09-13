@@ -15,3 +15,25 @@
 		align-items: center;
 	}
 }
+
+.user-header-bar {
+	display: grid;
+	grid-template-columns: max-content 1fr max-content;
+	grid-gap: 2.5rem;
+	align-items: center;
+
+	position: relative;
+	z-index: 20;
+	padding: 2rem;
+
+	background-color: $color-surface-header;
+	border-radius: $border-radius-medium;
+
+	&__profile-image {
+		width: 5rem;
+		height: 5rem;
+
+		background-color: #f7d047;
+		border-radius: 50%;
+	}
+}

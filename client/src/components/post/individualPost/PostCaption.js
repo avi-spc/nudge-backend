@@ -1,15 +1,15 @@
-import UserHeaderBar from '../headerBars/UserHeaderBar';
+import UserHeaderBar from '../../headerBars/UserHeaderBar';
 
 const PostCaption = () => {
 	return (
-		<div>
+		<div className="individual-post__header-p-caption">
 			<UserHeaderBar />
-			<div>
-				<p>
+			<div className="individual-post__caption-p-elapsed">
+				<p className="text-medium-R">
 					LetsWalk project. Goal is to make 100 characters and I have made 90 of them so far (not all is
 					shown here)
 				</p>
-				<span>127w</span>
+				<span className="elapsed absolute text-small-R">127w</span>
 			</div>
 		</div>
 	);

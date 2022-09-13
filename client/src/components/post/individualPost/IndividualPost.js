@@ -5,12 +5,10 @@ import PostDetails from './PostDetails';
 
 const IndividualPost = () => {
 	return (
-		<div>
-			<img src="" alt="" />
+		<div className="container individual-post">
+			<div className="individual-post__image"></div>
 			<PostCaption />
 			<div>
-				<IndividualComment />
-				<IndividualComment />
 				<IndividualComment />
 			</div>
 			<PostActions />

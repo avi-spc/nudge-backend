@@ -1,8 +1,18 @@
 .container {
-    max-width: 100rem;
-    margin: 8rem auto;
-    padding: 1rem;
+	max-width: 100rem;
+	margin: 8rem auto;
+	padding: 1rem;
 
-    background-color: $color-surface-primary;
-    border-radius: $border-radius-large;
+	background-color: $color-surface-primary;
+	border-radius: $border-radius-large;
+}
+
+.absolute {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.bordered{
+    border: thin solid $color-border-primary;
 }

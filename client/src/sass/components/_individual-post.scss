@@ -1,0 +1,134 @@
+.individual-post {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	grid-template-rows: repeat(3, minmax(0, 1fr));
+	grid-gap: 0 1rem;
+
+	max-width: 130rem;
+	margin: 8rem auto;
+
+	color: $color-text-primary;
+	height: 67rem;
+
+	&__image {
+		grid-row: 1/-1;
+
+		width: 65rem;
+
+		background-color: $color-surface-secondary;
+		border-radius: $border-radius-medium;
+	}
+
+	&__header-p-caption {
+		position: relative;
+	}
+
+	&__caption-p-elapsed {
+		position: absolute;
+		top: 0;
+		z-index: 10;
+
+		padding: 12rem 4.5rem 4.5rem 4.5rem;
+
+		background-color: $color-surface-tertiary;
+		border-radius: $border-radius-medium;
+	}
+
+	.elapsed {
+		justify-self: start;
+		padding: 0.8rem 1rem;
+
+		color: $color-text-secondary;
+
+		background-color: $color-surface-primary;
+		border-radius: $border-radius-large;
+	}
+
+	&__individual-comment {
+		display: grid;
+		grid-template-columns: min-content max-content 1fr;
+		align-items: center;
+		grid-gap: 1rem 2.5rem;
+
+		margin: 8rem 2.5rem;
+
+		.profile-image {
+			width: 5rem;
+			height: 5rem;
+
+			background-color: #f7d047;
+			border-radius: 50%;
+		}
+
+		.comment-text {
+			grid-column: 2/-1;
+		}
+
+		.btn {
+			&-like {
+				justify-self: start;
+				grid-row: 3 / span 1;
+				grid-column: 2 / span 1;
+			}
+
+			&-reply {
+				justify-self: center;
+				grid-row: 3 / span 1;
+				grid-column: 2 / span 1;
+
+				color: $color-text-secondary;
+			}
+		}
+	}
+
+	&__post-actions {
+		align-self: end;
+		padding: 2rem;
+
+		background-color: $color-surface-tertiary;
+		border-radius: $border-radius-medium;
+
+		ul {
+			display: grid;
+			grid-template-columns: repeat(3, min-content) 1fr;
+			grid-gap: 0 2.5rem;
+		}
+
+		.btn-save {
+			justify-self: right;
+		}
+	}
+
+	&__post-details {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+
+		max-width: 130rem;
+
+		.avatars-p-info {
+			display: flex;
+			align-items: center;
+			margin-left: 1.5rem;
+		}
+
+		.avatars {
+			div {
+				padding: 2.5rem;
+			}
+		}
+
+		.info {
+			margin-left: 2.5rem;
+		}
+
+		.likes-info {
+			color: $color-text-primary;
+		}
+
+		.date {
+			margin-top: 1rem;
+			color: $color-text-secondary;
+		}
+	}
+}
