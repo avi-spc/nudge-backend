@@ -7,19 +7,7 @@
 		border-radius: $border-radius-medium;
 	}
 
-	input {
-		display: block;
-		padding: 2.8rem;
-		width: 100%;
-
-		color: $color-text-primary;
-
-		background-color: $color-surface-quarternary;
-		border-radius: $border-radius-medium 0 0 $border-radius-medium;
-		border-style: none;
-	}
-
-	&__btn-container {
+	&__btn-post-container {
 		padding: 1rem;
 	}
 

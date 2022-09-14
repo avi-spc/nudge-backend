@@ -2,7 +2,7 @@ import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 
 const ImageUpload = () => {
 	return (
-		<div className="container image-upload">
+		<div className="container-medium padded image-upload">
 			<TitleHeaderBar />
 			<div className="image-upload__buttons">
 				<button className="btn btn--rect-sm text-medium-R">Select from device</button>
