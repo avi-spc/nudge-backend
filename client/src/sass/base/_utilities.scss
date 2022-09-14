@@ -7,12 +7,26 @@
 	border-radius: $border-radius-large;
 }
 
-.absolute {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
+.container-small {
+	max-width: 65rem;
+	margin: 8rem auto;
 }
 
-.bordered{
-    border: thin solid $color-border-primary;
+.container-normal {
+}
+
+.container-medium {
+}
+
+.container-large {
+}
+
+.absolute {
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
+}
+
+.bordered {
+	border: thin solid $color-border-primary;
 }

@@ -1,13 +1,15 @@
+import { Fragment } from 'react';
+
 const UserRegistration = () => {
 	return (
-		<div>
+		<Fragment>
 			<form className="sign-up__form">
-				<input type="email" placeholder="email" className="text-normal-R" />
-				<input type="password" placeholder="password" className="text-normal-R" />
-				<input type="password" placeholder="confirm password" className="text-normal-R" />
+				<input type="email" placeholder="email" className="input-field text-normal-R" />
+				<input type="password" placeholder="password" className="input-field text-normal-R" />
+				<input type="password" placeholder="confirm password" className="input-field text-normal-R" />
 			</form>
-			<button className="btn btn--rect text-medium-SB">Sign Up</button>
-		</div>
+			<button className="btn btn--rect-lg text-medium-SB">Sign Up</button>
+		</Fragment>
 	);
 };
 

@@ -54,6 +54,10 @@ ul {
   background-color: #1e1e1e;
   border-radius: 3rem; }
 
+.container-small {
+  max-width: 65rem;
+  margin: 8rem auto; }
+
 .absolute {
   position: absolute;
   bottom: 1rem;
@@ -68,7 +72,7 @@ ul {
   cursor: pointer; }
   .btn:hover {
     background-color: #96d0ff; }
-  .btn--rect {
+  .btn--rect-lg {
     border-radius: 2rem;
     padding: 2.5rem 5rem; }
   .btn--rect-sm {
@@ -420,6 +424,45 @@ ul {
       margin-top: 1rem;
       color: #989899; }
 
+.input-field {
+  display: block;
+  padding: 2.8rem;
+  width: 100%;
+  color: #d9d9d9;
+  background-color: #121212;
+  border-radius: 2rem;
+  border-style: none; }
+  .input-field::placeholder {
+    color: #5a5a5e; }
+
+.log-in__logo-p-form,
+.sign-up__logo-p-form {
+  padding: 8rem 8rem 5rem 8rem;
+  text-align: center;
+  background-color: #1e1e1e;
+  border-radius: 3rem; }
+
+.log-in__logo,
+.sign-up__logo {
+  font-family: 'Libre Barcode 39 Text', cursive;
+  font-size: 12.8rem;
+  color: #d9d9d9; }
+
+.log-in__form,
+.sign-up__form {
+  margin-top: 8rem;
+  margin-bottom: 5rem; }
+  .log-in__form > :not(:last-child),
+  .sign-up__form > :not(:last-child) {
+    margin-bottom: 2rem; }
+
+.sign-up__profile-image-upload div {
+  margin: 8rem auto 5rem auto;
+  width: 15rem;
+  height: 15rem;
+  background-color: #6cb6ff;
+  border-radius: 50%; }
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -437,67 +480,5 @@ ul {
   .navbar__actions .action {
     width: 5rem;
     height: 5rem;
-    background-color: #6cb6ff;
-    border-radius: 50%; }
-
-.sign-in {
-  max-width: 65rem;
-  margin: 8rem auto; }
-  .sign-in__logo-p-form {
-    padding: 8rem 8rem 5rem 8rem;
-    text-align: center;
-    background-color: #1e1e1e;
-    border-radius: 3rem; }
-  .sign-in__logo {
-    font-family: 'Libre Barcode 39 Text', cursive;
-    font-size: 12.8rem;
-    color: #d9d9d9; }
-  .sign-in__form {
-    margin-top: 8rem;
-    margin-bottom: 5rem; }
-    .sign-in__form > :not(:last-child) {
-      margin-bottom: 2rem; }
-    .sign-in__form input {
-      display: block;
-      padding: 2.8rem;
-      width: 100%;
-      color: #d9d9d9;
-      background-color: #121212;
-      border-radius: 2rem;
-      border-style: none; }
-    .sign-in__form input::placeholder {
-      color: #5a5a5e; }
-
-.sign-up {
-  max-width: 65rem;
-  margin: 8rem auto; }
-  .sign-up__logo-p-form {
-    padding: 8rem 8rem 5rem 8rem;
-    text-align: center;
-    background-color: #1e1e1e;
-    border-radius: 3rem; }
-  .sign-up__logo {
-    font-family: 'Libre Barcode 39 Text', cursive;
-    font-size: 12.8rem;
-    color: #d9d9d9; }
-  .sign-up__form {
-    margin-top: 8rem;
-    margin-bottom: 5rem; }
-    .sign-up__form > :not(:last-child) {
-      margin-bottom: 2rem; }
-    .sign-up__form input {
-      display: block;
-      padding: 2.8rem;
-      width: 100%;
-      color: #d9d9d9;
-      background-color: #121212;
-      border-radius: 2rem;
-      border-style: none; }
-    .sign-up__form input::placeholder {
-      color: #5a5a5e; }
-  .sign-up__image-upload div {
-    margin: 8rem auto 5rem auto;
-    width: 15rem;
-    height: 15rem;
     background-color: #6cb6ff;
     border-radius: 50%; }

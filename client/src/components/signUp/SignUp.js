@@ -4,12 +4,12 @@ import UserRegistration from './UserRegistration';
 
 const SignUp = () => {
 	return (
-		<div className="sign-up">
+		<div className="container-small sign-up">
 			<div className="sign-up__logo-p-form">
 				<div className="sign-up__logo">nudge</div>
-				<UserRegistration />
+				{/* <UserRegistration /> */}
 				{/* <UserDetails /> */}
-				{/* <UserImageUpload /> */}
+				<UserImageUpload />
 			</div>
 			<button className="btn-alternate text-medium-R">
 				Already have an account? <span className="text-medium-SB">Log In</span>

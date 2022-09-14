@@ -1,0 +1,15 @@
+.input-field {
+	display: block;
+	padding: 2.8rem;
+	width: 100%;
+
+	color: $color-text-primary;
+
+	background-color: $color-surface-quarternary;
+	border-radius: $border-radius-normal;
+	border-style: none;
+
+	&::placeholder {
+		color: $color-text-tertiary;
+	}
+}
