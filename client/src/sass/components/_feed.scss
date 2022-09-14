@@ -1,10 +1,17 @@
-.feed-individual-post {
-	max-width: 80rem;
+.feed {
+	& > div:not(:first-child) {
+		margin-top: 4rem;
+	}
+}
 
+.feed-individual-post {
 	&__post-visual {
+		position: relative;
+		z-index: 10;
+
 		.image {
 			margin-top: 1rem;
-			height: 78rem;
+			height: 63rem;
 
 			background-color: $color-surface-tertiary;
 			border-radius: $border-radius-medium;
@@ -12,14 +19,20 @@
 	}
 
 	&__post-actions {
-		padding: 2rem;
-
-		background-color: $color-surface-tertiary;
-		border-radius: $border-radius-medium;
-
 		display: grid;
 		grid-template-columns: repeat(3, min-content) 1fr;
 		grid-gap: 0 2.5rem;
+
+		position: relative;
+		z-index: 5;
+
+		margin-top: -6rem;
+		padding: 8rem 2rem 2rem 2rem;
+
+		color: $color-text-primary;
+
+		background-color: $color-surface-secondary;
+		border-radius: $border-radius-medium;
 
 		.btn-save {
 			justify-self: right;
@@ -27,17 +40,47 @@
 	}
 
 	&__post-details {
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-gap: 2.5rem 0;
+		.details-m-input {
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-gap: 2.5rem 0;
 
-		padding: 0 2.5rem;
+			padding: 0 2rem;
+			margin-bottom: 4rem;
+		}
+
+		margin-top: -5rem;
+		padding: 8rem 1rem 1rem 1rem;
 
 		color: $color-text-primary;
 
-		.caption {
-			display: inline-block;
-			float: left;
+		background-color: $color-surface-tertiary;
+		border-radius: $border-radius-medium;
+
+		.username-p-caption {
+			display: grid;
+			grid-template-columns: 1fr;
+
+			// padding: 1rem;
+
+			background-color: $color-surface-secondary;
+			border-radius: $border-radius-normal;
+
+			.username {
+				justify-self: center;
+				padding: 1.5rem 2.5rem;
+				background-color: $color-surface-quarternary;
+				border-radius: 0 0 $border-radius-small $border-radius-small;
+			}
+
+			.caption {
+				padding: 2rem 3rem 3rem 3rem;
+			}
+		}
+
+		.comments-count,
+		.elapsed-time {
+			color: $color-text-secondary;
 		}
 	}
 }

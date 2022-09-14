@@ -1,20 +1,10 @@
 const NavActions = () => {
 	return (
 		<div className="navbar__actions">
-			<ul>
-				<li>
-					<div className="action"></div>
-				</li>
-				<li>
-					<div className="action"></div>
-				</li>
-				<li>
-					<div className="action"></div>
-				</li>
-				<li>
-					<div className="action"></div>
-				</li>
-			</ul>
+			<span class="material-symbols-outlined btn-like">cottage</span>
+			<span class="material-symbols-outlined btn-like">loupe</span>
+			<span class="material-symbols-outlined btn-like">favorite</span>
+			<div className="btn btn--cir"></div>
 		</div>
 	);
 };

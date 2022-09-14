@@ -14,18 +14,12 @@
 	}
 
 	&__actions {
-		ul {
-			display: grid;
-			grid-template-columns: repeat(4, max-content);
-			grid-gap: 0 2rem;
-		}
+		display: grid;
+		grid-template-columns: repeat(4, max-content);
+		grid-gap: 0 2rem;
 
-		.action {
-			width: 5rem;
-			height: 5rem;
-
-			background-color: $color-accent-primary;
-			border-radius: 50%;
+		.material-symbols-outlined {
+			font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 200, 'opsz' 48;
 		}
 	}
 }

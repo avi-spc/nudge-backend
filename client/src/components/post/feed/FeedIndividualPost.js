@@ -4,9 +4,9 @@ import PostVisual from './PostVisual';
 
 const FeedIndividualPost = () => {
 	return (
-		<div className="container feed-individual-post">
-			{/* <PostVisual /> */}
-			{/* <PostActions /> */}
+		<div className="feed-individual-post">
+			<PostVisual />
+			<PostActions />
 			<PostDetails />
 		</div>
 	);

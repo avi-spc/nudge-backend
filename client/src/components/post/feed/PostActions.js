@@ -1,10 +1,10 @@
 const PostActions = () => {
 	return (
 		<div className="feed-individual-post__post-actions">
-			<button className="btn btn--cir text-medium-SB"></button>
-			<button className="btn btn--cir text-medium-SB"></button>
-			<button className="btn btn--cir text-medium-SB"></button>
-			<button className="btn btn--cir text-medium-SB btn-save"></button>
+			<span class="material-symbols-outlined btn-like">favorite</span>
+			<span class="material-symbols-outlined btn-like">maps_ugc</span>
+			<span class="material-symbols-outlined btn-like">share</span>
+			<span class="material-symbols-outlined btn-like btn-save">bookmark</span>
 		</div>
 	);
 };
