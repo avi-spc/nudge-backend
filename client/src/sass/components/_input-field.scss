@@ -1,6 +1,4 @@
-.input-field {
-	display: block;
-	padding: 2.8rem;
+.text-field {
 	width: 100%;
 
 	color: $color-text-primary;
@@ -11,5 +9,13 @@
 
 	&::placeholder {
 		color: $color-text-tertiary;
+	}
+
+	&--lg {
+		padding: 2.8rem;
+	}
+
+	&--sm {
+		padding: 2rem;
 	}
 }

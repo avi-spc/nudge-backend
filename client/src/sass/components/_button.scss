@@ -1,5 +1,6 @@
 .btn {
 	color: $color-text-accent;
+	
 	background-color: $color-accent-primary;
 	cursor: pointer;
 
@@ -25,7 +26,9 @@
 
 	&--cir {
 		border-radius: 10rem;
-		padding: 1.5rem;
+		padding: .8rem;
+
+		line-height: 0;
 	}
 }
 

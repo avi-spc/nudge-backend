@@ -1,19 +1,18 @@
-.header-bar {
+.title-header-bar {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 2.5rem;
+
+	padding: 2rem 2rem 2rem 3rem;
 
 	color: $color-text-primary;
 
 	background-color: $color-surface-header;
 	border-radius: $border-radius-medium;
+}
 
-	&__btn-close {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 100, 'opsz' 20;
 }
 
 .user-header-bar {

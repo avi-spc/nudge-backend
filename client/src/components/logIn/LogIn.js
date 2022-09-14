@@ -4,8 +4,12 @@ const LogIn = () => {
 			<div className="log-in__logo-p-form">
 				<div className="log-in__logo">nudge</div>
 				<form className="log-in__form">
-					<input type="email" placeholder="email" className="input-field text-normal-R" />
-					<input type="password" placeholder="password" className="input-field text-normal-R" />
+					<input type="email" placeholder="email" className="text-field text-field--lg text-normal-R" />
+					<input
+						type="password"
+						placeholder="password"
+						className="text-field text-field--lg text-normal-R"
+					/>
 				</form>
 				<button className="btn btn--rect-lg text-medium-SB">Log In</button>
 			</div>
