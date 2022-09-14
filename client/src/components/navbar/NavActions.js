@@ -1,14 +1,22 @@
 const NavActions = () => {
-    return (
-        <div>
-            <ul>
-                <li><img src="" alt="" /></li>
-                <li><img src="" alt="" /></li>
-                <li><img src="" alt="" /></li>
-                <li><img src="" alt="" /></li>
-            </ul>
-        </div>
-    )
+	return (
+		<div className="navbar__actions">
+			<ul>
+				<li>
+					<div className="action"></div>
+				</li>
+				<li>
+					<div className="action"></div>
+				</li>
+				<li>
+					<div className="action"></div>
+				</li>
+				<li>
+					<div className="action"></div>
+				</li>
+			</ul>
+		</div>
+	);
 };
 
 export default NavActions;

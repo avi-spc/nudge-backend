@@ -1,7 +1,10 @@
+import UserHeaderBar from '../../headerBars/UserHeaderBar';
+
 const PostVisual = () => {
 	return (
-		<div>
-			<img src="" alt="" />
+		<div className="feed-individual-post__post-visual">
+			<UserHeaderBar />
+			<div className="image"></div>
 		</div>
 	);
 };

@@ -1,0 +1,43 @@
+.feed-individual-post {
+	max-width: 80rem;
+
+	&__post-visual {
+		.image {
+			margin-top: 1rem;
+			height: 78rem;
+
+			background-color: $color-surface-tertiary;
+			border-radius: $border-radius-medium;
+		}
+	}
+
+	&__post-actions {
+		padding: 2rem;
+
+		background-color: $color-surface-tertiary;
+		border-radius: $border-radius-medium;
+
+		display: grid;
+		grid-template-columns: repeat(3, min-content) 1fr;
+		grid-gap: 0 2.5rem;
+
+		.btn-save {
+			justify-self: right;
+		}
+	}
+
+	&__post-details {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-gap: 2.5rem 0;
+
+		padding: 0 2.5rem;
+
+		color: $color-text-primary;
+
+		.caption {
+			display: inline-block;
+			float: left;
+		}
+	}
+}

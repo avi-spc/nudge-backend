@@ -1,0 +1,31 @@
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	padding: 1.5rem 42rem;
+
+	color: $color-text-primary;
+	background-color: $color-surface-tertiary;
+
+	&__logo {
+		font-family: 'Libre Barcode 39 Text', cursive;
+		font-size: 6.4rem;
+	}
+
+	&__actions {
+		ul {
+			display: grid;
+			grid-template-columns: repeat(4, max-content);
+			grid-gap: 0 2rem;
+		}
+
+		.action {
+			width: 5rem;
+			height: 5rem;
+
+			background-color: $color-accent-primary;
+			border-radius: 50%;
+		}
+	}
+}

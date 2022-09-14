@@ -2,8 +2,8 @@ import NavActions from './NavActions';
 
 const Navbar = () => {
 	return (
-		<div>
-			<img src="" alt="" />
+		<div className="navbar">
+			<div className="navbar__logo">nudge</div>
 			<NavActions />
 		</div>
 	);

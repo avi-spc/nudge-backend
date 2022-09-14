@@ -20,6 +20,9 @@ button,
 textarea {
   font-family: 'Fredoka', sans-serif; }
 
+ul {
+  list-style: none; }
+
 .text-small-R {
   font-size: 1.6rem;
   font-weight: 400; }
@@ -281,6 +284,32 @@ textarea {
   .edit-profile textarea {
     resize: none; }
 
+.feed-individual-post {
+  max-width: 80rem; }
+  .feed-individual-post__post-visual .image {
+    margin-top: 1rem;
+    height: 78rem;
+    background-color: #2c2c2c;
+    border-radius: 2.5rem; }
+  .feed-individual-post__post-actions {
+    padding: 2rem;
+    background-color: #2c2c2c;
+    border-radius: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, min-content) 1fr;
+    grid-gap: 0 2.5rem; }
+    .feed-individual-post__post-actions .btn-save {
+      justify-self: right; }
+  .feed-individual-post__post-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2.5rem 0;
+    padding: 0 2.5rem;
+    color: #d9d9d9; }
+    .feed-individual-post__post-details .caption {
+      display: inline-block;
+      float: left; }
+
 .header-bar {
   display: flex;
   justify-content: space-between;
@@ -390,6 +419,26 @@ textarea {
     .individual-post__post-details .date {
       margin-top: 1rem;
       color: #989899; }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 42rem;
+  color: #d9d9d9;
+  background-color: #2c2c2c; }
+  .navbar__logo {
+    font-family: 'Libre Barcode 39 Text', cursive;
+    font-size: 6.4rem; }
+  .navbar__actions ul {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    grid-gap: 0 2rem; }
+  .navbar__actions .action {
+    width: 5rem;
+    height: 5rem;
+    background-color: #6cb6ff;
+    border-radius: 50%; }
 
 .sign-in {
   max-width: 65rem;
