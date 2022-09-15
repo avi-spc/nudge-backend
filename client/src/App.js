@@ -1,3 +1,4 @@
+import Alert from './components/Alert';
 import LogIn from './components/logIn/LogIn';
 import Navbar from './components/navbar/Navbar';
 import ImageUpload from './components/post/createPost/ImageUpload';
@@ -12,8 +13,7 @@ import SignUp from './components/signUp/SignUp';
 const App = () => {
 	return (
 		<div className="App">
-			<Navbar />
-			<PostFeed />
+			<Alert />
 		</div>
 	);
 };
