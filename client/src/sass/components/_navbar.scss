@@ -16,10 +16,7 @@
 	&__actions {
 		display: grid;
 		grid-template-columns: repeat(4, max-content);
+		align-items: center;
 		grid-gap: 0 2rem;
-
-		.material-symbols-outlined {
-			font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 200, 'opsz' 48;
-		}
 	}
 }

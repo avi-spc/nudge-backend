@@ -4,6 +4,8 @@
 }
 
 .container-normal {
+	max-width: 80rem;
+	margin: 8rem auto;
 }
 
 .container-medium {
@@ -14,6 +16,14 @@
 .container-large {
 	max-width: 130rem;
 	margin: 8rem auto;
+}
+
+.avatar {
+	width: 5rem;
+	height: 5rem;
+
+	background-color: #f7d047;
+	border-radius: 50%;
 }
 
 .padded {
@@ -31,4 +41,18 @@
 
 .bordered {
 	border: thin solid $color-border-primary;
+}
+
+.material-symbols-outlined {
+	&.symbol--lg {
+		font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 200, 'opsz' 48;
+	}
+
+	&.symbol--md {
+		font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 100, 'opsz' 20;
+	}
+
+	&.symbol--sm {
+		font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' -25, 'opsz' 20;
+	}
 }

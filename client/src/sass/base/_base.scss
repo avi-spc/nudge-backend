@@ -26,6 +26,15 @@ textarea {
 	resize: none;
 }
 
+input,
+textarea {
+	color: $color-text-primary;
+}
+
+input::placeholder {
+	color: $color-text-tertiary;
+}
+
 ul {
 	list-style: none;
 }

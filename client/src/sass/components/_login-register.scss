@@ -1,6 +1,9 @@
 .log-in,
 .sign-up {
 	&__logo-p-form {
+		display: grid;
+		justify-items: center;
+
 		padding: 8rem 8rem 5rem 8rem;
 		text-align: center;
 
@@ -26,8 +29,15 @@
 
 .sign-up {
 	&__profile-avatar-upload {
+		display: grid;
+		grid-template-rows: repeat(3, max-content);
+		justify-items: center;
+		align-items: center;
+		grid-gap: 5rem;
+
+		margin-top: 8rem;
+
 		div {
-			margin: 8rem auto 5rem auto;
 			width: 15rem;
 			height: 15rem;
 

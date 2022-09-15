@@ -2,13 +2,13 @@ import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 
 const PublishPost = () => {
 	return (
-		<div className="container create-post">
+		<div className="container-medium padded create-post">
 			<TitleHeaderBar />
 			<div className="create-post__image-p-caption">
-				<div className="create-post__post-image"></div>
+				<div className="create-post__image"></div>
 				<div className="create-post__user-p-caption">
 					<div className="user-details">
-						<div className="user-profile-image"></div>
+						<div className="avatar"></div>
 						<div className="username text-medium-SB">justdoingokhay</div>
 					</div>
 					<textarea

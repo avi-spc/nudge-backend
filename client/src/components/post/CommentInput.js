@@ -8,7 +8,7 @@ const CommentInput = () => {
 					className="text-field text-field--lg text-medium-R"
 				/>
 				<div className="comment-input__btn-post-container">
-					<button className="btn btn-post text-small-R">POST</button>
+					<button className="btn text-small-R comment-input__btn-post">POST</button>
 				</div>
 			</form>
 		</div>

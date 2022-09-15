@@ -11,10 +11,6 @@
 	border-radius: $border-radius-medium;
 }
 
-.material-symbols-outlined {
-	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 100, 'opsz' 20;
-}
-
 .user-header-bar {
 	display: grid;
 	grid-template-columns: max-content 1fr max-content;
@@ -29,22 +25,15 @@
 	background-color: $color-surface-header;
 	border-radius: $border-radius-medium;
 
-	&__avatar {
-		width: 5rem;
-		height: 5rem;
-
-		background-color: #f7d047;
-		border-radius: 50%;
-	}
-
-	.btn--more {
+	&__btn-more {
 		color: $color-text-primary;
 		border-radius: 50%;
 		border: thin solid transparent;
 
+		cursor: pointer;
+
 		&:hover {
 			border: thin solid $color-border-primary;
-			cursor: pointer;
 		}
 	}
 }

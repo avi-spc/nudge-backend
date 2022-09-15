@@ -2,7 +2,7 @@ import FeedIndividualPost from './FeedIndividualPost';
 
 const PostFeed = () => {
 	return (
-		<div className='container-small feed'>
+		<div className='container-normal feed'>
 			<FeedIndividualPost />
 			<FeedIndividualPost />
 		</div>

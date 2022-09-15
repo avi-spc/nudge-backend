@@ -3,11 +3,11 @@ const UserPostGallery = () => {
 		<div className="posts-gallery">
 			<div className="posts-gallery__tabs padded text-medium-SB">
 				<div>
-					<span class="material-symbols-outlined">grid_on</span>
+					<span className="material-symbols-outlined symbol--lg">grid_on</span>
 					<span>POSTS</span>
 				</div>
 				<div>
-					<span class="material-symbols-outlined">bookmark</span>
+					<span className="material-symbols-outlined symbol--lg">bookmark</span>
 					<span>SAVED</span>
 				</div>
 			</div>

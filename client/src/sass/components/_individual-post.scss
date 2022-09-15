@@ -61,18 +61,6 @@
 			margin-top: 2rem;
 		}
 
-		.material-symbols-outlined {
-			font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' -25, 'opsz' 20;
-		}
-
-		.avatar {
-			width: 5rem;
-			height: 5rem;
-
-			background-color: #f7d047;
-			border-radius: 50%;
-		}
-
 		.comment-text {
 			grid-column: 2/-1;
 		}
@@ -104,10 +92,6 @@
 
 		background-color: $color-surface-tertiary;
 		border-radius: $border-radius-medium;
-
-		.material-symbols-outlined {
-			font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 200, 'opsz' 48;
-		}
 
 		.btn-save {
 			justify-self: right;

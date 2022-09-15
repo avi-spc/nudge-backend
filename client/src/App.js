@@ -1,6 +1,7 @@
 import LogIn from './components/logIn/LogIn';
 import Navbar from './components/navbar/Navbar';
 import ImageUpload from './components/post/createPost/ImageUpload';
+import PublishPost from './components/post/createPost/PublishPost';
 import FeedIndividualPost from './components/post/feed/FeedIndividualPost';
 import PostFeed from './components/post/feed/PostFeed';
 import IndividualPost from './components/post/individualPost/IndividualPost';

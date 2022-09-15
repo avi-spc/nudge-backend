@@ -21,6 +21,13 @@ textarea {
   font-family: 'Fredoka', sans-serif;
   resize: none; }
 
+input,
+textarea {
+  color: #d9d9d9; }
+
+input::placeholder {
+  color: #5a5a5e; }
+
 ul {
   list-style: none; }
 
@@ -52,6 +59,10 @@ ul {
   max-width: 65rem;
   margin: 8rem auto; }
 
+.container-normal {
+  max-width: 80rem;
+  margin: 8rem auto; }
+
 .container-medium {
   max-width: 100rem;
   margin: 8rem auto; }
@@ -59,6 +70,12 @@ ul {
 .container-large {
   max-width: 130rem;
   margin: 8rem auto; }
+
+.avatar {
+  width: 5rem;
+  height: 5rem;
+  background-color: #f7d047;
+  border-radius: 50%; }
 
 .padded {
   padding: 1rem;
@@ -72,6 +89,15 @@ ul {
 
 .bordered {
   border: thin solid #383838; }
+
+.material-symbols-outlined.symbol--lg {
+  font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 200, 'opsz' 48; }
+
+.material-symbols-outlined.symbol--md {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 100, 'opsz' 20; }
+
+.material-symbols-outlined.symbol--sm {
+  font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' -25, 'opsz' 20; }
 
 .btn {
   color: #1e1e1e;
@@ -118,15 +144,17 @@ ul {
 .comment-input__btn-post-container {
   padding: 1rem; }
 
-.comment-input .btn-post {
+.comment-input__btn-post {
   border-radius: 10rem;
   padding: 2rem 1rem; }
 
 .create-post__image-p-caption {
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-gap: 0 3rem;
   margin-top: 1rem; }
 
-.create-post__post-image {
+.create-post__image {
   width: 53rem;
   height: 53rem;
   background-color: #242424;
@@ -137,18 +165,13 @@ ul {
   flex-direction: column;
   flex-grow: 1;
   color: #d9d9d9;
-  margin: 2rem 0 0 3rem; }
+  margin-top: 2rem; }
   .create-post__user-p-caption .user-details {
     display: flex;
     align-items: center;
     margin-bottom: 2rem; }
     .create-post__user-p-caption .user-details .username {
       margin-left: 2.5rem; }
-  .create-post__user-p-caption .user-profile-image {
-    width: 5rem;
-    height: 5rem;
-    background-color: #f7d047;
-    border-radius: 50%; }
 
 .create-post__caption-text {
   flex-grow: 1;
@@ -186,7 +209,7 @@ ul {
   z-index: 10; }
   .feed-individual-post__post-visual .image {
     margin-top: 1rem;
-    height: 63rem;
+    height: 78rem;
     background-color: #2c2c2c;
     border-radius: 2.5rem; }
 
@@ -241,9 +264,6 @@ ul {
   background-color: #000000;
   border-radius: 2.5rem; }
 
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 100, 'opsz' 20; }
-
 .user-header-bar {
   display: grid;
   grid-template-columns: max-content 1fr max-content;
@@ -255,18 +275,13 @@ ul {
   color: #d9d9d9;
   background-color: #000000;
   border-radius: 2.5rem; }
-  .user-header-bar__avatar {
-    width: 5rem;
-    height: 5rem;
-    background-color: #f7d047;
-    border-radius: 50%; }
-  .user-header-bar .btn--more {
+  .user-header-bar__btn-more {
     color: #d9d9d9;
     border-radius: 50%;
-    border: thin solid transparent; }
-    .user-header-bar .btn--more:hover {
-      border: thin solid #383838;
-      cursor: pointer; }
+    border: thin solid transparent;
+    cursor: pointer; }
+    .user-header-bar__btn-more:hover {
+      border: thin solid #383838; }
 
 .individual-post {
   display: grid;
@@ -308,13 +323,6 @@ ul {
     margin: 0 2.5rem; }
     .individual-post__individual-comment:not(:first-child) {
       margin-top: 2rem; }
-    .individual-post__individual-comment .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' -25, 'opsz' 20; }
-    .individual-post__individual-comment .avatar {
-      width: 5rem;
-      height: 5rem;
-      background-color: #f7d047;
-      border-radius: 50%; }
     .individual-post__individual-comment .comment-text {
       grid-column: 2/-1; }
     .individual-post__individual-comment .btn-like {
@@ -334,8 +342,6 @@ ul {
     padding: 2rem;
     background-color: #2c2c2c;
     border-radius: 2.5rem; }
-    .individual-post__post-actions .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 200, 'opsz' 48; }
     .individual-post__post-actions .btn-save {
       justify-self: right; }
   .individual-post__post-details {
@@ -363,12 +369,9 @@ ul {
 
 .text-field {
   width: 100%;
-  color: #d9d9d9;
   background-color: #121212;
   border-radius: 2rem;
   border-style: none; }
-  .text-field::placeholder {
-    color: #5a5a5e; }
   .text-field--lg {
     padding: 2.8rem; }
   .text-field--sm {
@@ -376,6 +379,8 @@ ul {
 
 .log-in__logo-p-form,
 .sign-up__logo-p-form {
+  display: grid;
+  justify-items: center;
   padding: 8rem 8rem 5rem 8rem;
   text-align: center;
   background-color: #1e1e1e;
@@ -395,12 +400,18 @@ ul {
   .sign-up__form > :not(:last-child) {
     margin-bottom: 2rem; }
 
-.sign-up__profile-avatar-upload div {
-  margin: 8rem auto 5rem auto;
-  width: 15rem;
-  height: 15rem;
-  background-color: #6cb6ff;
-  border-radius: 50%; }
+.sign-up__profile-avatar-upload {
+  display: grid;
+  grid-template-rows: repeat(3, max-content);
+  justify-items: center;
+  align-items: center;
+  grid-gap: 5rem;
+  margin-top: 8rem; }
+  .sign-up__profile-avatar-upload div {
+    width: 15rem;
+    height: 15rem;
+    background-color: #6cb6ff;
+    border-radius: 50%; }
 
 .navbar {
   display: flex;
@@ -415,9 +426,8 @@ ul {
   .navbar__actions {
     display: grid;
     grid-template-columns: repeat(4, max-content);
+    align-items: center;
     grid-gap: 0 2rem; }
-    .navbar__actions .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 200, 'opsz' 48; }
 
 .user-profile {
   display: grid;
@@ -483,8 +493,6 @@ ul {
       height: 31.3rem;
       background-color: #242424;
       border-radius: 2rem; }
-  .posts-gallery .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 200, 'opsz' 40; }
 
 .update-profile {
   color: #d9d9d9; }
