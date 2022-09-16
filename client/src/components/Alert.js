@@ -7,9 +7,9 @@ const Alert = ({ alerts }) => {
 		alerts.length > 0 && (
 			<div className="alerts-group">
 				{alerts.map((alert) => (
-					<div className={`alert ${alert.alertType}`} key={alert.id}>
+					<div className={`alert ${alert.category}`} key={alert.id}>
 						<span className="material-symbols-outlined">
-							{alert.alertType === 'success' ? 'check_circle' : 'block'}
+							{alert.category === 'success' ? 'check_circle' : 'block'}
 						</span>
 						<span className="text-medium-M">{alert.message}</span>
 						<span className="material-symbols-outlined symbol--md alert__btn-close">close</span>
