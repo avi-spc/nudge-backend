@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setAlert } from '../../reduxStore/actions/alert';
+import { registerUser } from '../../reduxStore/actions/auth';
 
-const UserRegistration = ({ setAlert }) => {
+const UserRegistration = ({ setAlert, registerUser }) => {
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
@@ -17,13 +18,13 @@ const UserRegistration = ({ setAlert }) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
-	const registerUser = (e) => {
+	const register = (e) => {
 		e.preventDefault();
 
 		if (password !== confirm_password) {
 			setAlert(`passwords don't match`, 'error');
 		} else {
-			setAlert('passwords match', 'success');
+			registerUser({ email, password });
 		}
 	};
 
@@ -55,7 +56,7 @@ const UserRegistration = ({ setAlert }) => {
 					className="text-field text-field--lg text-normal-R"
 				/>
 			</form>
-			<button className="btn btn--rect-lg text-medium-SB" onClick={(e) => registerUser(e)}>
+			<button className="btn btn--rect-lg text-medium-SB" onClick={(e) => register(e)}>
 				Sign Up
 			</button>
 		</Fragment>
@@ -63,7 +64,8 @@ const UserRegistration = ({ setAlert }) => {
 };
 
 UserRegistration.propTypes = {
-	setAlert: PropTypes.func.isRequired
+	setAlert: PropTypes.func.isRequired,
+	registerUser: PropTypes.func.isRequired
 };
 
-export default connect(null, { setAlert })(UserRegistration);
+export default connect(null, { setAlert, registerUser })(UserRegistration);

@@ -46,7 +46,7 @@ router.post(
 
 			jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
 				if (err) throw err;
-				res.status(200).json({ type: ResponseTypes.SUCCESS, data: { token } });
+				res.status(200).json({ type: ResponseTypes.SUCCESS, token });
 			});
 		} catch (err) {
 			if (err.code === 11000 && 'email' in err.keyPattern) {
