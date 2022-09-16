@@ -99,16 +99,23 @@ ul {
 .material-symbols-outlined.symbol--sm {
   font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' -25, 'opsz' 20; }
 
+.alerts-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%); }
+  .alerts-group > div:not(:first-child) {
+    margin-top: 2rem; }
+
 .alert {
   display: grid;
   grid-template-columns: min-content max-content min-content;
   grid-gap: 0 2rem;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 5vh;
-  left: 50%;
-  transform: translateX(-50%);
   padding: 2.5rem;
   border-radius: 3rem; }
   .alert.error {

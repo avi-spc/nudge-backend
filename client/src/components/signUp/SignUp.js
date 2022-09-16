@@ -7,8 +7,8 @@ const SignUp = () => {
 		<div className="container-small sign-up">
 			<div className="sign-up__logo-p-form">
 				<div className="sign-up__logo">nudge</div>
-				{/* <UserRegistration /> */}
-				<UserDetails />
+				<UserRegistration />
+				{/* <UserDetails /> */}
 				{/* <UserImageUpload /> */}
 			</div>
 			<button className="btn-alternate text-medium-R">

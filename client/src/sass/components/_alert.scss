@@ -1,14 +1,24 @@
-.alert {
-	display: grid;
-	grid-template-columns: min-content max-content min-content;
-	grid-gap: 0 2rem;
-	justify-content: center;
+.alerts-group {
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 
 	position: fixed;
 	top: 5vh;
 	left: 50%;
 	transform: translateX(-50%);
+
+	& > div:not(:first-child) {
+		margin-top: 2rem;
+	}
+}
+
+.alert {
+	display: grid;
+	grid-template-columns: min-content max-content min-content;
+	grid-gap: 0 2rem;
+	justify-content: center;
+	align-items: center;
 
 	padding: 2.5rem;
 	border-radius: $border-radius-large;

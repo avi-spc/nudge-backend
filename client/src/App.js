@@ -1,19 +1,17 @@
+import { Provider } from 'react-redux';
+
+import store from './reduxStore/store';
+
 import Alert from './components/Alert';
-import LogIn from './components/logIn/LogIn';
-import Navbar from './components/navbar/Navbar';
-import ImageUpload from './components/post/createPost/ImageUpload';
-import PublishPost from './components/post/createPost/PublishPost';
-import FeedIndividualPost from './components/post/feed/FeedIndividualPost';
-import PostFeed from './components/post/feed/PostFeed';
-import IndividualPost from './components/post/individualPost/IndividualPost';
-import UserProfile from './components/profile/dashboard/UserProfile';
-import UpdateProfile from './components/profile/UpdateProfile';
 import SignUp from './components/signUp/SignUp';
 
 const App = () => {
 	return (
 		<div className="App">
-			<Alert />
+			<Provider store={store}>
+				<Alert />
+				<SignUp />
+			</Provider>
 		</div>
 	);
 };
