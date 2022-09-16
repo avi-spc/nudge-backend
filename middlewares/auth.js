@@ -1,10 +1,14 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
 
+const ResponseTypes = require('../utils/responseTypes');
+
 const authenticate = (req, res, next) => {
 	const token = req.header('x-auth-token');
 	if (!token) {
-		return res.status(400).json({ msg: 'no token, authorization denied' });
+		return res
+			.status(400)
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'no token, authorization denied' }] });
 	}
 
 	try {
@@ -13,7 +17,7 @@ const authenticate = (req, res, next) => {
 
 		next();
 	} catch (err) {
-		res.status(401).json({ msg: 'invalid token' });
+		res.status(401).json({ type: ResponseTypes.ERROR, errors: [{ msg: 'invalid token' }] });
 	}
 };
 
