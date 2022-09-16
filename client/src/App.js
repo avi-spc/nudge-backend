@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import store from './reduxStore/store';
 
 import Alert from './components/Alert';
+import LogIn from './components/logIn/LogIn';
 import SignUp from './components/signUp/SignUp';
 
 import { retrieveUser } from './reduxStore/actions/auth';
@@ -17,7 +18,7 @@ const App = () => {
 		<div className="App">
 			<Provider store={store}>
 				<Alert />
-				<SignUp />
+				<LogIn />
 			</Provider>
 		</div>
 	);

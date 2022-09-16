@@ -3,7 +3,14 @@ import axios from 'axios';
 import { setAuthToken } from '../utils/setAuthToken';
 import { setAlert } from './alert';
 
-import { REGISTER_SUCCESS, REGISTER_ERROR, AUTH_SUCCESS, AUTH_ERROR } from './types';
+import {
+	REGISTER_SUCCESS,
+	REGISTER_ERROR,
+	AUTH_SUCCESS,
+	AUTH_ERROR,
+	LOGIN_SUCCESS,
+	LOGIN_ERROR
+} from './types';
 
 export const retrieveUser = () => async (dispatch) => {
 	if (localStorage.token) {
@@ -40,6 +47,7 @@ export const registerUser =
 			const res = await axios.post('/api/users/', body, config);
 
 			dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+			dispatch(retrieveUser());
 		} catch (err) {
 			const errors = err.response.data.errors;
 
@@ -48,5 +56,32 @@ export const registerUser =
 			});
 
 			dispatch({ type: REGISTER_ERROR });
+		}
+	};
+
+export const loginUser =
+	({ email, password }) =>
+	async (dispatch) => {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		};
+
+		const body = JSON.stringify({ email, password });
+
+		try {
+			const res = await axios.post('/api/auth', body, config);
+
+			dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+			dispatch(retrieveUser());
+		} catch (err) {
+			const errors = err.response.data.errors;
+
+			errors.forEach((error) => {
+				dispatch(setAlert(error.msg, 'error'));
+			});
+
+			dispatch({ type: LOGIN_ERROR });
 		}
 	};

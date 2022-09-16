@@ -62,7 +62,7 @@ router.post(
 
 			jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
 				if (err) throw err;
-				res.status(200).json({ type: ResponseTypes.SUCCESS, data: { token } });
+				res.status(200).json({ type: ResponseTypes.SUCCESS, token });
 			});
 		} catch (err) {
 			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
