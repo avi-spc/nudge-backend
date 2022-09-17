@@ -11,10 +11,17 @@ import PostFeed from './components/post/feed/PostFeed';
 import PrivateRoute from './components/PrivateRoute';
 
 import { retrieveUser } from './reduxStore/actions/auth';
+import { retrieveCurrentProfile } from './reduxStore/actions/profile';
+import { setAuthToken } from './reduxStore/utils/setAuthToken';
+
+// if (localStorage.token) {
+// 	setAuthToken(localStorage.token);
+// }
 
 const App = () => {
 	useEffect(() => {
 		store.dispatch(retrieveUser());
+		store.dispatch(retrieveCurrentProfile());
 	}, []);
 
 	return (

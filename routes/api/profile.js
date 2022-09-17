@@ -25,7 +25,7 @@ router.get('/me', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }] });
 		}
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { profile } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, profile });
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
@@ -60,9 +60,7 @@ router.post(
 					{ new: true }
 				);
 
-				return res
-					.status(200)
-					.json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile updated', profile } });
+				return res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile updated', profile });
 			}
 
 			profile = new Profile({
@@ -74,7 +72,7 @@ router.post(
 
 			await profile.save();
 
-			res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile created', profile } });
+			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile created', profile });
 		} catch (err) {
 			if (err.code === 11000 && 'username' in err.keyPattern) {
 				return res

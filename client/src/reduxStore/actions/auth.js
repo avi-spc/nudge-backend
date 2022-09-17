@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { setAuthToken } from '../utils/setAuthToken';
 import { setAlert } from './alert';
+import { retrieveCurrentProfile } from './profile';
 
 import {
 	REGISTER_SUCCESS,
@@ -10,7 +11,8 @@ import {
 	AUTH_ERROR,
 	LOGIN_SUCCESS,
 	LOGIN_ERROR,
-	LOGOUT
+	LOGOUT,
+	CLEAR_PROFILE
 } from './types';
 
 export const retrieveUser = () => async (dispatch) => {
@@ -76,6 +78,7 @@ export const loginUser =
 
 			dispatch({ type: LOGIN_SUCCESS, payload: res.data });
 			dispatch(retrieveUser());
+			dispatch(retrieveCurrentProfile());
 		} catch (err) {
 			const errors = err.response.data.errors;
 
@@ -88,5 +91,6 @@ export const loginUser =
 	};
 
 export const logoutUser = () => (dispatch) => {
+	dispatch({ type: CLEAR_PROFILE });
 	dispatch({ type: LOGOUT });
 };

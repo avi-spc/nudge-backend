@@ -1,12 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import { setAlert } from '../../reduxStore/actions/alert';
-import { registerUser } from '../../reduxStore/actions/auth';
-
-const UserRegistration = ({ setAlert, registerUser, auth: { isAuthenticated } }) => {
+const UserRegistration = ({ setAlert, registerUser, isAuthenticated }) => {
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
@@ -28,10 +23,6 @@ const UserRegistration = ({ setAlert, registerUser, auth: { isAuthenticated } })
 			registerUser({ email, password });
 		}
 	};
-
-	if (isAuthenticated) {
-		return <Navigate to="/feed" />;
-	}
 
 	return (
 		<Fragment>
@@ -68,14 +59,4 @@ const UserRegistration = ({ setAlert, registerUser, auth: { isAuthenticated } })
 	);
 };
 
-UserRegistration.propTypes = {
-	setAlert: PropTypes.func.isRequired,
-	registerUser: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state) => ({
-	auth: state.auth
-});
-
-export default connect(mapStateToProps, { setAlert, registerUser })(UserRegistration);
+export default UserRegistration;
