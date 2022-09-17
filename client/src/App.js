@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import store from './reduxStore/store';
@@ -6,6 +7,8 @@ import store from './reduxStore/store';
 import Alert from './components/Alert';
 import LogIn from './components/logIn/LogIn';
 import SignUp from './components/signUp/SignUp';
+import PostFeed from './components/post/feed/PostFeed';
+import PrivateRoute from './components/PrivateRoute';
 
 import { retrieveUser } from './reduxStore/actions/auth';
 
@@ -17,8 +20,16 @@ const App = () => {
 	return (
 		<div className="App">
 			<Provider store={store}>
-				<Alert />
-				<LogIn />
+				<Router>
+					<Alert />
+					<Routes>
+						<Route path="/" element={<LogIn />} />
+						<Route path="/register" element={<SignUp />} />
+						<Route path="/" element={<PrivateRoute />}>
+							<Route path="feed" element={<PostFeed />} />
+						</Route>
+					</Routes>
+				</Router>
 			</Provider>
 		</div>
 	);

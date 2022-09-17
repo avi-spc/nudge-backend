@@ -9,7 +9,8 @@ import {
 	AUTH_SUCCESS,
 	AUTH_ERROR,
 	LOGIN_SUCCESS,
-	LOGIN_ERROR
+	LOGIN_ERROR,
+	LOGOUT
 } from './types';
 
 export const retrieveUser = () => async (dispatch) => {
@@ -85,3 +86,7 @@ export const loginUser =
 			dispatch({ type: LOGIN_ERROR });
 		}
 	};
+
+export const logoutUser = () => (dispatch) => {
+	dispatch({ type: LOGOUT });
+};

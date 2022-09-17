@@ -1,12 +1,21 @@
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import NavActions from './NavActions';
 
-const Navbar = () => {
+import { logoutUser } from '../../reduxStore/actions/auth';
+
+const Navbar = ({ logoutUser }) => {
 	return (
 		<div className="navbar">
 			<div className="navbar__logo">nudge</div>
-			<NavActions />
+			<NavActions logoutUser={logoutUser} />
 		</div>
 	);
 };
 
-export default Navbar;
+Navbar.protoTypes = {
+	logoutUser: PropTypes.func.isRequired
+};
+
+export default connect(null, { logoutUser })(Navbar);

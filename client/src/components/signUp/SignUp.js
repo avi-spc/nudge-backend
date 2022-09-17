@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import UserImageUpload from './UserImageUpload';
 import UserDetails from './UserDetails';
 import UserRegistration from './UserRegistration';
@@ -11,9 +13,11 @@ const SignUp = () => {
 				{/* <UserDetails /> */}
 				{/* <UserImageUpload /> */}
 			</div>
-			<button className="btn-alternate text-medium-R">
-				Already have an account? <span className="text-medium-SB">Log In</span>
-			</button>
+			<Link to="/">
+				<button className="btn-alternate text-medium-R">
+					Already have an account? <span className="text-medium-SB">Log In</span>
+				</button>
+			</Link>
 		</div>
 	);
 };

@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { loginUser } from '../../reduxStore/actions/auth';
 
-const LogIn = ({ loginUser }) => {
+const LogIn = ({ loginUser, auth: { isAuthenticated } }) => {
 	const [formData, setFormData] = useState({
 		email: '',
 		password: ''
@@ -21,6 +22,10 @@ const LogIn = ({ loginUser }) => {
 
 		loginUser({ email, password });
 	};
+
+	if (isAuthenticated) {
+		return <Navigate to="/feed" />;
+	}
 
 	return (
 		<div className="container-small log-in">
@@ -48,15 +53,22 @@ const LogIn = ({ loginUser }) => {
 					Log In
 				</button>
 			</div>
-			<button className="btn-alternate text-medium-R">
-				Don't have an account? <span className="text-medium-SB">Sign Up</span>
-			</button>
+			<Link to="/register">
+				<button className="btn-alternate text-medium-R">
+					Don't have an account? <span className="text-medium-SB">Sign Up</span>
+				</button>
+			</Link>
 		</div>
 	);
 };
 
 LogIn.propTypes = {
-	loginUser: PropTypes.func.isRequired
+	loginUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired
 };
 
-export default connect(null, { loginUser })(LogIn);
+const mapStateToProps = (state) => ({
+	auth: state.auth
+});
+
+export default connect(mapStateToProps, { loginUser })(LogIn);
