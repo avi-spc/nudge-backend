@@ -7,9 +7,10 @@ const UserProfile = () => {
 				<div className="user-profile__avatar" />
 				<div className="user-profile__details">
 					<div className="username text-large-M">justdoingokhay</div>
-					<button className="btn btn--cir user-profile__btn-edit">
+					{/* <button className="btn btn--cir user-profile__btn-edit">
 						<span class="material-symbols-outlined">edit</span>
-					</button>
+					</button> */}
+					<button className="btn btn--rect-es user-profile__btn-follow">Follow</button>
 					<div className="follows text-medium-R">
 						<div>2 posts</div>
 						<div>121 followers</div>

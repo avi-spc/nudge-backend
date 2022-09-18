@@ -6,7 +6,7 @@
 	padding: 1.5rem 42rem;
 
 	color: $color-text-primary;
-	background-color: $color-surface-tertiary;
+	background-color: $color-surface-secondary;
 
 	&__logo {
 		font-family: 'Libre Barcode 39 Text', cursive;
@@ -18,5 +18,33 @@
 		grid-template-columns: repeat(4, max-content);
 		align-items: center;
 		grid-gap: 0 2rem;
+
+		.profile-actions {
+			position: relative;
+
+			ul {
+				position: absolute;
+				top: 125%;
+				left: 50%;
+				transform: translateX(-50%);
+				z-index: 100;
+
+				padding: 2rem 3rem;
+
+				text-align: center;
+
+				background-color: $color-surface-tertiary;
+				border-radius: $border-radius-large;
+
+				li:hover {
+					color: $color-accent-primary;
+					cursor: pointer;
+				}
+
+				li:not(:first-child) {
+					margin-top: 1.5rem;
+				}
+			}
+		}
 	}
 }
