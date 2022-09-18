@@ -35,6 +35,17 @@ input::placeholder {
 	color: $color-text-tertiary;
 }
 
+a,
+a:link,
+a:visited {
+	color: $color-text-primary;
+	text-decoration: none;
+}
+
+a:hover {
+	color: $color-accent-primary;
+}
+
 ul {
 	list-style: none;
 }

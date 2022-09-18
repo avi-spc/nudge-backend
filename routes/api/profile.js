@@ -99,7 +99,7 @@ router.get('/user/:user_id', async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }] });
 		}
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { profile } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, profile });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res

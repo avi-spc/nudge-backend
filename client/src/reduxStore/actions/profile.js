@@ -6,7 +6,9 @@ import {
 	CREATE_PROFILE_SUCCESS,
 	CREATE_PROFILE_ERROR,
 	GET_PROFILE_SUCCESS,
-	GET_PROFILE_ERROR
+	GET_PROFILE_ERROR,
+	GET_SEEKER_PROFILE_SUCCESS,
+	GET_SEEKER_PROFILE_ERROR
 } from './types';
 
 export const retrieveCurrentProfile = () => async (dispatch) => {
@@ -22,6 +24,22 @@ export const retrieveCurrentProfile = () => async (dispatch) => {
 		});
 
 		dispatch({ type: GET_PROFILE_ERROR });
+	}
+};
+
+export const retrieveSeekerProfile = (userId) => async (dispatch) => {
+	try {
+		const res = await axios.get(`/api/profile/user/${userId}`);
+
+		dispatch({ type: GET_SEEKER_PROFILE_SUCCESS, payload: res.data });
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		errors.forEach((error) => {
+			dispatch(setAlert(error.msg, 'error'));
+		});
+
+		dispatch({ type: GET_SEEKER_PROFILE_ERROR });
 	}
 };
 

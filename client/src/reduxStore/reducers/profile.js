@@ -3,11 +3,14 @@ import {
 	CREATE_PROFILE_ERROR,
 	GET_PROFILE_SUCCESS,
 	GET_PROFILE_ERROR,
-	CLEAR_PROFILE
+	CLEAR_PROFILE,
+	GET_SEEKER_PROFILE_SUCCESS,
+	GET_SEEKER_PROFILE_ERROR
 } from '../actions/types';
 
 const initialState = {
-	profileSelf: null
+	profileSelf: null,
+	profileSeeker: null
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -17,10 +20,14 @@ const profileReducer = (state = initialState, action) => {
 		case CREATE_PROFILE_SUCCESS:
 		case GET_PROFILE_SUCCESS:
 			return { ...state, profileSelf: payload.profile };
+		case GET_SEEKER_PROFILE_SUCCESS:
+			return { ...state, profileSeeker: payload.profile };
 		case CREATE_PROFILE_ERROR:
 		case GET_PROFILE_ERROR:
 		case CLEAR_PROFILE:
-			return { ...state, profileSelf: null };
+			return { ...state, profileSelf: null, profileSeeker: null };
+		case GET_SEEKER_PROFILE_ERROR:
+			return { ...state, profileSeeker: null };
 		default:
 			return state;
 	}
