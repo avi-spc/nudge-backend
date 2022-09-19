@@ -17,7 +17,7 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 
 	return (
 		<div className="container-medium padded update-profile">
-			<TitleHeaderBar />
+			<TitleHeaderBar title="Edit profile" />
 			<div className="update-profile__form-p-avatar">
 				<form className="update-profile__form text-normal-R">
 					<label htmlFor="">Name</label>

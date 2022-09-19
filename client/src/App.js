@@ -9,6 +9,7 @@ import LogIn from './components/logIn/LogIn';
 import SignUp from './components/signUp/SignUp';
 import PostFeed from './components/post/feed/PostFeed';
 import UserProfile from './components/profile/dashboard/UserProfile';
+import Follows from './components/profile/dashboard/Follows';
 import UpdateProfile from './components/profile/UpdateProfile';
 import PrivateRoute from './components/PrivateRoute';
 
@@ -37,7 +38,11 @@ const App = () => {
 						<Route path="/register" element={<SignUp />} />
 						<Route path="/" element={<PrivateRoute />}>
 							<Route path="feed" element={<PostFeed />} />
-							<Route path="profile/:user_id" element={<UserProfile />} />
+							<Route path="profile/:user_id/" element={<UserProfile />}>
+								{['followers', 'following'].map((path, index) => {
+									return <Route path={path} element={<Follows />} key={index} />;
+								})}
+							</Route>
 							<Route path="profile/edit" element={<UpdateProfile />} />
 						</Route>
 					</Routes>

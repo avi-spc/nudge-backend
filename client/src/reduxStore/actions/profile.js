@@ -10,7 +10,8 @@ import {
 	GET_SEEKER_PROFILE_SUCCESS,
 	GET_SEEKER_PROFILE_ERROR,
 	UPDATE_PROFILE_SUCCESS,
-	UPDATE_PROFILE_ERROR
+	UPDATE_PROFILE_ERROR,
+	AUTH_SUCCESS
 } from './types';
 
 export const retrieveCurrentProfile = () => async (dispatch) => {
@@ -100,3 +101,25 @@ export const updateProfile =
 			dispatch({ type: UPDATE_PROFILE_ERROR });
 		}
 	};
+
+export const unfollowUser = (userId) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/api/users/unfollow/${userId}`);
+
+		dispatch({ type: AUTH_SUCCESS, payload: res.data });
+		dispatch(retrieveSeekerProfile(userId));
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const followUser = (userId) => async (dispatch) => {
+	try {
+		const res = await axios.post(`/api/users/follow/${userId}`);
+
+		dispatch({ type: AUTH_SUCCESS, payload: res.data });
+		dispatch(retrieveSeekerProfile(userId));
+	} catch (err) {
+		console.log(err);
+	}
+};

@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
 					type: mongoose.Schema.Types.ObjectId,
 					ref: 'user'
 				},
+				username: {
+					type: String,
+					ref: 'profile'
+				},
 				_id: false
 			}
 		],
@@ -25,6 +29,10 @@ const UserSchema = new mongoose.Schema({
 				user: {
 					type: mongoose.Schema.Types.ObjectId,
 					ref: 'user'
+				},
+				username: {
+					type: String,
+					ref: 'profile'
 				},
 				_id: false
 			}
