@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import UserPostGallery from './UserPostGallery';
+import Follows from './Follows';
 
 import { retrieveSeekerProfile } from '../../../reduxStore/actions/profile';
 
@@ -32,14 +33,15 @@ const UserProfile = ({ retrieveSeekerProfile, auth: { user }, profile: { profile
 
 						<div className="follows text-medium-R">
 							<div>2 posts</div>
-							<div>121 followers</div>
-							<div>2 following</div>
+							<div>{profileSeeker.user.follows.followers.length} followers</div>
+							<div>{profileSeeker.user.follows.following.length} following</div>
 						</div>
 						<div className="name text-medium-M">{profileSeeker.name}</div>
 						<p className="bio text-medium-R">{profileSeeker.bio}</p>
 					</div>
 				</div>
 				<UserPostGallery />
+				<Follows />
 			</div>
 		)
 	);
