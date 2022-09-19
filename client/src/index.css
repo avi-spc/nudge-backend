@@ -141,6 +141,12 @@ ul {
   color: #1e1e1e;
   background-color: #6cb6ff;
   cursor: pointer; }
+  .btn:disabled {
+    color: #989899;
+    background-color: #c6e6ff;
+    cursor: auto; }
+    .btn:disabled:hover {
+      background-color: #c6e6ff; }
   .btn:hover {
     background-color: #96d0ff; }
   .btn--rect-lg {

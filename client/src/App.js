@@ -9,6 +9,7 @@ import LogIn from './components/logIn/LogIn';
 import SignUp from './components/signUp/SignUp';
 import PostFeed from './components/post/feed/PostFeed';
 import UserProfile from './components/profile/dashboard/UserProfile';
+import UpdateProfile from './components/profile/UpdateProfile';
 import PrivateRoute from './components/PrivateRoute';
 
 import { retrieveUser } from './reduxStore/actions/auth';
@@ -37,6 +38,7 @@ const App = () => {
 						<Route path="/" element={<PrivateRoute />}>
 							<Route path="feed" element={<PostFeed />} />
 							<Route path="profile/:user_id" element={<UserProfile />} />
+							<Route path="profile/edit" element={<UpdateProfile />} />
 						</Route>
 					</Routes>
 				</Router>

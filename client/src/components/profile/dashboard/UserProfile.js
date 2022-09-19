@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -26,9 +26,11 @@ const UserProfile = ({ retrieveSeekerProfile, auth: { user }, profile: { profile
 						{user_id !== user._id ? (
 							<button className="btn btn--rect-es user-profile__btn-follow">Follow</button>
 						) : (
-							<button className="btn btn--cir user-profile__btn-edit">
-								<span className="material-symbols-outlined">edit</span>
-							</button>
+							<Link to="/profile/edit">
+								<button className="btn btn--cir user-profile__btn-edit">
+									<span className="material-symbols-outlined">edit</span>
+								</button>
+							</Link>
 						)}
 
 						<div className="follows text-medium-R">
@@ -41,7 +43,7 @@ const UserProfile = ({ retrieveSeekerProfile, auth: { user }, profile: { profile
 					</div>
 				</div>
 				<UserPostGallery />
-				<Follows />
+				{/* <Follows /> */}
 			</div>
 		)
 	);

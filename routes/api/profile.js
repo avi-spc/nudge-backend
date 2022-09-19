@@ -32,9 +32,52 @@ router.get('/me', auth, async (req, res) => {
 });
 
 // @route		POST: api/profile
-// @desc		Create/Update current user's profile
+// @desc		Create current user's profile
 // @access		Private
 router.post(
+	'/',
+	[
+		auth,
+		[
+			check('name', 'name is required').not().isEmpty(),
+			check('username', 'username is required').not().isEmpty()
+		]
+	],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ type: ResponseTypes.ERROR, errors: errors.array() });
+		}
+
+		const { name, username } = req.body;
+
+		try {
+			const profile = new Profile({
+				user: req.user.id,
+				name,
+				username,
+				bio: ''
+			});
+
+			await profile.save();
+
+			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile created', profile });
+		} catch (err) {
+			if (err.code === 11000 && 'username' in err.keyPattern) {
+				return res
+					.status(400)
+					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USERNAME_ALREADY_EXISTS }] });
+			}
+
+			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		}
+	}
+);
+
+// @route		PUT: api/profile
+// @desc		Update current user's profile
+// @access		Private
+router.put(
 	'/',
 	[
 		auth,
@@ -52,27 +95,13 @@ router.post(
 		const { name, username, bio } = req.body;
 
 		try {
-			let profile = await Profile.findOne({ user: req.user.id });
-			if (profile) {
-				profile = await Profile.findOneAndUpdate(
-					{ user: req.user.id },
-					{ $set: { name, username, bio } },
-					{ new: true }
-				);
+			const profile = await Profile.findOneAndUpdate(
+				{ user: req.user.id },
+				{ $set: { name, username, bio } },
+				{ new: true }
+			);
 
-				return res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile updated', profile });
-			}
-
-			profile = new Profile({
-				user: req.user.id,
-				name,
-				username,
-				bio: ''
-			});
-
-			await profile.save();
-
-			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile created', profile });
+			return res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile updated', profile });
 		} catch (err) {
 			if (err.code === 11000 && 'username' in err.keyPattern) {
 				return res

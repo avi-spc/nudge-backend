@@ -4,6 +4,16 @@
 	background-color: $color-accent-primary;
 	cursor: pointer;
 
+	&:disabled {
+		color: $color-text-disabled;
+		background-color: $color-accent-tertiary;
+		cursor: auto;
+
+		&:hover {
+			background-color: $color-accent-tertiary;
+		}
+	}
+
 	&:hover {
 		background-color: $color-accent-secondary;
 	}

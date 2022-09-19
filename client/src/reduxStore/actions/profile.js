@@ -8,7 +8,9 @@ import {
 	GET_PROFILE_SUCCESS,
 	GET_PROFILE_ERROR,
 	GET_SEEKER_PROFILE_SUCCESS,
-	GET_SEEKER_PROFILE_ERROR
+	GET_SEEKER_PROFILE_ERROR,
+	UPDATE_PROFILE_SUCCESS,
+	UPDATE_PROFILE_ERROR
 } from './types';
 
 export const retrieveCurrentProfile = () => async (dispatch) => {
@@ -58,13 +60,43 @@ export const createProfile =
 			const res = await axios.post('/api/profile', body, config);
 
 			dispatch({ type: CREATE_PROFILE_SUCCESS, payload: res.data });
+			dispatch(setAlert(res.data.msg, res.data.type));
 		} catch (err) {
 			const errors = err.response.data.errors;
 
+			console.log(err);
 			errors.forEach((error) => {
 				dispatch(setAlert(error.msg, 'error'));
 			});
 
 			dispatch({ type: CREATE_PROFILE_ERROR });
+		}
+	};
+
+export const updateProfile =
+	({ name, username, bio }) =>
+	async (dispatch) => {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		};
+
+		const body = JSON.stringify({ name, username, bio });
+
+		try {
+			const res = await axios.put('/api/profile', body, config);
+
+			dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data });
+			dispatch(setAlert(res.data.msg, res.data.type));
+		} catch (err) {
+			const errors = err.response.data.errors;
+
+			console.log(err);
+			errors.forEach((error) => {
+				dispatch(setAlert(error.msg, 'error'));
+			});
+
+			dispatch({ type: UPDATE_PROFILE_ERROR });
 		}
 	};
