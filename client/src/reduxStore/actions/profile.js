@@ -102,17 +102,6 @@ export const updateProfile =
 		}
 	};
 
-export const unfollowUser = (userId) => async (dispatch) => {
-	try {
-		const res = await axios.delete(`/api/users/unfollow/${userId}`);
-
-		dispatch({ type: AUTH_SUCCESS, payload: res.data });
-		dispatch(retrieveSeekerProfile(userId));
-	} catch (err) {
-		console.log(err);
-	}
-};
-
 export const followUser = (userId) => async (dispatch) => {
 	try {
 		const res = await axios.post(`/api/users/follow/${userId}`);
@@ -120,6 +109,17 @@ export const followUser = (userId) => async (dispatch) => {
 		dispatch({ type: AUTH_SUCCESS, payload: res.data });
 		dispatch(retrieveSeekerProfile(userId));
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data.errors);
+	}
+};
+
+export const unfollowUser = (userId) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/api/users/unfollow/${userId}`);
+
+		dispatch({ type: AUTH_SUCCESS, payload: res.data });
+		dispatch(retrieveSeekerProfile(userId));
+	} catch (err) {
+		console.log(err.response.data.errors);
 	}
 };

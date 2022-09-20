@@ -1,22 +1,48 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import IndividualComment from './IndividualComment';
 import PostActions from './PostActions';
 import PostCaption from './PostCaption';
 import PostDetails from './PostDetails';
 
-const IndividualPost = () => {
+import { retrieveIndividualPost } from '../../../reduxStore/actions/post';
+
+const IndividualPost = ({ retrieveIndividualPost, post }) => {
+	const { post_id } = useParams();
+
+	useEffect(() => {
+		retrieveIndividualPost(post_id);
+	}, [post_id]);
+
 	return (
-		<div className="container-large">
-			<div className="padded individual-post">
-				<div className="individual-post__image"></div>
-				<PostCaption />
-				<div className="individual-post__comments-list">
-					<IndividualComment />
+		post && (
+			<div className="container-large">
+				<div className="padded individual-post">
+					<div className="individual-post__image"></div>
+					<PostCaption caption={post.caption} />
+					<div className="individual-post__comments-list">
+						{post.comments.map((comment) => {
+							return <IndividualComment commentDetails={comment} key={comment._id} />;
+						})}
+					</div>
+					<PostActions post={post} />
 				</div>
-				<PostActions />
+				<PostDetails post={post} />
 			</div>
-			<PostDetails />
-		</div>
+		)
 	);
 };
 
-export default IndividualPost;
+IndividualPost.propTypes = {
+	retrieveIndividualPost: PropTypes.func.isRequired,
+	post: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+	post: state.post.currentPost
+});
+
+export default connect(mapStateToProps, { retrieveIndividualPost })(IndividualPost);

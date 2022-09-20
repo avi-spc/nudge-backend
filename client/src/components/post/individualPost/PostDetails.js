@@ -1,6 +1,6 @@
 import CommentInput from '../CommentInput';
 
-const PostDetails = () => {
+const PostDetails = ({ post }) => {
 	return (
 		<div className="individual-post__post-details">
 			<div className="avatars-p-meta">
@@ -12,7 +12,7 @@ const PostDetails = () => {
 					<div className="post-date text-small-R">MARCH 15, 2020</div>
 				</div>
 			</div>
-			<CommentInput />
+			<CommentInput postId={post._id} />
 		</div>
 	);
 };

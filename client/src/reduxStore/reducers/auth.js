@@ -5,7 +5,8 @@ import {
 	AUTH_ERROR,
 	LOGIN_SUCCESS,
 	LOGIN_ERROR,
-	LOGOUT
+	LOGOUT,
+	UPDATE_SAVED_POSTS
 } from '../actions/types';
 
 const initialState = {
@@ -30,6 +31,8 @@ const authReducer = (state = initialState, action) => {
 		case LOGOUT:
 			localStorage.removeItem('token');
 			return { ...state, token: null, isAuthenticated: false, user: null };
+		case UPDATE_SAVED_POSTS:
+			return { ...state, user: { ...state.user, savedPosts: payload.savedPosts } };
 		default:
 			return state;
 	}

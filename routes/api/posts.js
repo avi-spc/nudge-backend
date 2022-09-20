@@ -42,7 +42,7 @@ router.get('/', auth, async (req, res) => {
 	try {
 		const posts = await Post.find().sort({ date: 'desc' });
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { posts } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, posts });
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
@@ -60,7 +60,7 @@ router.get('/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_ALREADY_EXISTS }] });
 		}
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { post } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, post });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -151,7 +151,7 @@ router.post('/like/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'post liked', post } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post liked', likes: post.likes });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -180,7 +180,7 @@ router.delete('/unlike/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'post unliked', post } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post unliked', likes: post.likes });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -227,7 +227,9 @@ router.post(
 			post.comments.unshift(commentObject);
 			await post.save();
 
-			res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'comment created', post } });
+			res
+				.status(200)
+				.json({ type: ResponseTypes.SUCCESS, msg: 'comment created', comments: post.comments });
 		} catch (err) {
 			if (err.kind === 'ObjectId') {
 				return res
@@ -516,7 +518,8 @@ router.post('/save/:post_id', auth, async (req, res) => {
 
 		res.status(200).json({
 			type: ResponseTypes.SUCCESS,
-			data: { msg: 'post added to saves', savedPosts: user.savedPosts }
+			msg: 'post added to saves',
+			savedPosts: user.savedPosts
 		});
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
@@ -549,7 +552,8 @@ router.delete('/unsave/:post_id', auth, async (req, res) => {
 
 		res.status(200).json({
 			type: ResponseTypes.SUCCESS,
-			data: { msg: 'post removed from saves', savedPosts: user.savedPosts }
+			msg: 'post removed from saves',
+			savedPosts: user.savedPosts
 		});
 	} catch (err) {
 		if (err.kind === 'ObjectId') {

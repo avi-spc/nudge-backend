@@ -11,6 +11,7 @@ import PostFeed from './components/post/feed/PostFeed';
 import UserProfile from './components/profile/dashboard/UserProfile';
 import Follows from './components/profile/dashboard/Follows';
 import UpdateProfile from './components/profile/UpdateProfile';
+import IndividualPost from './components/post/individualPost/IndividualPost';
 import PrivateRoute from './components/PrivateRoute';
 
 import { retrieveUser } from './reduxStore/actions/auth';
@@ -33,7 +34,6 @@ const App = () => {
 				<Router>
 					<Alert />
 					<Routes>
-						{console.log('changed')}
 						<Route path="/" element={<LogIn />} />
 						<Route path="/register" element={<SignUp />} />
 						<Route path="/" element={<PrivateRoute />}>
@@ -44,6 +44,7 @@ const App = () => {
 								})}
 							</Route>
 							<Route path="profile/edit" element={<UpdateProfile />} />
+							<Route path="post/:post_id" element={<IndividualPost />} />
 						</Route>
 					</Routes>
 				</Router>
