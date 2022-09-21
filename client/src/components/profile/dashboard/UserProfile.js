@@ -5,20 +5,31 @@ import PropTypes from 'prop-types';
 
 import UserPostGallery from './UserPostGallery';
 
-import { retrieveSeekerProfile, followUser, unfollowUser } from '../../../reduxStore/actions/profile';
+import {
+	retrieveSeekerProfile,
+	followUser,
+	unfollowUser
+} from '../../../reduxStore/actions/profile';
+import { discardPostImage } from '../../../reduxStore/actions/post';
 
 const UserProfile = ({
 	retrieveSeekerProfile,
 	followUser,
 	unfollowUser,
+	discardPostImage,
 	auth: { user },
-	profile: { profileSeeker }
+	profile: { profileSeeker },
+	createPostImageId
 }) => {
 	const { user_id } = useParams();
 
 	useEffect(() => {
 		retrieveSeekerProfile(user_id);
 	}, [user_id]);
+
+	useEffect(() => {
+		if (createPostImageId) discardPostImage(createPostImageId);
+	}, []);
 
 	return (
 		profileSeeker && (
@@ -76,15 +87,21 @@ UserProfile.propTypes = {
 	retrieveSeekerProfile: PropTypes.func.isRequired,
 	unfollowUser: PropTypes.func.isRequired,
 	followUser: PropTypes.func.isRequired,
+	discardPostImage: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	createPostImageId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	auth: state.auth,
-	profile: state.profile
+	profile: state.profile,
+	createPostImageId: state.post.createPostImageId
 });
 
-export default connect(mapStateToProps, { retrieveSeekerProfile, followUser, unfollowUser })(
-	UserProfile
-);
+export default connect(mapStateToProps, {
+	retrieveSeekerProfile,
+	followUser,
+	unfollowUser,
+	discardPostImage
+})(UserProfile);

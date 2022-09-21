@@ -12,6 +12,8 @@ import UserProfile from './components/profile/dashboard/UserProfile';
 import Follows from './components/profile/dashboard/Follows';
 import UpdateProfile from './components/profile/UpdateProfile';
 import IndividualPost from './components/post/individualPost/IndividualPost';
+import ImageUpload from './components/post/createPost/ImageUpload';
+import PublishPost from './components/post/createPost/PublishPost';
 import PrivateRoute from './components/PrivateRoute';
 
 import { retrieveUser } from './reduxStore/actions/auth';
@@ -45,6 +47,8 @@ const App = () => {
 							</Route>
 							<Route path="profile/edit" element={<UpdateProfile />} />
 							<Route path="post/:post_id" element={<IndividualPost />} />
+							<Route path="create" element={<ImageUpload />} />
+							<Route path="create/publish" element={<PublishPost />} />
 						</Route>
 					</Routes>
 				</Router>

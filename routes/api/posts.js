@@ -17,23 +17,40 @@ const User = require('../../models/User');
 // @route		POST: api/posts
 // @desc		Create new post
 // @access		Private
-router.post('/', [auth, imageUploadHandler], async (req, res) => {
-	const { caption } = req.body;
+router.post(
+	'/',
+	[
+		auth,
+		[
+			check('caption', 'caption is required').not().isEmpty(),
+			check('imageId', 'image is required').not().isEmpty()
+		]
+	],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ type: ResponseTypes.ERROR, errors: errors.array() });
+		}
 
-	try {
-		const post = new Post({
-			user: req.user.id,
-			imageId: req.file.id,
-			caption
-		});
+		const { caption, imageId } = req.body;
 
-		await post.save();
+		try {
+			const post = new Post({
+				user: req.user.id,
+				imageId,
+				caption
+			});
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'post created', post } });
-	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			await post.save();
+
+			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post created', post });
+		} catch (err) {
+			res
+				.status(500)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		}
 	}
-});
+);
 
 // @route		GET: api/posts
 // @desc		Retrieve all posts
@@ -110,7 +127,7 @@ router.delete('/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		if (post.user.toString() !== req.user.id) {
+		if (post.user._id.toString() !== req.user.id) {
 			return res
 				.status(401)
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }] });
@@ -573,9 +590,15 @@ router.delete('/unsave/:post_id', auth, async (req, res) => {
 });
 
 // @route		GET: api/posts/image/:image_id
-// @desc		Retreive post/profile image
+// @desc		Stream post image
 // @access		Private
 router.get('/image/:image_id', async (req, res) => {
+	if (!mongoose.isObjectIdOrHexString(req.params.image_id)) {
+		return res
+			.status(400)
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+	}
+
 	try {
 		const images = await PostStream()
 			.find({ _id: mongoose.Types.ObjectId(req.params.image_id) })
@@ -590,6 +613,48 @@ router.get('/image/:image_id', async (req, res) => {
 		const stream = PostStream().openDownloadStreamByName(images[0].filename);
 
 		stream.pipe(res);
+	} catch (err) {
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		POST: api/posts/image/
+// @desc		Upload post image
+// @access		Private
+router.post('/image', [auth, imageUploadHandler], async (req, res) => {
+	try {
+		if (!req.file) {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'file is required' }] });
+		}
+
+		res.status(200).json({ type: ResponseTypes.SUCCESS, imageId: req.file.id });
+	} catch (err) {
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		DELETE: api/posts/image/:image_id
+// @desc		Delete post image
+// @access		Private
+router.delete('/image/:image_id', auth, async (req, res) => {
+	if (!mongoose.isObjectIdOrHexString(req.params.image_id)) {
+		return res
+			.status(400)
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+	}
+
+	try {
+		await PostStream().delete(mongoose.Types.ObjectId(req.params.image_id), (err, result) => {
+			if (err) {
+				return res
+					.status(400)
+					.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+			}
+
+			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post discarded' });
+		});
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}

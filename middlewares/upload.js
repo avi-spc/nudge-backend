@@ -5,6 +5,8 @@ const config = require('config');
 const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 
+const ResponseTypes = require('../utils/responseTypes');
+
 const storage = new GridFsStorage({
 	url: config.get('mongoURI'),
 	file: (req, file) => {
@@ -52,12 +54,6 @@ const areFormFieldsValid = (req) => {
 
 	switch (req.header('x-bucket-type')) {
 		case 'post':
-			if (!req.body.caption || req.body.caption === '') {
-				obj.isValid = false;
-				obj.errMsg = 'caption is required';
-			}
-
-			break;
 		case 'profile':
 			break;
 		default:
@@ -79,7 +75,7 @@ const isFileTypeAllowed = (file) => {
 const imageUploadHandler = (req, res, next) => {
 	upload(req, res, (err) => {
 		if (err) {
-			return res.json({ msg: err.message });
+			return res.status(404).json({ type: ResponseTypes.ERROR, errors: [{ msg: err.message }] });
 		}
 
 		next();

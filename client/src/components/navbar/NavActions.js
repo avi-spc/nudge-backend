@@ -5,8 +5,12 @@ import PropTypes from 'prop-types';
 const NavActions = ({ logoutUser, profile: { profileSelf } }) => {
 	return (
 		<div className="navbar__actions">
-			<span className="material-symbols-outlined symbol--lg">cottage</span>
-			<span className="material-symbols-outlined symbol--lg">loupe</span>
+			<Link to="/feed">
+				<span className="material-symbols-outlined symbol--lg">cottage</span>
+			</Link>
+			<Link to="/create">
+				<span className="material-symbols-outlined symbol--lg">loupe</span>
+			</Link>
 			<span className="material-symbols-outlined symbol--lg">favorite</span>
 			<div className="profile-actions">
 				<div className="avatar"></div>

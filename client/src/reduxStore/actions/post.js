@@ -8,7 +8,10 @@ import {
 	GET_INDIVIDUAL_POST_ERROR,
 	UPDATE_COMMENTS,
 	UPDATE_LIKES,
-	UPDATE_SAVED_POSTS
+	UPDATE_SAVED_POSTS,
+	POST_IMAGE_UPLOAD_SUCCESS,
+	POST_UPLOAD_SUCCESS,
+	POST_UPLOAD_ERROR
 } from './types';
 
 export const retrieveAllPosts = () => async (dispatch) => {
@@ -100,5 +103,62 @@ export const addComment = (comment, postId) => async (dispatch) => {
 		});
 	} catch (err) {
 		console.log(err.response.data.errors);
+	}
+};
+
+export const uploadPostImage = (formData) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-type': 'multipart/formdata',
+			'x-bucket-type': 'post'
+		}
+	};
+
+	const body = new FormData(formData);
+
+	try {
+		const res = await axios.post('/api/posts/image', body, config);
+
+		dispatch({ type: POST_IMAGE_UPLOAD_SUCCESS, payload: res.data });
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		errors.forEach((error) => {
+			dispatch(setAlert(error.msg, 'error'));
+		});
+	}
+};
+
+export const discardPostImage = (imageId) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/api/posts/image/${imageId}`);
+
+		dispatch(setAlert(res.data.msg, res.data.type));
+		dispatch({ type: POST_UPLOAD_ERROR });
+	} catch (err) {
+		console.log(err.response.data.errors);
+	}
+};
+
+export const publishPost = (postData) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+
+	const body = JSON.stringify(postData);
+
+	try {
+		const res = await axios.post('/api/posts', body, config);
+
+		dispatch(setAlert(res.data.msg, res.data.type));
+		dispatch({ type: POST_UPLOAD_SUCCESS });
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		errors.forEach((error) => {
+			dispatch(setAlert(error.msg, 'error'));
+		});
 	}
 };

@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 
 import FeedIndividualPost from './FeedIndividualPost';
 
-import { retrieveAllPosts } from '../../../reduxStore/actions/post';
+import { retrieveAllPosts, discardPostImage } from '../../../reduxStore/actions/post';
 
-const PostFeed = ({ retrieveAllPosts, posts }) => {
+const PostFeed = ({ retrieveAllPosts, discardPostImage, post: { posts, createPostImageId } }) => {
 	useEffect(() => {
 		retrieveAllPosts();
+
+		if (createPostImageId) discardPostImage(createPostImageId);
 	}, []);
 
 	return (
@@ -22,11 +24,12 @@ const PostFeed = ({ retrieveAllPosts, posts }) => {
 
 PostFeed.propTypes = {
 	retrieveAllPosts: PropTypes.func.isRequired,
-	posts: PropTypes.array.isRequired
+	discardPostImage: PropTypes.func.isRequired,
+	post: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	posts: state.post.posts
+	post: state.post
 });
 
-export default connect(mapStateToProps, { retrieveAllPosts })(PostFeed);
+export default connect(mapStateToProps, { retrieveAllPosts, discardPostImage })(PostFeed);
