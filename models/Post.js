@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const mongooseAutopulate = require('mongoose-autopopulate');
 
 const PostSchema = new mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'user'
+		ref: 'user',
+		autopopulate: { select: 'username' }
 	},
 	imageId: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -17,7 +19,8 @@ const PostSchema = new mongoose.Schema({
 		{
 			user: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'user'
+				ref: 'user',
+				autopopulate: { select: 'username' }
 			},
 			_id: false
 		}
@@ -26,7 +29,8 @@ const PostSchema = new mongoose.Schema({
 		{
 			user: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'user'
+				ref: 'user',
+				autopopulate: { select: 'username' }
 			},
 			comment: {
 				type: String,
@@ -68,5 +72,7 @@ const PostSchema = new mongoose.Schema({
 		default: Date.now
 	}
 });
+
+PostSchema.plugin(mongooseAutopulate);
 
 module.exports = Post = mongoose.model('post', PostSchema);

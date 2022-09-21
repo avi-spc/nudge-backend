@@ -237,7 +237,9 @@ router.post(
 					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 			}
 
-			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res
+				.status(500)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );
@@ -367,7 +369,9 @@ router.delete('/comment/unlike/:post_id/:comment_id', auth, async (req, res) => 
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
 		}
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'comment unliked', comments } });
+		res
+			.status(200)
+			.json({ type: ResponseTypes.SUCCESS, data: { msg: 'comment unliked', comments } });
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
@@ -425,7 +429,9 @@ router.post(
 					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 			}
 
-			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res
+				.status(500)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );
@@ -562,6 +568,29 @@ router.delete('/unsave/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		GET: api/posts/image/:image_id
+// @desc		Retreive post/profile image
+// @access		Private
+router.get('/image/:image_id', async (req, res) => {
+	try {
+		const images = await PostStream()
+			.find({ _id: mongoose.Types.ObjectId(req.params.image_id) })
+			.toArray();
+
+		if (!images) {
+			return res
+				.status(404)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+		}
+
+		const stream = PostStream().openDownloadStreamByName(images[0].filename);
+
+		stream.pipe(res);
+	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });

@@ -13,7 +13,7 @@ const PostActions = ({ likePost, unlikePost, savePost, unsavePost, post, user })
 
 	useEffect(() => {
 		setAlready({
-			liked: post.likes.find((like) => like.user === user._id) ? true : false,
+			liked: post.likes.find((like) => like.user._id === user._id) ? true : false,
 			saved: user.savedPosts.find((savedPost) => savedPost.post === post._id) ? true : false
 		});
 	}, [post]);

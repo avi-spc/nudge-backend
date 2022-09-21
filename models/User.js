@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseAutopulate = require('mongoose-autopopulate');
 
 const UserSchema = new mongoose.Schema({
 	email: {
@@ -10,16 +11,15 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	username: {
+		type: String
+	},
 	follows: {
 		followers: [
 			{
 				user: {
 					type: mongoose.Schema.Types.ObjectId,
 					ref: 'user'
-				},
-				username: {
-					type: String,
-					ref: 'profile'
 				},
 				_id: false
 			}
@@ -29,10 +29,6 @@ const UserSchema = new mongoose.Schema({
 				user: {
 					type: mongoose.Schema.Types.ObjectId,
 					ref: 'user'
-				},
-				username: {
-					type: String,
-					ref: 'profile'
 				},
 				_id: false
 			}
@@ -52,5 +48,7 @@ const UserSchema = new mongoose.Schema({
 		default: Date.now
 	}
 });
+
+UserSchema.plugin(mongooseAutopulate);
 
 module.exports = User = mongoose.model('user', UserSchema);

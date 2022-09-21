@@ -60,6 +60,7 @@ router.post(
 			});
 
 			await profile.save();
+			await User.findByIdAndUpdate(req.user.id, { $set: { username: profile.username } }, { new: true });
 
 			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile created', profile });
 		} catch (err) {
@@ -100,6 +101,8 @@ router.put(
 				{ $set: { name, username, bio } },
 				{ new: true }
 			);
+
+			await User.findByIdAndUpdate(req.user.id, { $set: { username: profile.username } }, { new: true });
 
 			return res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile updated', profile });
 		} catch (err) {

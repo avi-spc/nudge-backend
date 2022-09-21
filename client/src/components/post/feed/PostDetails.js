@@ -7,7 +7,7 @@ const PostDetails = ({ post }) => {
 		<div className="feed-individual-post__post-details">
 			<div className="details-m-input">
 				<div className="username-p-caption">
-					<div className="username text-medium-SB">justdoingokhay</div>
+					<div className="username text-medium-SB">{post.user.username}</div>
 					<p className="caption text-medium-R">{post.caption}</p>
 				</div>
 				<div className="likes-count text-medium-SB">{post.likes.length} likes</div>
