@@ -4,8 +4,7 @@ const mongooseAutopulate = require('mongoose-autopopulate');
 const PostSchema = new mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'user',
-		autopopulate: { select: 'username' }
+		ref: 'user'
 	},
 	imageId: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -19,8 +18,7 @@ const PostSchema = new mongoose.Schema({
 		{
 			user: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'user',
-				autopopulate: { select: 'username' }
+				ref: 'user'
 			},
 			_id: false
 		}
@@ -29,8 +27,7 @@ const PostSchema = new mongoose.Schema({
 		{
 			user: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'user',
-				autopopulate: { select: 'username' }
+				ref: 'user'
 			},
 			comment: {
 				type: String,

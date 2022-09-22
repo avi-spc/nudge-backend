@@ -57,7 +57,9 @@ router.post(
 // @access		Private
 router.get('/', auth, async (req, res) => {
 	try {
-		const posts = await Post.find().sort({ date: 'desc' });
+		const posts = await Post.find()
+			.sort({ date: 'desc' })
+			.populate({ path: 'user', select: 'username' });
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, posts });
 	} catch (err) {
@@ -70,7 +72,14 @@ router.get('/', auth, async (req, res) => {
 // @access		Private
 router.get('/:post_id', auth, async (req, res) => {
 	try {
-		const post = await Post.findById(req.params.post_id);
+		const post = await Post.findById(req.params.post_id)
+			.populate({
+				path: 'user',
+				select: 'username'
+			})
+			.populate({ path: 'likes.user', select: 'username' })
+			.populate({ path: 'comments.user', select: 'username' });
+			
 		if (!post) {
 			return res
 				.status(400)
