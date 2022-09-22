@@ -56,9 +56,7 @@ const UserProfile = ({
 									<span className="material-symbols-outlined">edit</span>
 								</button>
 							</Link>
-						) : user.follows.following.find((follow) => {
-								return follow.user === user_id;
-						  }) ? (
+						) : user.follows.following.find((follow) => follow.user === user_id) ? (
 							<button
 								className="btn btn--rect-es user-profile__btn-follow"
 								onClick={() => unfollowUser(user_id)}
@@ -77,18 +75,10 @@ const UserProfile = ({
 						<div className="follows text-medium-R">
 							<div>2 posts</div>
 							<Link to={`/profile/${user_id}/followers`}>
-								{`${
-									profileSeekerFollows.followers.filter((follow) => {
-										return follow.user !== null;
-									}).length
-								} followers`}
+								{profileSeekerFollows.followers.length} followers
 							</Link>
 							<Link to={`/profile/${user_id}/following`}>
-								{`${
-									profileSeekerFollows.following.filter((follow) => {
-										return follow.user !== null;
-									}).length
-								} following`}
+								{profileSeekerFollows.following.length} following
 							</Link>
 						</div>
 						<div className="name text-medium-M">{profileSeeker.name}</div>

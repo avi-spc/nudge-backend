@@ -17,17 +17,14 @@ const Follows = () => {
 		<div className="padded user-profile__follows">
 			<TitleHeaderBar title={followsType} action={() => navigate(`/profile/${user}`)} />
 			<ul className="follows-list">
-				{follows.map(
-					(follow) =>
-						follow.user && (
-							<li key={follow.user}>
-								<Link to={`/profile/${follow.user._id}`}>
-									<div className="avatar"></div>
-									<div className="text-medium-SB">{follow.user.username}</div>
-								</Link>
-							</li>
-						)
-				)}
+				{follows.map((follow) => (
+					<li key={follow.user}>
+						<Link to={`/profile/${follow.user._id}`}>
+							<div className="avatar"></div>
+							<div className="text-medium-SB">{follow.user.username}</div>
+						</Link>
+					</li>
+				))}
 			</ul>
 		</div>
 	);
