@@ -123,3 +123,38 @@ export const unfollowUser = (userId) => async (dispatch) => {
 		console.log(err.response.data.errors);
 	}
 };
+
+export const uploadProfileImage = (formData) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-type': 'multipart/formdata',
+			'x-bucket-type': 'profile'
+		}
+	};
+
+	const body = new FormData(formData);
+
+	try {
+		const res = await axios.put('/api/profile/image', body, config);
+
+		dispatch(setAlert(res.data.msg, res.data.type));
+		dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data });
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		errors.forEach((error) => {
+			dispatch(setAlert(error.msg, 'error'));
+		});
+	}
+};
+
+export const removeProfileImage = () => async (dispatch) => {
+	try {
+		const res = await axios.delete('/api/profile/image');
+
+		dispatch(setAlert(res.data.msg, res.data.type));
+		dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data });
+	} catch (err) {
+		console.log(err.response.data.errors);
+	}
+};

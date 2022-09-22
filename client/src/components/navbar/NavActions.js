@@ -13,7 +13,16 @@ const NavActions = ({ logoutUser, profile: { profileSelf } }) => {
 			</Link>
 			<span className="material-symbols-outlined symbol--lg">favorite</span>
 			<div className="profile-actions">
-				<div className="avatar"></div>
+				{profileSelf.imageId ? (
+					<img
+						src={`http://localhost:5000/api/profile/image/${profileSelf.imageId}`}
+						alt=""
+						className="avatar"
+					/>
+				) : (
+					<div className="avatar"></div>
+				)}
+
 				<ul className="text-medium-R">
 					<li>
 						<Link to={`/profile/${profileSelf.user}`}>Profile</Link>

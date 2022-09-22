@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
@@ -60,17 +61,24 @@ router.post(
 			});
 
 			await profile.save();
-			await User.findByIdAndUpdate(req.user.id, { $set: { username: profile.username } }, { new: true });
+			await User.findByIdAndUpdate(
+				req.user.id,
+				{ $set: { username: profile.username } },
+				{ new: true }
+			);
 
 			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile created', profile });
 		} catch (err) {
 			if (err.code === 11000 && 'username' in err.keyPattern) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USERNAME_ALREADY_EXISTS }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.USERNAME_ALREADY_EXISTS }]
+				});
 			}
 
-			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res
+				.status(500)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );
@@ -102,17 +110,24 @@ router.put(
 				{ new: true }
 			);
 
-			await User.findByIdAndUpdate(req.user.id, { $set: { username: profile.username } }, { new: true });
+			await User.findByIdAndUpdate(
+				req.user.id,
+				{ $set: { username: profile.username } },
+				{ new: true }
+			);
 
 			return res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile updated', profile });
 		} catch (err) {
 			if (err.code === 11000 && 'username' in err.keyPattern) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USERNAME_ALREADY_EXISTS }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.USERNAME_ALREADY_EXISTS }]
+				});
 			}
 
-			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res
+				.status(500)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );
@@ -152,7 +167,11 @@ router.delete('/', auth, async (req, res) => {
 
 		if (profile.imageId) {
 			await ProfileStream().delete(profile.imageId, (err, result) => {
-				if (err) throw err;
+				if (err) {
+					return res
+						.status(400)
+						.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+				}
 			});
 		}
 
@@ -164,13 +183,44 @@ router.delete('/', auth, async (req, res) => {
 	}
 });
 
-// @route		POST: api/profile/profileImage
+// @route		GET: api/profile/image/:image_id
+// @desc		Stream profile image
+// @access		Private
+router.get('/image/:image_id', async (req, res) => {
+	if (!mongoose.isObjectIdOrHexString(req.params.image_id)) {
+		return res
+			.status(400)
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+	}
+
+	try {
+		const images = await ProfileStream()
+			.find({ _id: mongoose.Types.ObjectId(req.params.image_id) })
+			.toArray();
+
+		if (!images) {
+			return res
+				.status(404)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+		}
+
+		const stream = ProfileStream().openDownloadStreamByName(images[0].filename);
+
+		stream.pipe(res);
+	} catch (err) {
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		POST: api/profile/image (not in use yet)
 // @desc		Upload profile image
 // @access		Private
-router.post('/profileImage', [auth, imageUploadHandler], async (req, res) => {
+router.post('/image', [auth, imageUploadHandler], async (req, res) => {
 	try {
 		if (!req.file) {
-			return res.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'choose an image to upload' }] });
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'choose an image to upload' }] });
 		}
 
 		const profile = await Profile.findOneAndUpdate(
@@ -179,26 +229,35 @@ router.post('/profileImage', [auth, imageUploadHandler], async (req, res) => {
 			{ new: true }
 		);
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile image added', profile } });
+		res
+			.status(200)
+			.json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile image added', profile } });
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });
 
-// @route		PUT: api/profile/profileImage
+// @route		PUT: api/profile/image
 // @desc		Update profile image
 // @access		Private
-router.put('/profileImage', [auth, imageUploadHandler], async (req, res) => {
+router.put('/image', [auth, imageUploadHandler], async (req, res) => {
 	try {
 		if (!req.file) {
-			return res.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'choose an image to replace' }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: 'choose an image to upload' }]
+			});
 		}
 
 		let profile = await Profile.findOne({ user: req.user.id });
 
 		if (profile.imageId) {
 			await ProfileStream().delete(profile.imageId, (err, result) => {
-				if (err) throw err;
+				if (err) {
+					return res
+						.status(400)
+						.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+				}
 			});
 		}
 
@@ -208,23 +267,25 @@ router.put('/profileImage', [auth, imageUploadHandler], async (req, res) => {
 			{ new: true }
 		);
 
-		res
-			.status(200)
-			.json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile image updated', profile } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile image updated', profile });
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });
 
-// @route		DELETE: api/profile/profileImage
+// @route		DELETE: api/profile/image
 // @desc		Delete profile image
 // @access		Private
-router.delete('/profileImage', auth, async (req, res) => {
+router.delete('/image', auth, async (req, res) => {
 	try {
 		let profile = await Profile.findOne({ user: req.user.id });
 
 		await ProfileStream().delete(profile.imageId, (err, result) => {
-			if (err) throw err;
+			if (err) {
+				return res
+					.status(400)
+					.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+			}
 		});
 
 		profile = await Profile.findOneAndUpdate(
@@ -233,9 +294,7 @@ router.delete('/profileImage', auth, async (req, res) => {
 			{ new: true }
 		);
 
-		res
-			.status(200)
-			.json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile image deleted', profile } });
+		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile image removed', profile });
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}

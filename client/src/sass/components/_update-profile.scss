@@ -37,4 +37,21 @@
 		justify-self: end;
 		align-self: end;
 	}
+
+	&__image {
+		width: 50rem;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		ul {
+			padding: 3rem;
+			text-align: center;
+		}
+
+		li:not(:first-child) {
+			margin-top: 1.5rem;
+		}
+	}
 }

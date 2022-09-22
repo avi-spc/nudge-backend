@@ -46,6 +46,11 @@ a:hover {
 	color: $color-accent-primary;
 }
 
+li:hover {
+	color: $color-accent-primary;
+	cursor: pointer;
+}
+
 ul {
 	list-style: none;
 }

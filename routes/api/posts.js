@@ -134,7 +134,11 @@ router.delete('/:post_id', auth, async (req, res) => {
 		}
 
 		await PostStream().delete(post.imageId, (err, result) => {
-			if (err) throw err;
+			if (err) {
+				return res
+					.status(400)
+					.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+			}
 		});
 
 		await post.deleteOne();
@@ -214,12 +218,7 @@ router.delete('/unlike/:post_id', auth, async (req, res) => {
 // @access		Private
 router.post(
 	'/comment/:post_id',
-	[
-		auth,
-		[
-			check('comment', 'comment is required').not().isEmpty()
-		]
-	],
+	[auth, [check('comment', 'comment is required').not().isEmpty()]],
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -399,12 +398,7 @@ router.delete('/comment/unlike/:post_id/:comment_id', auth, async (req, res) => 
 // @access		Private
 router.post(
 	'/comment/reply/:post_id/:comment_id',
-	[
-		auth,
-		[
-			check('reply', 'reply is required').not().isEmpty()
-		]
-	],
+	[auth, [check('reply', 'reply is required').not().isEmpty()]],
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {

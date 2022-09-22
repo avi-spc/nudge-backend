@@ -35,7 +35,16 @@ const UserProfile = ({
 		profileSeeker && (
 			<div className="container-medium">
 				<div className="user-profile">
-					<div className="user-profile__avatar" />
+					{profileSeeker.imageId ? (
+						<img
+							src={`http://localhost:5000/api/profile/image/${profileSeeker.imageId}`}
+							alt=""
+							className="user-profile__avatar"
+						/>
+					) : (
+						<div className="user-profile__avatar" />
+					)}
+
 					<div className="user-profile__details">
 						<div className="username text-large-M">{profileSeeker.username}</div>
 

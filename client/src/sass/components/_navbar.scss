@@ -36,11 +36,6 @@
 				background-color: $color-surface-tertiary;
 				border-radius: $border-radius-large;
 
-				li:hover {
-					color: $color-accent-primary;
-					cursor: pointer;
-				}
-
 				li:not(:first-child) {
 					margin-top: 1.5rem;
 				}

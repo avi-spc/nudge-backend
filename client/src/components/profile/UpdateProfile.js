@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import TitleHeaderBar from '../headerBars/TitleHeaderBar';
+import UpdateProfileImage from './UpdateProfileImage';
 
 import { updateProfile } from '../../reduxStore/actions/profile';
 
@@ -62,6 +63,7 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 					</button>
 				</div>
 			</div>
+			<UpdateProfileImage />
 		</div>
 	);
 };
