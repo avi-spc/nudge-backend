@@ -32,9 +32,13 @@ export const retrieveCurrentProfile = () => async (dispatch) => {
 
 export const retrieveSeekerProfile = (userId) => async (dispatch) => {
 	try {
-		const res = await axios.get(`/api/profile/user/${userId}`);
+		const resProfile = await axios.get(`/api/profile/user/${userId}`);
+		const resFollows = await axios.get(`/api/users/follows/${userId}`);
 
-		dispatch({ type: GET_SEEKER_PROFILE_SUCCESS, payload: res.data });
+		dispatch({
+			type: GET_SEEKER_PROFILE_SUCCESS,
+			payload: { profile: resProfile.data.profile, follows: resFollows.data.follows }
+		});
 	} catch (err) {
 		const errors = err.response.data.errors;
 

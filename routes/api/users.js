@@ -68,20 +68,9 @@ router.post(
 // @access		Private
 router.post('/follow/:user_id', auth, async (req, res) => {
 	try {
-		const { username: followerUsername } = await Profie.findOne({ user: req.user.id }).select([
-			'-_id',
-			'username'
-		]);
-
-		if (!followerUsername) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
-		}
-
 		let user = await User.findByIdAndUpdate(
 			req.params.user_id,
-			{ $addToSet: { 'follows.followers': { user: req.user.id, username: followerUsername } } },
+			{ $addToSet: { 'follows.followers': { user: req.user.id } } },
 			{ new: true }
 		);
 
@@ -91,19 +80,10 @@ router.post('/follow/:user_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
 		}
 
-		const { username: followingUsername } = await Profie.findOne({
-			user: req.params.user_id
-		}).select(['-_id', 'username']);
-
 		user = await User.findByIdAndUpdate(
 			req.user.id,
 			{
-				$addToSet: {
-					'follows.following': {
-						user: req.params.user_id,
-						username: followingUsername
-					}
-				}
+				$addToSet: { 'follows.following': { user: req.params.user_id } }
 			},
 			{ new: true }
 		);
@@ -167,6 +147,39 @@ router.get('/savedPosts', auth, async (req, res) => {
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, savedPosts: user.savedPosts });
 	} catch (err) {
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		GET: api/users/follows
+// @desc		Retrieve current user's follows
+// @access		Private
+router.get('/follows/:user_id', auth, async (req, res) => {
+	try {
+		const user = await User.findById(req.params.user_id)
+			.populate({
+				path: 'follows.followers.user',
+				select: 'username'
+			})
+			.populate({
+				path: 'follows.following.user',
+				select: 'username'
+			});
+
+		if (!user) {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
+		}
+
+		res.status(200).json({ type: ResponseTypes.SUCCESS, follows: user.follows });
+	} catch (err) {
+		if (err.kind === 'ObjectId') {
+			return res
+				.status(400)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
+		}
+
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });

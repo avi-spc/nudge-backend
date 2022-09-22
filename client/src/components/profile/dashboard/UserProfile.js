@@ -20,7 +20,7 @@ const UserProfile = ({
 	retrieveSavedPosts,
 	discardPostImage,
 	auth: { user, savedPosts },
-	profile: { profileSeeker },
+	profile: { profileSeeker, profileSeekerFollows },
 	createPostImageId
 }) => {
 	const { user_id } = useParams();
@@ -77,10 +77,18 @@ const UserProfile = ({
 						<div className="follows text-medium-R">
 							<div>2 posts</div>
 							<Link to={`/profile/${user_id}/followers`}>
-								{profileSeeker.user.follows.followers.length} followers
+								{`${
+									profileSeekerFollows.followers.filter((follow) => {
+										return follow.user !== null;
+									}).length
+								} followers`}
 							</Link>
 							<Link to={`/profile/${user_id}/following`}>
-								{profileSeeker.user.follows.following.length} following
+								{`${
+									profileSeekerFollows.following.filter((follow) => {
+										return follow.user !== null;
+									}).length
+								} following`}
 							</Link>
 						</div>
 						<div className="name text-medium-M">{profileSeeker.name}</div>
@@ -88,7 +96,7 @@ const UserProfile = ({
 					</div>
 				</div>
 				<UserPostGallery retrieveSavedPosts={retrieveSavedPosts} savedPosts={savedPosts} />
-				<Outlet context={{ user: profileSeeker.user }} />
+				<Outlet context={{ user: profileSeeker.user, profileSeekerFollows }} />
 			</div>
 		)
 	);

@@ -12,7 +12,8 @@ import {
 
 const initialState = {
 	profileSelf: null,
-	profileSeeker: null
+	profileSeeker: null,
+	profileSeekerFollows: null
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -24,7 +25,7 @@ const profileReducer = (state = initialState, action) => {
 		case UPDATE_PROFILE_SUCCESS:
 			return { ...state, profileSelf: payload.profile };
 		case GET_SEEKER_PROFILE_SUCCESS:
-			return { ...state, profileSeeker: payload.profile };
+			return { ...state, profileSeeker: payload.profile, profileSeekerFollows: payload.follows };
 		case CREATE_PROFILE_ERROR:
 		case GET_PROFILE_ERROR:
 		case CLEAR_PROFILE:

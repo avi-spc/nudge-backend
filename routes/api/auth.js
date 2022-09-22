@@ -18,6 +18,7 @@ const User = require('../../models/User');
 router.get('/', auth, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id).select('-password');
+
 		res.status(200).json({ type: ResponseTypes.SUCCESS, user });
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
@@ -65,7 +66,9 @@ router.post(
 				res.status(200).json({ type: ResponseTypes.SUCCESS, token });
 			});
 		} catch (err) {
-			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res
+				.status(500)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );

@@ -5,26 +5,29 @@ import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 const Follows = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { user } = useOutletContext();
+	const { user, profileSeekerFollows } = useOutletContext();
 
 	const followsType = location.pathname.split('/')[3];
 	const follows =
-		location.pathname.split('/')[3] === 'followers' ? user.follows.followers : user.follows.following;
+		location.pathname.split('/')[3] === 'followers'
+			? profileSeekerFollows.followers
+			: profileSeekerFollows.following;
 
 	return (
 		<div className="padded user-profile__follows">
-			<TitleHeaderBar title={followsType} action={() => navigate(`/profile/${user._id}`)} />
+			<TitleHeaderBar title={followsType} action={() => navigate(`/profile/${user}`)} />
 			<ul className="follows-list">
-				{follows.map((follow, index) => {
-					return (
-						<li key={index}>
-							<Link to={`/profile/${follow.user}`}>
-								<div className="avatar"></div>
-								<div className="text-medium-SB">{follow.username}</div>
-							</Link>
-						</li>
-					);
-				})}
+				{follows.map(
+					(follow) =>
+						follow.user && (
+							<li key={follow.user}>
+								<Link to={`/profile/${follow.user._id}`}>
+									<div className="avatar"></div>
+									<div className="text-medium-SB">{follow.user.username}</div>
+								</Link>
+							</li>
+						)
+				)}
 			</ul>
 		</div>
 	);
