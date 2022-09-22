@@ -12,7 +12,8 @@ import {
 	LOGIN_SUCCESS,
 	LOGIN_ERROR,
 	LOGOUT,
-	CLEAR_PROFILE
+	CLEAR_PROFILE,
+	GET_SAVED_POSTS
 } from './types';
 
 export const retrieveUser = () => async (dispatch) => {
@@ -93,4 +94,14 @@ export const loginUser =
 export const logoutUser = () => (dispatch) => {
 	dispatch({ type: CLEAR_PROFILE });
 	dispatch({ type: LOGOUT });
+};
+
+export const retrieveSavedPosts = () => async (dispatch) => {
+	try {
+		const res = await axios.get('/api/users/savedPosts');
+
+		dispatch({ type: GET_SAVED_POSTS, payload: res.data });
+	} catch (err) {
+		console.log(err.response.data.errors);
+	}
 };

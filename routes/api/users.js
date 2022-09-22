@@ -56,7 +56,9 @@ router.post(
 					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_ALREADY_EXISTS }] });
 			}
 
-			res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res
+				.status(500)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 		}
 	}
 );
@@ -89,10 +91,9 @@ router.post('/follow/:user_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
 		}
 
-		const { username: followingUsername } = await Profie.findOne({ user: req.params.user_id }).select([
-			'-_id',
-			'username'
-		]);
+		const { username: followingUsername } = await Profie.findOne({
+			user: req.params.user_id
+		}).select(['-_id', 'username']);
 
 		user = await User.findByIdAndUpdate(
 			req.user.id,
@@ -150,6 +151,22 @@ router.delete('/unfollow/:user_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
 		}
 
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		GET: api/users/savedPosts
+// @desc		Retrieve current user's saved posts
+// @access		Private
+router.get('/savedPosts', auth, async (req, res) => {
+	try {
+		const user = await User.findById(req.user.id).populate({
+			path: 'savedPosts.post',
+			select: 'imageId'
+		});
+
+		res.status(200).json({ type: ResponseTypes.SUCCESS, savedPosts: user.savedPosts });
+	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });

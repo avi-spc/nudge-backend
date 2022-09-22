@@ -6,13 +6,15 @@ import {
 	LOGIN_SUCCESS,
 	LOGIN_ERROR,
 	LOGOUT,
+	GET_SAVED_POSTS,
 	UPDATE_SAVED_POSTS
 } from '../actions/types';
 
 const initialState = {
 	token: localStorage.getItem('token'),
 	isAuthenticated: false,
-	user: null
+	user: null,
+	savedPosts: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -30,7 +32,9 @@ const authReducer = (state = initialState, action) => {
 		case LOGIN_ERROR:
 		case LOGOUT:
 			localStorage.removeItem('token');
-			return { ...state, token: null, isAuthenticated: false, user: null };
+			return { ...state, token: null, isAuthenticated: false, user: null, savedPosts: [] };
+		case GET_SAVED_POSTS:
+			return { ...state, savedPosts: payload.savedPosts };
 		case UPDATE_SAVED_POSTS:
 			return { ...state, user: { ...state.user, savedPosts: payload.savedPosts } };
 		default:

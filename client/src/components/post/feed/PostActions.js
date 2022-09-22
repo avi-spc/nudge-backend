@@ -72,4 +72,6 @@ const mapStateToProps = (state) => ({
 	user: state.auth.user
 });
 
-export default connect(mapStateToProps, { likePost, unlikePost, savePost, unsavePost })(PostActions);
+export default connect(mapStateToProps, { likePost, unlikePost, savePost, unsavePost })(
+	PostActions
+);

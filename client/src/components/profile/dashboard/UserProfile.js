@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import UserPostGallery from './UserPostGallery';
 
+import { retrieveSavedPosts } from '../../../reduxStore/actions/auth';
 import {
 	retrieveSeekerProfile,
 	followUser,
@@ -16,8 +17,9 @@ const UserProfile = ({
 	retrieveSeekerProfile,
 	followUser,
 	unfollowUser,
+	retrieveSavedPosts,
 	discardPostImage,
-	auth: { user },
+	auth: { user, savedPosts },
 	profile: { profileSeeker },
 	createPostImageId
 }) => {
@@ -85,7 +87,7 @@ const UserProfile = ({
 						<p className="bio text-medium-R">{profileSeeker.bio}</p>
 					</div>
 				</div>
-				<UserPostGallery />
+				<UserPostGallery retrieveSavedPosts={retrieveSavedPosts} savedPosts={savedPosts} />
 				<Outlet context={{ user: profileSeeker.user }} />
 			</div>
 		)
@@ -96,6 +98,7 @@ UserProfile.propTypes = {
 	retrieveSeekerProfile: PropTypes.func.isRequired,
 	unfollowUser: PropTypes.func.isRequired,
 	followUser: PropTypes.func.isRequired,
+	retrieveSavedPosts: PropTypes.func.isRequired,
 	discardPostImage: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
@@ -112,5 +115,6 @@ export default connect(mapStateToProps, {
 	retrieveSeekerProfile,
 	followUser,
 	unfollowUser,
-	discardPostImage
+	discardPostImage,
+	retrieveSavedPosts
 })(UserProfile);
