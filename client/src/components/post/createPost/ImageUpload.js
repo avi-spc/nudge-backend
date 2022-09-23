@@ -19,10 +19,13 @@ const ImageUpload = ({ uploadPostImage, createPostImageId }) => {
 
 	return (
 		<div className="container-medium padded image-upload">
-			<TitleHeaderBar title="Create new post" action={() => navigate('/feed')} />
+			<TitleHeaderBar title="create new post" action={() => navigate('/feed')} />
 			<div className="image-upload__buttons">
 				<form ref={form}>
-					<input type="file" name="file" className="btn text-medium-R" />
+					<label htmlFor="file" className="btn btn--rect-sm text-medium-R">
+						Select from device
+					</label>
+					<input type="file" id="file" name="file" className="hidden" />
 				</form>
 				{/* <button className="btn btn--rect-sm text-medium-R">Select from device</button>
 				<button className="btn btn--cir text-medium-R image-upload__btn-next"></button> */}

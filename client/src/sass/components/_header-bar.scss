@@ -9,6 +9,10 @@
 
 	background-color: $color-surface-header;
 	border-radius: $border-radius-medium;
+
+	::first-letter {
+		text-transform: capitalize;
+	}
 }
 
 .user-header-bar {

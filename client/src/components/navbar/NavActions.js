@@ -1,8 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const NavActions = ({ logoutUser, profile: { profileSelf } }) => {
+	const location = useLocation();
+	const [showDropdown, setShowDropdown] = useState(false);
+
+	useEffect(() => {
+		setShowDropdown(false);
+	}, [location]);
+
 	return (
 		<div className="navbar__actions">
 			<Link to="/feed">
@@ -12,7 +20,7 @@ const NavActions = ({ logoutUser, profile: { profileSelf } }) => {
 				<span className="material-symbols-outlined symbol--lg">loupe</span>
 			</Link>
 			<span className="material-symbols-outlined symbol--lg">favorite</span>
-			<div className="profile-actions">
+			<div className="profile-actions" onClick={() => setShowDropdown(!showDropdown)}>
 				{profileSelf.imageId ? (
 					<img
 						src={`http://localhost:5000/api/profile/image/${profileSelf.imageId}`}
@@ -23,12 +31,14 @@ const NavActions = ({ logoutUser, profile: { profileSelf } }) => {
 					<div className="avatar"></div>
 				)}
 
-				<ul className="text-medium-R">
-					<li>
-						<Link to={`/profile/${profileSelf.user}`}>Profile</Link>
-					</li>
-					<li onClick={() => logoutUser()}>Logout</li>
-				</ul>
+				{showDropdown && (
+					<ul className="text-medium-R">
+						<li>
+							<Link to={`/profile/${profileSelf.user}`}>Profile</Link>
+						</li>
+						<li onClick={() => logoutUser()}>Logout</li>
+					</ul>
+				)}
 			</div>
 		</div>
 	);

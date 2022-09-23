@@ -26,7 +26,7 @@ const PublishPost = ({ publishPost, discardPostImage, createPostImageId }) => {
 
 	return (
 		<div className="container-medium padded create-post">
-			<TitleHeaderBar title="Create new post" action={() => discardPostImage(createPostImageId)} />
+			<TitleHeaderBar title="create new post" action={() => discardPostImage(createPostImageId)} />
 			<div className="create-post__image-p-caption">
 				{createPostImageId && (
 					<img

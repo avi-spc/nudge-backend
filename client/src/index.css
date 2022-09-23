@@ -127,6 +127,9 @@ ul {
   height: 100vh;
   background-color: rgba(217, 217, 217, 0.5); }
 
+.hidden {
+  display: none; }
+
 .alerts-group {
   display: flex;
   flex-direction: column;
@@ -328,6 +331,8 @@ ul {
   color: #d9d9d9;
   background-color: #000000;
   border-radius: 2.5rem; }
+  .title-header-bar ::first-letter {
+    text-transform: capitalize; }
 
 .user-header-bar {
   display: grid;

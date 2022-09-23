@@ -15,7 +15,14 @@ const UpdateProfileImage = ({ setShowPopup, uploadProfileImage, removeProfileIma
 				<ul className="text-medium-R">
 					<li>
 						<form ref={form}>
-							<input type="file" name="file" onChange={() => uploadProfileImage(form.current)} />
+							<label htmlFor="file">Change profile photo</label>
+							<input
+								type="file"
+								id="file"
+								name="file"
+								onChange={() => uploadProfileImage(form.current)}
+								className="hidden"
+							/>
 						</form>
 					</li>
 					<li onClick={() => removeProfileImage()}>Remove</li>
