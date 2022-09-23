@@ -6,7 +6,7 @@ const PostCaption = ({ post }) => {
 			<UserHeaderBar username={post.user.username} />
 			<div className="individual-post__caption-p-elapsed">
 				<p className="text-medium-R">{post.caption}</p>
-				<span className="elapsed absolute text-small-R">127w</span>
+				<span className="elapsed absolute text-small-R">{post.date}</span>
 			</div>
 		</div>
 	);

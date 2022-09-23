@@ -420,6 +420,23 @@ ul {
     .individual-post__post-details .post-date {
       margin-top: 1rem;
       color: #989899; }
+  .individual-post__liked-users {
+    width: 65rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    color: #d9d9d9; }
+    .individual-post__liked-users .users-list {
+      display: grid;
+      grid-gap: 3rem 0;
+      padding: 3rem; }
+      .individual-post__liked-users .users-list li {
+        display: grid;
+        grid-template-columns: min-content 1fr;
+        grid-gap: 0 2.5rem;
+        align-items: center; }
 
 .text-field {
   width: 100%;

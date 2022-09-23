@@ -7,6 +7,7 @@ import IndividualComment from './IndividualComment';
 import PostActions from './PostActions';
 import PostCaption from './PostCaption';
 import PostDetails from './PostDetails';
+import PostLikedUsers from './PostLikedUsers';
 
 import { retrieveIndividualPost } from '../../../reduxStore/actions/post';
 
@@ -34,6 +35,7 @@ const IndividualPost = ({ retrieveIndividualPost, post }) => {
 					<PostActions post={post} />
 				</div>
 				<PostDetails post={post} />
+				<PostLikedUsers post={post} />
 			</div>
 		)
 	);
