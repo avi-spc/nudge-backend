@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const UserPostGallery = ({ retrieveSavedPosts, savedPosts }) => {
 	useEffect(() => {
@@ -21,11 +22,13 @@ const UserPostGallery = ({ retrieveSavedPosts, savedPosts }) => {
 				{savedPosts.length > 0 &&
 					savedPosts.map((saved) =>
 						saved.post && saved.post.imageId ? (
-							<img
-								src={`http://localhost:5000/api/posts/image/${saved.post.imageId}`}
-								className="gallery-post"
-								key={saved.post._id}
-							></img>
+							<Link to={`/post/${saved.post._id}`}>
+								<img
+									src={`http://localhost:5000/api/posts/image/${saved.post.imageId}`}
+									className="gallery-post"
+									key={saved.post._id}
+								></img>
+							</Link>
 						) : null
 					)}
 			</div>

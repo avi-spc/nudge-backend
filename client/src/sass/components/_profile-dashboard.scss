@@ -20,6 +20,7 @@
 		display: grid;
 		grid-template-columns: min-content 1fr;
 		grid-gap: 0 3rem;
+		justify-items: start;
 		align-items: center;
 	}
 
@@ -28,6 +29,7 @@
 		justify-content: space-between;
 
 		grid-column: 1/-1;
+		justify-self: stretch;
 		margin: 4rem 0 4rem 0;
 		padding: 3.5rem;
 
@@ -46,11 +48,6 @@
 
 	&__btn-edit {
 		padding: 1.2rem;
-		justify-self: start;
-	}
-
-	&__btn-follow {
-		justify-self: start;
 	}
 
 	&__follows {
@@ -68,7 +65,7 @@
 
 			padding: 3rem;
 
-			li {
+			li a {
 				display: grid;
 				grid-template-columns: min-content 1fr;
 				grid-gap: 0 2.5rem;

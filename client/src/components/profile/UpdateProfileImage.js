@@ -5,20 +5,22 @@ import TitleHeaderBar from '../headerBars/TitleHeaderBar';
 
 import { uploadProfileImage, removeProfileImage } from '../../reduxStore/actions/profile';
 
-const UpdateProfileImage = ({ uploadProfileImage, removeProfileImage }) => {
+const UpdateProfileImage = ({ setShowPopup, uploadProfileImage, removeProfileImage }) => {
 	const form = useRef();
 
 	return (
-		<div className="padded update-profile__image">
-			<TitleHeaderBar title="Change profile photo" />
-			<ul className="text-medium-R">
-				<li>
-					<form ref={form}>
-						<input type="file" name="file" onChange={() => uploadProfileImage(form.current)} />
-					</form>
-				</li>
-				<li onClick={() => removeProfileImage()}>Remove</li>
-			</ul>
+		<div className="popup">
+			<div className="padded update-profile__image">
+				<TitleHeaderBar title="Change profile photo" action={() => setShowPopup(false)} />
+				<ul className="text-medium-R">
+					<li>
+						<form ref={form}>
+							<input type="file" name="file" onChange={() => uploadProfileImage(form.current)} />
+						</form>
+					</li>
+					<li onClick={() => removeProfileImage()}>Remove</li>
+				</ul>
+			</div>
 		</div>
 	);
 };

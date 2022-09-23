@@ -1,6 +1,6 @@
 import CommentInput from '../CommentInput';
 
-const PostDetails = ({ post }) => {
+const PostDetails = ({ setShowPopup, post }) => {
 	return (
 		<div className="individual-post__post-details">
 			<div className="avatars-p-meta">
@@ -8,7 +8,7 @@ const PostDetails = ({ post }) => {
 					<div className="btn btn--cir text-medium-SB"></div>
 				</div>
 				<div className="meta">
-					<div className="likes-info text-medium-R">
+					<div className="likes-info text-medium-R" onClick={() => setShowPopup(true)}>
 						{post.likes.length > 0 ? `Liked by ${post.likes[0].user.username}` : null}
 						{post.likes.length > 1 ? ` and ${post.likes.length - 1} others` : null}
 					</div>

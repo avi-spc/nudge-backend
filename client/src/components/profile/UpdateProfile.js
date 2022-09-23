@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,9 +9,16 @@ import UpdateProfileImage from './UpdateProfileImage';
 import { updateProfile } from '../../reduxStore/actions/profile';
 
 const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
+	const navigate = useNavigate();
+
 	const [formData, setFormData] = useState(profileSelf);
+	const [showPopup, setShowPopup] = useState(false);
 
 	const { name, username, bio } = formData;
+
+	useEffect(() => {
+		setShowPopup(false);
+	}, [profileSelf.imageId]);
 
 	const onChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,7 +26,7 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 
 	return (
 		<div className="container-medium padded update-profile">
-			<TitleHeaderBar title="Edit profile" />
+			<TitleHeaderBar title="Edit profile" action={() => navigate('/feed')} />
 			<div className="update-profile__form-p-avatar">
 				<form className="update-profile__form text-normal-R">
 					<label htmlFor="">Name</label>
@@ -52,7 +60,9 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 					<div className="update-profile__avatar" />
 					<div>
 						<div className="text-large-M">{profileSelf.username}</div>
-						<button className="btn btn--rect-es text-small-R">Change profile picture</button>
+						<button className="btn btn--rect-es text-small-R" onClick={() => setShowPopup(true)}>
+							Change profile picture
+						</button>
 					</div>
 					<button
 						className="btn btn--rect-sm text-medium-R update-profile__btn-save"
@@ -63,7 +73,7 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 					</button>
 				</div>
 			</div>
-			<UpdateProfileImage />
+			{showPopup && <UpdateProfileImage setShowPopup={setShowPopup} />}
 		</div>
 	);
 };

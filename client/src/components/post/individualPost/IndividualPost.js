@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,6 +13,8 @@ import { retrieveIndividualPost } from '../../../reduxStore/actions/post';
 
 const IndividualPost = ({ retrieveIndividualPost, post }) => {
 	const { post_id } = useParams();
+
+	const [showPopup, setShowPopup] = useState(false);
 
 	useEffect(() => {
 		retrieveIndividualPost(post_id);
@@ -34,8 +36,8 @@ const IndividualPost = ({ retrieveIndividualPost, post }) => {
 					</div>
 					<PostActions post={post} />
 				</div>
-				<PostDetails post={post} />
-				<PostLikedUsers post={post} />
+				<PostDetails post={post} setShowPopup={setShowPopup} />
+				{showPopup && <PostLikedUsers post={post} setShowPopup={setShowPopup} />}
 			</div>
 		)
 	);

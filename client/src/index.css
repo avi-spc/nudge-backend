@@ -115,6 +115,18 @@ ul {
 .material-symbols-outlined.filled {
   font-variation-settings: 'FILL' 1; }
 
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(217, 217, 217, 0.5); }
+
 .alerts-group {
   display: flex;
   flex-direction: column;
@@ -422,17 +434,12 @@ ul {
       color: #989899; }
   .individual-post__liked-users {
     width: 65rem;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
     color: #d9d9d9; }
     .individual-post__liked-users .users-list {
       display: grid;
       grid-gap: 3rem 0;
       padding: 3rem; }
-      .individual-post__liked-users .users-list li {
+      .individual-post__liked-users .users-list li a {
         display: grid;
         grid-template-columns: min-content 1fr;
         grid-gap: 0 2.5rem;
@@ -530,11 +537,13 @@ ul {
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-gap: 0 3rem;
+    justify-items: start;
     align-items: center; }
   .user-profile .follows {
     display: flex;
     justify-content: space-between;
     grid-column: 1/-1;
+    justify-self: stretch;
     margin: 4rem 0 4rem 0;
     padding: 3.5rem;
     background-color: #242424;
@@ -545,10 +554,7 @@ ul {
   .user-profile .bio {
     margin-top: 1.5rem; }
   .user-profile__btn-edit {
-    padding: 1.2rem;
-    justify-self: start; }
-  .user-profile__btn-follow {
-    justify-self: start; }
+    padding: 1.2rem; }
   .user-profile__follows {
     width: 65rem;
     position: fixed;
@@ -560,7 +566,7 @@ ul {
       display: grid;
       grid-gap: 3rem 0;
       padding: 3rem; }
-      .user-profile__follows .follows-list li {
+      .user-profile__follows .follows-list li a {
         display: grid;
         grid-template-columns: min-content 1fr;
         grid-gap: 0 2.5rem;

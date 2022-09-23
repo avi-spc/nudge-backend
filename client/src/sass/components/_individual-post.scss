@@ -139,11 +139,6 @@
 
 	&__liked-users {
 		width: 65rem;
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		z-index: 100;
 
 		color: $color-text-primary;
 
@@ -153,7 +148,7 @@
 
 			padding: 3rem;
 
-			li {
+			li a {
 				display: grid;
 				grid-template-columns: min-content 1fr;
 				grid-gap: 0 2.5rem;
