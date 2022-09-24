@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import UserPostGallery from './UserPostGallery';
+import UserSavedPostGallery from './UserSavedPostGallery';
 
 import { retrieveSavedPosts } from '../../../reduxStore/actions/auth';
 import {
@@ -24,9 +25,11 @@ const UserProfile = ({
 	createPostImageId
 }) => {
 	const { user_id } = useParams();
+	const [showSaved, setShowSaved] = useState(true);
 
 	useEffect(() => {
 		retrieveSeekerProfile(user_id);
+		setShowSaved(false);
 	}, [user_id]);
 
 	useEffect(() => {
@@ -73,7 +76,7 @@ const UserProfile = ({
 						)}
 
 						<div className="follows text-medium-R">
-							<div>2 posts</div>
+							<div>{profileSeeker.user.posts.length} posts</div>
 							<Link to={`/profile/${user_id}/followers`}>
 								{profileSeekerFollows.followers.length} followers
 							</Link>
@@ -85,8 +88,27 @@ const UserProfile = ({
 						<p className="bio text-medium-R">{profileSeeker.bio}</p>
 					</div>
 				</div>
-				<UserPostGallery retrieveSavedPosts={retrieveSavedPosts} savedPosts={savedPosts} />
-				<Outlet context={{ user: profileSeeker.user, profileSeekerFollows }} />
+
+				<div className="user-profile__gallery-tabs padded text-medium-SB">
+					<div onClick={() => setShowSaved(false)} className={`${!showSaved ? 'active' : ''}`}>
+						<span className="material-symbols-outlined symbol--lg">grid_on</span>
+						<span>POSTS</span>
+					</div>
+					{user_id === user._id && (
+						<div onClick={() => setShowSaved(true)} className={`${showSaved ? 'active' : ''}`}>
+							<span className="material-symbols-outlined symbol--lg">bookmark</span>
+							<span>SAVED</span>
+						</div>
+					)}
+				</div>
+
+				{showSaved ? (
+					<UserSavedPostGallery retrieveSavedPosts={retrieveSavedPosts} savedPosts={savedPosts} />
+				) : (
+					<UserPostGallery posts={profileSeeker.user.posts} />
+				)}
+
+				<Outlet context={{ user: profileSeeker.user._id, profileSeekerFollows }} />
 			</div>
 		)
 	);

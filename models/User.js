@@ -34,6 +34,18 @@ const UserSchema = new mongoose.Schema({
 			}
 		]
 	},
+	posts: [
+		{
+			post: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'post'
+			},
+			imageId: {
+				type: mongoose.Schema.Types.ObjectId
+			},
+			_id: false
+		}
+	],
 	savedPosts: [
 		{
 			post: {

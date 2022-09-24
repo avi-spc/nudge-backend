@@ -43,6 +43,12 @@ router.post(
 
 			await post.save();
 
+			await User.findByIdAndUpdate(
+				req.user.id,
+				{ $addToSet: { posts: { post: post._id, imageId: post.imageId } } },
+				{ new: true }
+			);
+
 			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post created', post });
 		} catch (err) {
 			res
@@ -58,7 +64,7 @@ router.post(
 router.get('/', auth, async (req, res) => {
 	try {
 		const posts = await Post.find()
-			.sort({ date: 'desc' })
+			.sort({ createdAt: 'desc' })
 			.populate({ path: 'user', select: 'username' });
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, posts });
@@ -79,7 +85,7 @@ router.get('/:post_id', auth, async (req, res) => {
 			})
 			.populate({ path: 'likes.user', select: 'username' })
 			.populate({ path: 'comments.user', select: 'username' });
-			
+
 		if (!post) {
 			return res
 				.status(400)
