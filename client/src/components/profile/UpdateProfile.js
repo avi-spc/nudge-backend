@@ -76,7 +76,7 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 					</button>
 				</div>
 			</div>
-			{showPopup && <UpdateProfileImage setShowPopup={setShowPopup} />}
+			{showPopup && <UpdateProfileImage setShowPopup={setShowPopup} profile={profileSelf} />}
 		</div>
 	);
 };

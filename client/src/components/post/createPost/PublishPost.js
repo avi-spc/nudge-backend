@@ -7,7 +7,12 @@ import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 
 import { publishPost, discardPostImage } from '../../../reduxStore/actions/post';
 
-const PublishPost = ({ publishPost, discardPostImage, createPostImageId }) => {
+const PublishPost = ({
+	publishPost,
+	discardPostImage,
+	createPostImageId,
+	profile: { profileSelf }
+}) => {
 	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({ caption: '', imageId: createPostImageId });
@@ -35,8 +40,16 @@ const PublishPost = ({ publishPost, discardPostImage, createPostImageId }) => {
 				)}
 				<div className="create-post__user-p-caption">
 					<div className="user-details">
-						<div className="avatar"></div>
-						<div className="username text-medium-SB">justdoingokhay</div>
+						{profileSelf.imageId ? (
+							<img
+								src={`http://localhost:5000/api/profile/image/${profileSelf.imageId}`}
+								alt=""
+								className="avatar"
+							/>
+						) : (
+							<div className="avatar"></div>
+						)}
+						<div className="username text-medium-SB">{profileSelf.username}</div>
 					</div>
 					<textarea
 						className="text-medium-R create-post__caption-text"
@@ -63,11 +76,13 @@ const PublishPost = ({ publishPost, discardPostImage, createPostImageId }) => {
 PublishPost.propTypes = {
 	publishPost: PropTypes.func.isRequired,
 	discardPostImage: PropTypes.func.isRequired,
-	createPostImageId: PropTypes.string.isRequired
+	createPostImageId: PropTypes.string.isRequired,
+	profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	createPostImageId: state.post.createPostImageId
+	createPostImageId: state.post.createPostImageId,
+	profile: state.profile
 });
 
 export default connect(mapStateToProps, { publishPost, discardPostImage })(PublishPost);

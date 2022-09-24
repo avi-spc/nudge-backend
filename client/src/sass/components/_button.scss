@@ -40,6 +40,12 @@
 
 		line-height: 0;
 	}
+
+	&--danger {
+		width: 100%;
+		color: $color-text-error;
+		background-color: $color-surface-error;
+	}
 }
 
 .btn-alternate {

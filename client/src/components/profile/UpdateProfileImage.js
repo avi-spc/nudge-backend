@@ -5,7 +5,7 @@ import TitleHeaderBar from '../headerBars/TitleHeaderBar';
 
 import { uploadProfileImage, removeProfileImage } from '../../reduxStore/actions/profile';
 
-const UpdateProfileImage = ({ setShowPopup, uploadProfileImage, removeProfileImage }) => {
+const UpdateProfileImage = ({ setShowPopup, uploadProfileImage, removeProfileImage, profile }) => {
 	const form = useRef();
 
 	return (
@@ -25,7 +25,16 @@ const UpdateProfileImage = ({ setShowPopup, uploadProfileImage, removeProfileIma
 							/>
 						</form>
 					</li>
-					<li onClick={() => removeProfileImage()}>Remove</li>
+					{profile.imageId && (
+						<li>
+							<button
+								className="btn btn--rect-sm btn--danger text-medium-R"
+								onClick={() => removeProfileImage()}
+							>
+								Remove
+							</button>
+						</li>
+					)}
 				</ul>
 			</div>
 		</div>

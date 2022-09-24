@@ -268,6 +268,12 @@ router.put('/image', [auth, imageUploadHandler], async (req, res) => {
 			{ new: true }
 		);
 
+		await User.findByIdAndUpdate(
+			req.user.id,
+			{ $set: { profileImageId: profile.imageId } },
+			{ new: true }
+		);
+
 		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile image updated', profile });
 	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
@@ -292,6 +298,12 @@ router.delete('/image', auth, async (req, res) => {
 		profile = await Profile.findOneAndUpdate(
 			{ user: req.user.id },
 			{ $set: { imageId: null } },
+			{ new: true }
+		);
+
+		await User.findOneAndUpdate(
+			{ user: req.user.id },
+			{ $set: { profileImageId: null } },
 			{ new: true }
 		);
 

@@ -3,7 +3,15 @@ import { timestampInWords } from '../../../reduxStore/utils/timestampFormatter';
 const IndividualComment = ({ commentDetails }) => {
 	return (
 		<div className="individual-post__individual-comment">
-			<div className="avatar"></div>
+			{commentDetails.user.profileImageId ? (
+				<img
+					src={`http://localhost:5000/api/profile/image/${commentDetails.user.profileImageId}`}
+					alt=""
+					className="avatar"
+				/>
+			) : (
+				<div className="avatar"></div>
+			)}
 			<div className="text-medium-SB">{commentDetails.user.username}</div>
 			<span className="elapsed bordered text-small-R">
 				{timestampInWords(commentDetails.createdAt, 'short')}

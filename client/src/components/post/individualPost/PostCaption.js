@@ -5,7 +5,7 @@ import { timestampInWords } from '../../../reduxStore/utils/timestampFormatter';
 const PostCaption = ({ post }) => {
 	return (
 		<div className="individual-post__header-p-caption">
-			<UserHeaderBar username={post.user.username} />
+			<UserHeaderBar username={post.user.username} imageId={post.user.profileImageId} />
 			<div className="individual-post__caption-p-elapsed">
 				<p className="text-medium-R">{post.caption}</p>
 				<span className="elapsed absolute text-small-R">
