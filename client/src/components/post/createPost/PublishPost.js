@@ -29,10 +29,9 @@ const PublishPost = ({ publishPost, discardPostImage, createPostImageId }) => {
 			<TitleHeaderBar title="create new post" action={() => discardPostImage(createPostImageId)} />
 			<div className="create-post__image-p-caption">
 				{createPostImageId && (
-					<img
-						src={`http://localhost:5000/api/posts/image/${createPostImageId}`}
-						className="create-post__image"
-					></img>
+					<div className="create-post__image">
+						<img src={`http://localhost:5000/api/posts/image/${createPostImageId}`}></img>
+					</div>
 				)}
 				<div className="create-post__user-p-caption">
 					<div className="user-details">

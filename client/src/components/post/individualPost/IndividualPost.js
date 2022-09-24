@@ -24,10 +24,9 @@ const IndividualPost = ({ retrieveIndividualPost, post }) => {
 		post && (
 			<div className="container-large">
 				<div className="padded individual-post">
-					<img
-						src={`http://localhost:5000/api/posts/image/${post.imageId}`}
-						className="individual-post__image"
-					></img>
+					<div className="individual-post__image">
+						<img src={`http://localhost:5000/api/posts/image/${post.imageId}`}></img>
+					</div>
 					<PostCaption post={post} />
 					<div className="individual-post__comments-list">
 						{post.comments.map((comment) => {
