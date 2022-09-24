@@ -79,9 +79,13 @@
 			}
 		}
 
-		.comments-count,
+		.comments-count {
+			color: $color-text-secondary;
+		}
+
 		.elapsed-time {
 			color: $color-text-secondary;
+			text-transform: uppercase;
 		}
 	}
 }

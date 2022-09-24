@@ -1,5 +1,7 @@
 import CommentInput from '../CommentInput';
 
+import { timestampInWords } from '../../../reduxStore/utils/timestampFormatter';
+
 const PostDetails = ({ setShowPopup, post }) => {
 	return (
 		<div className="individual-post__post-details">
@@ -12,7 +14,7 @@ const PostDetails = ({ setShowPopup, post }) => {
 						{post.likes.length > 0 ? `Liked by ${post.likes[0].user.username}` : null}
 						{post.likes.length > 1 ? ` and ${post.likes.length - 1} others` : null}
 					</div>
-					<div className="post-date text-small-R">{post.date}</div>
+					<div className="post-date text-small-R">{timestampInWords(post.createdAt)}</div>
 				</div>
 			</div>
 			<CommentInput postId={post._id} />
