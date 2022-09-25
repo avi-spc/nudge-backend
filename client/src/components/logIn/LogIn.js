@@ -1,33 +1,35 @@
-import { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { loginUser } from '../../reduxStore/actions/auth';
+import { login } from '../../reduxStore/actions/auth';
+import { useForm } from '../../hooks/useForm';
 
-const LogIn = ({ loginUser, auth: { isAuthenticated }, profile: { profileSelf } }) => {
-	const [formData, setFormData] = useState({
-		email: '',
-		password: ''
-	});
+const LogIn = (props) => {
+	const {
+		login,
+		auth: { isAuthenticated },
+		profile: { profileSelf }
+	} = props;
 
-	const { email, password } = formData;
+	const navigate = useNavigate();
 
-	const onChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
+	useEffect(() => {
+		if (isAuthenticated && profileSelf) {
+			navigate('/feed');
+		} else if (isAuthenticated && !profileSelf) {
+			navigate('/register');
+		}
+	}, [isAuthenticated]);
 
-	const login = (e) => {
+	const submitLogin = (e) => {
 		e.preventDefault();
 
-		loginUser({ email, password });
+		login(formData);
 	};
 
-	if (isAuthenticated && profileSelf) {
-		return <Navigate to="/feed" />;
-	} else if (isAuthenticated && !profileSelf) {
-		return <Navigate to="/register" />;
-	}
+	const { formData, onChange } = useForm({ email: '', password: '' });
 
 	return (
 		<div className="container-small log-in">
@@ -37,7 +39,7 @@ const LogIn = ({ loginUser, auth: { isAuthenticated }, profile: { profileSelf } 
 					<input
 						type="email"
 						name="email"
-						value={email}
+						value={formData.email}
 						onChange={(e) => onChange(e)}
 						placeholder="email"
 						className="text-field text-field--lg text-normal-R"
@@ -45,13 +47,13 @@ const LogIn = ({ loginUser, auth: { isAuthenticated }, profile: { profileSelf } 
 					<input
 						type="password"
 						name="password"
-						value={password}
+						value={formData.password}
 						onChange={(e) => onChange(e)}
 						placeholder="password"
 						className="text-field text-field--lg text-normal-R"
 					/>
 				</form>
-				<button className="btn btn--rect-lg text-medium-SB" onClick={(e) => login(e)}>
+				<button className="btn btn--rect-lg text-medium-SB" onClick={(e) => submitLogin(e)}>
 					Log In
 				</button>
 			</div>
@@ -65,7 +67,7 @@ const LogIn = ({ loginUser, auth: { isAuthenticated }, profile: { profileSelf } 
 };
 
 LogIn.propTypes = {
-	loginUser: PropTypes.func.isRequired,
+	login: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired
 };
@@ -75,4 +77,4 @@ const mapStateToProps = (state) => ({
 	profile: state.profile
 });
 
-export default connect(mapStateToProps, { loginUser })(LogIn);
+export default connect(mapStateToProps, { login })(LogIn);

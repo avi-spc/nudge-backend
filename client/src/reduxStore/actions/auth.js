@@ -63,33 +63,31 @@ export const registerUser =
 		}
 	};
 
-export const loginUser =
-	({ email, password }) =>
-	async (dispatch) => {
-		const config = {
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		};
-
-		const body = JSON.stringify({ email, password });
-
-		try {
-			const res = await axios.post('/api/auth', body, config);
-
-			dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-			dispatch(retrieveUser());
-			dispatch(retrieveCurrentProfile());
-		} catch (err) {
-			const errors = err.response.data.errors;
-
-			errors.forEach((error) => {
-				dispatch(setAlert(error.msg, 'error'));
-			});
-
-			dispatch({ type: LOGIN_ERROR });
+export const login = (formData) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
 		}
 	};
+
+	const body = JSON.stringify(formData);
+
+	try {
+		const res = await axios.post('/api/auth', body, config);
+
+		dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+		dispatch(retrieveUser());
+		dispatch(retrieveCurrentProfile());
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		errors.forEach((error) => {
+			dispatch(setAlert(error.msg, 'error'));
+		});
+
+		dispatch({ type: LOGIN_ERROR });
+	}
+};
 
 export const logoutUser = () => (dispatch) => {
 	dispatch({ type: CLEAR_PROFILE });
