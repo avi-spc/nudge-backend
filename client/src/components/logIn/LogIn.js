@@ -10,18 +10,18 @@ const LogIn = (props) => {
 	const {
 		login,
 		auth: { isAuthenticated },
-		profile: { profileSelf }
+		profile: { personalProfile }
 	} = props;
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (isAuthenticated && profileSelf) {
+		if (isAuthenticated && personalProfile) {
 			navigate('/feed');
-		} else if (isAuthenticated && !profileSelf) {
+		} else if (isAuthenticated && !personalProfile) {
 			navigate('/register');
 		}
-	}, [isAuthenticated, profileSelf]);
+	}, [isAuthenticated, personalProfile]);
 
 	const submitLogin = (e) => {
 		e.preventDefault();

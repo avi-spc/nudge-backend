@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const NavActions = ({ logoutUser, profile: { profileSelf } }) => {
+const NavActions = ({ logoutUser, profile: { personalProfile } }) => {
 	const location = useLocation();
 	const [showDropdown, setShowDropdown] = useState(false);
 
@@ -21,9 +21,9 @@ const NavActions = ({ logoutUser, profile: { profileSelf } }) => {
 			</Link>
 			<span className="material-symbols-outlined symbol--lg">favorite</span>
 			<div className="profile-actions" onClick={() => setShowDropdown(!showDropdown)}>
-				{profileSelf.imageId ? (
+				{personalProfile.imageId ? (
 					<img
-						src={`http://localhost:5000/api/profile/image/${profileSelf.imageId}`}
+						src={`http://localhost:5000/api/profile/image/${personalProfile.imageId}`}
 						alt=""
 						className="avatar"
 					/>
@@ -34,7 +34,7 @@ const NavActions = ({ logoutUser, profile: { profileSelf } }) => {
 				{showDropdown && (
 					<ul className="text-medium-R">
 						<li>
-							<Link to={`/profile/${profileSelf.user}`}>Profile</Link>
+							<Link to={`/profile/${personalProfile.user}`}>Profile</Link>
 						</li>
 						<li onClick={() => logoutUser()}>Logout</li>
 					</ul>

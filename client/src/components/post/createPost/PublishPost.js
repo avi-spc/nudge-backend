@@ -11,7 +11,7 @@ const PublishPost = ({
 	publishPost,
 	discardPostImage,
 	createPostImageId,
-	profile: { profileSelf }
+	profile: { personalProfile }
 }) => {
 	const navigate = useNavigate();
 
@@ -40,16 +40,16 @@ const PublishPost = ({
 				)}
 				<div className="create-post__user-p-caption">
 					<div className="user-details">
-						{profileSelf.imageId ? (
+						{personalProfile.imageId ? (
 							<img
-								src={`http://localhost:5000/api/profile/image/${profileSelf.imageId}`}
+								src={`http://localhost:5000/api/profile/image/${personalProfile.imageId}`}
 								alt=""
 								className="avatar"
 							/>
 						) : (
 							<div className="avatar"></div>
 						)}
-						<div className="username text-medium-SB">{profileSelf.username}</div>
+						<div className="username text-medium-SB">{personalProfile.username}</div>
 					</div>
 					<textarea
 						className="text-medium-R create-post__caption-text"

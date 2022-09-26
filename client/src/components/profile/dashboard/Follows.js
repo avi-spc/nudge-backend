@@ -3,15 +3,16 @@ import { Link, useOutletContext, useLocation, useNavigate } from 'react-router-d
 import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 
 const Follows = () => {
-	const navigate = useNavigate();
 	const location = useLocation();
-	const { user, profileSeekerFollows } = useOutletContext();
+	const navigate = useNavigate();
+
+	const { user, userProfileFollows } = useOutletContext();
 
 	const followsType = location.pathname.split('/')[3];
 	const follows =
 		location.pathname.split('/')[3] === 'followers'
-			? profileSeekerFollows.followers
-			: profileSeekerFollows.following;
+			? userProfileFollows.followers
+			: userProfileFollows.following;
 
 	return (
 		<div className="popup">

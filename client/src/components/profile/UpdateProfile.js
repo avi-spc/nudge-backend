@@ -13,25 +13,25 @@ import UpdateProfileImage from './UpdateProfileImage';
 const UpdateProfile = (props) => {
 	const {
 		updateProfile,
-		profile: { profileSelf }
+		profile: { personalProfile }
 	} = props;
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		setShowPopup(false);
-	}, [profileSelf.imageId]);
+	}, [personalProfile.imageId]);
 
 	const [showPopup, setShowPopup] = useState(false);
 
-	const { name, username, bio } = profileSelf;
+	const { name, username, bio } = personalProfile;
 	const { formData: profile, onChange } = useForm({ name, username, bio });
 
 	return (
 		<div className="container-medium padded update-profile">
 			<TitleHeaderBar
 				title="edit profile"
-				action={() => navigate(`/profile/${profileSelf.user}`)}
+				action={() => navigate(`/profile/${personalProfile.user}`)}
 			/>
 			<div className="update-profile__form-p-avatar">
 				<form className="update-profile__form text-normal-R">
@@ -64,7 +64,7 @@ const UpdateProfile = (props) => {
 				<div className="update-profile__avatar-p-username">
 					<div className="update-profile__avatar" />
 					<div>
-						<div className="text-large-M">{profileSelf.username}</div>
+						<div className="text-large-M">{personalProfile.username}</div>
 						<button className="btn btn--rect-es text-small-R" onClick={() => setShowPopup(true)}>
 							Change profile picture
 						</button>
@@ -78,7 +78,7 @@ const UpdateProfile = (props) => {
 					</button>
 				</div>
 			</div>
-			{showPopup && <UpdateProfileImage setShowPopup={setShowPopup} profile={profileSelf} />}
+			{showPopup && <UpdateProfileImage setShowPopup={setShowPopup} profile={personalProfile} />}
 		</div>
 	);
 };

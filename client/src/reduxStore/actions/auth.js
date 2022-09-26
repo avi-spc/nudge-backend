@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { setAuthToken } from '../utils/setAuthToken';
 import { setAlert } from './alert';
-import { retrieveCurrentProfile } from './profile';
+import { getPersonalProfile } from './profile';
 
 import {
 	REGISTER_SUCCESS,
@@ -75,7 +75,7 @@ export const login = (user) => async (dispatch) => {
 
 		dispatch({ type: LOGIN_SUCCESS, payload: res.data });
 		dispatch(retrieveUser());
-		dispatch(retrieveCurrentProfile());
+		dispatch(getPersonalProfile());
 	} catch (err) {
 		const errors = err.response.data.errors;
 

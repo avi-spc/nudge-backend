@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const UserPostGallery = ({ posts }) => {
+const UserPostGallery = (props) => {
+	const { posts } = props;
+
 	return (
 		<div className="posts-gallery">
 			{posts.length > 0 &&
@@ -15,6 +17,10 @@ const UserPostGallery = ({ posts }) => {
 				))}
 		</div>
 	);
+};
+
+UserPostGallery.propTypes = {
+	posts: PropTypes.array.isRequired
 };
 
 export default UserPostGallery;

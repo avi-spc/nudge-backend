@@ -17,7 +17,7 @@ import PublishPost from './components/post/createPost/PublishPost';
 import PrivateRoute from './components/PrivateRoute';
 
 import { retrieveUser } from './reduxStore/actions/auth';
-import { retrieveCurrentProfile } from './reduxStore/actions/profile';
+import { getPersonalProfile } from './reduxStore/actions/profile';
 import { setAuthToken } from './reduxStore/utils/setAuthToken';
 
 // if (localStorage.token) {
@@ -27,7 +27,7 @@ import { setAuthToken } from './reduxStore/utils/setAuthToken';
 const App = () => {
 	useEffect(() => {
 		store.dispatch(retrieveUser());
-		store.dispatch(retrieveCurrentProfile());
+		store.dispatch(getPersonalProfile());
 	}, []);
 
 	return (

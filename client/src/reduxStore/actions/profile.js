@@ -14,7 +14,7 @@ import {
 	AUTH_SUCCESS
 } from './types';
 
-export const retrieveCurrentProfile = () => async (dispatch) => {
+export const getPersonalProfile = () => async (dispatch) => {
 	try {
 		const res = await axios.get('api/profile/me');
 
@@ -30,7 +30,7 @@ export const retrieveCurrentProfile = () => async (dispatch) => {
 	}
 };
 
-export const retrieveSeekerProfile = (userId) => async (dispatch) => {
+export const getUserProfile = (userId) => async (dispatch) => {
 	try {
 		const resProfile = await axios.get(`/api/profile/user/${userId}`);
 		const resFollows = await axios.get(`/api/users/follows/${userId}`);
@@ -107,7 +107,7 @@ export const followUser = (userId) => async (dispatch) => {
 		const res = await axios.post(`/api/users/follow/${userId}`);
 
 		dispatch({ type: AUTH_SUCCESS, payload: res.data });
-		dispatch(retrieveSeekerProfile(userId));
+		dispatch(getUserProfile(userId));
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}
@@ -118,7 +118,7 @@ export const unfollowUser = (userId) => async (dispatch) => {
 		const res = await axios.delete(`/api/users/unfollow/${userId}`);
 
 		dispatch({ type: AUTH_SUCCESS, payload: res.data });
-		dispatch(retrieveSeekerProfile(userId));
+		dispatch(getUserProfile(userId));
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}
