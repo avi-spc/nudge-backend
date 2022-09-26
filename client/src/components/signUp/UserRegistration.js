@@ -1,32 +1,29 @@
-import { Fragment, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
-const UserRegistration = ({ setAlert, registerUser, isAuthenticated }) => {
-	const [formData, setFormData] = useState({
-		email: '',
-		password: '',
-		confirm_password: ''
-	});
+import { useForm } from '../../hooks/useForm';
 
-	const { email, password, confirm_password } = formData;
+const UserRegistration = (props) => {
+	const { setAlert, register } = props;
 
-	const onChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
-
-	const register = (e) => {
+	const submitRegister = (e) => {
 		e.preventDefault();
 
 		if (password !== confirm_password) {
-			setAlert(`passwords don't match`, 'error');
-		} else {
-			registerUser({ email, password });
+			return setAlert("passwords don't match", 'error');
 		}
+
+		const user = { email, password };
+		
+		register(user);
 	};
+
+	const { formData, onChange } = useForm({ email: '', password: '', confirm_password: '' });
+	const { email, password, confirm_password } = formData;
 
 	return (
 		<Fragment>
-			<form className="sign-up__form">
+			<form className="sign-up__form" onSubmit={(e) => submitRegister(e)}>
 				<input
 					type="email"
 					name="email"
@@ -51,12 +48,15 @@ const UserRegistration = ({ setAlert, registerUser, isAuthenticated }) => {
 					placeholder="confirm password"
 					className="text-field text-field--lg text-normal-R"
 				/>
+				<input type="submit" value="Sign Up" className="btn btn--rect-lg text-medium-SB" />
 			</form>
-			<button className="btn btn--rect-lg text-medium-SB" onClick={(e) => register(e)}>
-				Sign Up
-			</button>
 		</Fragment>
 	);
+};
+
+UserRegistration.propTypes = {
+	setAlert: PropTypes.func.isRequired,
+	register: PropTypes.func.isRequired
 };
 
 export default UserRegistration;

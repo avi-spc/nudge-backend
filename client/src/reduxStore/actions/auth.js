@@ -36,41 +36,39 @@ export const retrieveUser = () => async (dispatch) => {
 	}
 };
 
-export const registerUser =
-	({ email, password }) =>
-	async (dispatch) => {
-		const config = {
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		};
-
-		const body = JSON.stringify({ email, password });
-
-		try {
-			const res = await axios.post('/api/users/', body, config);
-
-			dispatch({ type: REGISTER_SUCCESS, payload: res.data });
-			dispatch(retrieveUser());
-		} catch (err) {
-			const errors = err.response.data.errors;
-
-			errors.forEach((error) => {
-				dispatch(setAlert(error.msg, 'error'));
-			});
-
-			dispatch({ type: REGISTER_ERROR });
-		}
-	};
-
-export const login = (formData) => async (dispatch) => {
+export const register = (user) => async (dispatch) => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json'
 		}
 	};
 
-	const body = JSON.stringify(formData);
+	const body = JSON.stringify(user);
+
+	try {
+		const res = await axios.post('/api/users/', body, config);
+
+		dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+		dispatch(retrieveUser());
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		errors.forEach((error) => {
+			dispatch(setAlert(error.msg, 'error'));
+		});
+
+		dispatch({ type: REGISTER_ERROR });
+	}
+};
+
+export const login = (user) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+
+	const body = JSON.stringify(user);
 
 	try {
 		const res = await axios.post('/api/auth', body, config);

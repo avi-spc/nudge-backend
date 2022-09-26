@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -21,25 +21,25 @@ const LogIn = (props) => {
 		} else if (isAuthenticated && !profileSelf) {
 			navigate('/register');
 		}
-	}, [isAuthenticated]);
+	}, [isAuthenticated, profileSelf]);
 
 	const submitLogin = (e) => {
 		e.preventDefault();
 
-		login(formData);
+		login(user);
 	};
 
-	const { formData, onChange } = useForm({ email: '', password: '' });
+	const { formData: user, onChange } = useForm({ email: '', password: '' });
 
 	return (
 		<div className="container-small log-in">
 			<div className="log-in__logo-p-form">
 				<div className="log-in__logo">nudge</div>
-				<form className="log-in__form">
+				<form className="log-in__form" onSubmit={(e) => submitLogin(e)}>
 					<input
 						type="email"
 						name="email"
-						value={formData.email}
+						value={user.email}
 						onChange={(e) => onChange(e)}
 						placeholder="email"
 						className="text-field text-field--lg text-normal-R"
@@ -47,15 +47,13 @@ const LogIn = (props) => {
 					<input
 						type="password"
 						name="password"
-						value={formData.password}
+						value={user.password}
 						onChange={(e) => onChange(e)}
 						placeholder="password"
 						className="text-field text-field--lg text-normal-R"
 					/>
+					<input type="submit" value="Log In" className="btn btn--rect-lg text-medium-SB" />
 				</form>
-				<button className="btn btn--rect-lg text-medium-SB" onClick={(e) => submitLogin(e)}>
-					Log In
-				</button>
 			</div>
 			<Link to="/register">
 				<button className="btn-alternate text-medium-R">

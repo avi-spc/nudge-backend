@@ -1,28 +1,24 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
-const UserDetails = ({ createProfile }) => {
-	const [formData, setFormData] = useState({
-		name: '',
-		username: ''
-	});
+import { useForm } from '../../hooks/useForm';
 
-	const { name, username } = formData;
+const UserDetails = (props) => {
+	const { createProfile } = props;
 
-	const onChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
+	const submitProfile = (e) => {
+		createProfile(profile);
 	};
 
-	const setProfile = (e) => {
-		createProfile({ name, username });
-	};
+	const { formData: profile, onChange } = useForm({ name: '', username: '' });
 
 	return (
 		<Fragment>
-			<form className="sign-up__form">
+			<form className="sign-up__form" onSubmit={(e) => submitProfile(e)}>
 				<input
 					type="text"
 					name="name"
-					value={name}
+					value={profile.name}
 					onChange={(e) => onChange(e)}
 					placeholder="name"
 					className="text-field text-field--lg text-normal-R"
@@ -30,17 +26,19 @@ const UserDetails = ({ createProfile }) => {
 				<input
 					type="text"
 					name="username"
-					value={username}
+					value={profile.username}
 					onChange={(e) => onChange(e)}
 					placeholder="username"
 					className="text-field text-field--lg text-normal-R"
 				/>
+				<input type="submit" value="Confirm" className="btn btn--rect-lg text-medium-SB" />
 			</form>
-			<button className="btn btn--rect-lg text-medium-SB" onClick={(e) => setProfile(e)}>
-				Confirm
-			</button>
 		</Fragment>
 	);
+};
+
+UserDetails.propTypes = {
+	createProfile: PropTypes.func.isRequired
 };
 
 export default UserDetails;

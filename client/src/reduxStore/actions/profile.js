@@ -50,33 +50,31 @@ export const retrieveSeekerProfile = (userId) => async (dispatch) => {
 	}
 };
 
-export const createProfile =
-	({ name, username }) =>
-	async (dispatch) => {
-		const config = {
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		};
-
-		const body = JSON.stringify({ name, username });
-
-		try {
-			const res = await axios.post('/api/profile', body, config);
-
-			dispatch({ type: CREATE_PROFILE_SUCCESS, payload: res.data });
-			dispatch(setAlert(res.data.msg, res.data.type));
-		} catch (err) {
-			const errors = err.response.data.errors;
-
-			console.log(err);
-			errors.forEach((error) => {
-				dispatch(setAlert(error.msg, 'error'));
-			});
-
-			dispatch({ type: CREATE_PROFILE_ERROR });
+export const createProfile = (profile) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
 		}
 	};
+
+	const body = JSON.stringify(profile);
+
+	try {
+		const res = await axios.post('/api/profile', body, config);
+
+		dispatch({ type: CREATE_PROFILE_SUCCESS, payload: res.data });
+		dispatch(setAlert(res.data.msg, res.data.type));
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		console.log(err);
+		errors.forEach((error) => {
+			dispatch(setAlert(error.msg, 'error'));
+		});
+
+		dispatch({ type: CREATE_PROFILE_ERROR });
+	}
+};
 
 export const updateProfile =
 	({ name, username, bio }) =>

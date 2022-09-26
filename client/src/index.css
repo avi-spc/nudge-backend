@@ -500,11 +500,13 @@ img {
 
 .log-in__form,
 .sign-up__form {
-  margin-top: 8rem;
-  margin-bottom: 5rem; }
-  .log-in__form > :not(:last-child),
-  .sign-up__form > :not(:last-child) {
+  margin-top: 8rem; }
+  .log-in__form > input:not(:last-child),
+  .sign-up__form > input:not(:last-child) {
     margin-bottom: 2rem; }
+  .log-in__form > input[type='submit'],
+  .sign-up__form > input[type='submit'] {
+    margin-top: 3rem; }
 
 .sign-up__profile-avatar-upload {
   display: grid;

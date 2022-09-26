@@ -1,25 +1,31 @@
-import { Navigate, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setAlert } from '../../reduxStore/actions/alert';
-import { registerUser } from '../../reduxStore/actions/auth';
+import { register } from '../../reduxStore/actions/auth';
 import { createProfile } from '../../reduxStore/actions/profile';
 
-import UserImageUpload from './UserImageUpload';
-import UserDetails from './UserDetails';
 import UserRegistration from './UserRegistration';
+import UserDetails from './UserDetails';
 
-const SignUp = ({
-	setAlert,
-	registerUser,
-	createProfile,
-	auth: { isAuthenticated },
-	profile: { profileSelf }
-}) => {
-	if (isAuthenticated && profileSelf) {
-		return <Navigate to="/feed" />;
-	}
+const SignUp = (props) => {
+	const {
+		setAlert,
+		register,
+		createProfile,
+		auth: { isAuthenticated },
+		profile: { profileSelf }
+	} = props;
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (isAuthenticated && profileSelf) {
+			navigate('/feed');
+		}
+	}, [isAuthenticated, profileSelf]);
 
 	return (
 		<div className="container-small sign-up">
@@ -29,15 +35,12 @@ const SignUp = ({
 					<UserRegistration
 						setAlert={setAlert}
 						isAuthenticated={isAuthenticated}
-						registerUser={registerUser}
+						register={register}
 					/>
 				)}
-
 				{isAuthenticated && !profileSelf && (
 					<UserDetails setAlert={setAlert} createProfile={createProfile} />
 				)}
-
-				{/* <UserImageUpload /> */}
 			</div>
 			{!isAuthenticated && (
 				<Link to="/">
@@ -52,7 +55,7 @@ const SignUp = ({
 
 SignUp.propTypes = {
 	setAlert: PropTypes.func.isRequired,
-	registerUser: PropTypes.func.isRequired,
+	register: PropTypes.func.isRequired,
 	createProfile: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired
@@ -63,4 +66,4 @@ const mapStateToProps = (state) => ({
 	profile: state.profile
 });
 
-export default connect(mapStateToProps, { setAlert, registerUser, createProfile })(SignUp);
+export default connect(mapStateToProps, { setAlert, register, createProfile })(SignUp);

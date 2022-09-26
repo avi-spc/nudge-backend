@@ -19,10 +19,13 @@
 
 	&__form {
 		margin-top: 8rem;
-		margin-bottom: 5rem;
 
-		& > :not(:last-child) {
+		& > input:not(:last-child) {
 			margin-bottom: 2rem;
+		}
+
+		& > input[type='submit'] {
+			margin-top: 3rem;
 		}
 	}
 }
