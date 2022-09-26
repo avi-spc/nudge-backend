@@ -140,14 +140,14 @@ export const discardPostImage = (imageId) => async (dispatch) => {
 	}
 };
 
-export const publishPost = (postData) => async (dispatch) => {
+export const publishPost = (newPost) => async (dispatch) => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json'
 		}
 	};
 
-	const body = JSON.stringify(postData);
+	const body = JSON.stringify(newPost);
 
 	try {
 		const res = await axios.post('/api/posts', body, config);

@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
-
 import { uploadPostImage } from '../../../reduxStore/actions/post';
 
-const ImageUpload = ({ uploadPostImage, createPostImageId }) => {
+import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
+
+const ImageUpload = (props) => {
+	const { uploadPostImage, createPostImageId } = props;
+
 	const navigate = useNavigate();
-	const form = useRef();
+	const postImageForm = useRef();
 
 	useEffect(() => {
 		if (createPostImageId) {
@@ -21,17 +23,15 @@ const ImageUpload = ({ uploadPostImage, createPostImageId }) => {
 		<div className="container-medium padded image-upload">
 			<TitleHeaderBar title="create new post" action={() => navigate('/feed')} />
 			<div className="image-upload__buttons">
-				<form ref={form}>
+				<form ref={postImageForm}>
 					<label htmlFor="file" className="btn btn--rect-sm text-medium-R">
 						Select from device
 					</label>
 					<input type="file" id="file" name="file" className="hidden" />
 				</form>
-				{/* <button className="btn btn--rect-sm text-medium-R">Select from device</button>
-				<button className="btn btn--cir text-medium-R image-upload__btn-next"></button> */}
 				<button
 					className="btn btn--cir text-medium-R image-upload__btn-next"
-					onClick={() => uploadPostImage(form.current)}
+					onClick={() => uploadPostImage(postImageForm.current)}
 				></button>
 			</div>
 		</div>

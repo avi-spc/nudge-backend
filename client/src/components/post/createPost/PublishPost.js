@@ -3,25 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
-
 import { publishPost, discardPostImage } from '../../../reduxStore/actions/post';
+import { useForm } from '../../../hooks/useForm';
+import { isEmpty } from '../../../reduxStore/utils/validator';
 
-const PublishPost = ({
-	publishPost,
-	discardPostImage,
-	createPostImageId,
-	profile: { personalProfile }
-}) => {
+import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
+import Avatar from '../../Avatar';
+
+const PublishPost = (props) => {
+	const {
+		publishPost,
+		discardPostImage,
+		profile: { personalProfile },
+		createPostImageId
+	} = props;
+
 	const navigate = useNavigate();
-
-	const [formData, setFormData] = useState({ caption: '', imageId: createPostImageId });
-
-	const { caption } = formData;
-
-	const onChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
 
 	useEffect(() => {
 		if (!createPostImageId) {
@@ -29,32 +26,24 @@ const PublishPost = ({
 		}
 	}, [createPostImageId]);
 
+	const { formData: newPost, onChange } = useForm({ caption: '', imageId: createPostImageId });
+
 	return (
 		<div className="container-medium padded create-post">
 			<TitleHeaderBar title="create new post" action={() => discardPostImage(createPostImageId)} />
 			<div className="create-post__image-p-caption">
-				{createPostImageId && (
-					<div className="create-post__image">
-						<img src={`http://localhost:5000/api/posts/image/${createPostImageId}`}></img>
-					</div>
-				)}
+				<div className="create-post__image">
+					<img src={`http://localhost:5000/api/posts/image/${createPostImageId}`}></img>
+				</div>
 				<div className="create-post__user-p-caption">
 					<div className="user-details">
-						{personalProfile.imageId ? (
-							<img
-								src={`http://localhost:5000/api/profile/image/${personalProfile.imageId}`}
-								alt=""
-								className="avatar"
-							/>
-						) : (
-							<div className="avatar"></div>
-						)}
+						<Avatar imageId={personalProfile.imageId} classType="avatar" />
 						<div className="username text-medium-SB">{personalProfile.username}</div>
 					</div>
 					<textarea
 						className="text-medium-R create-post__caption-text"
 						name="caption"
-						value={caption}
+						value={newPost.caption}
 						onChange={(e) => onChange(e)}
 						cols="25"
 						rows="10"
@@ -62,8 +51,8 @@ const PublishPost = ({
 					></textarea>
 					<button
 						className="btn btn--rect-sm text-medium-R create-post__btn-publish"
-						onClick={() => publishPost(formData)}
-						disabled={caption.trim() === ''}
+						onClick={() => publishPost(newPost)}
+						disabled={isEmpty(newPost)}
 					>
 						Publish
 					</button>
@@ -76,13 +65,13 @@ const PublishPost = ({
 PublishPost.propTypes = {
 	publishPost: PropTypes.func.isRequired,
 	discardPostImage: PropTypes.func.isRequired,
-	createPostImageId: PropTypes.string.isRequired,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	createPostImageId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	createPostImageId: state.post.createPostImageId,
-	profile: state.profile
+	profile: state.profile,
+	createPostImageId: state.post.createPostImageId
 });
 
 export default connect(mapStateToProps, { publishPost, discardPostImage })(PublishPost);
