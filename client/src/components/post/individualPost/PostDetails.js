@@ -1,8 +1,12 @@
-import CommentInput from '../CommentInput';
+import PropTypes from 'prop-types';
 
 import { timestampInWords } from '../../../reduxStore/utils/timestampFormatter';
 
-const PostDetails = ({ setShowPopup, post }) => {
+import CommentInput from '../CommentInput';
+
+const PostDetails = (props) => {
+	const { setShowPopup, post } = props;
+
 	return (
 		<div className="individual-post__post-details">
 			<div className="avatars-p-meta">
@@ -20,6 +24,11 @@ const PostDetails = ({ setShowPopup, post }) => {
 			<CommentInput postId={post._id} />
 		</div>
 	);
+};
+
+PostDetails.propTypes = {
+	setShowPopup: PropTypes.func.isRequired,
+	post: PropTypes.object.isRequired
 };
 
 export default PostDetails;

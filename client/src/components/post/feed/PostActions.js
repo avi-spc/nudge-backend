@@ -4,11 +4,8 @@ import PropTypes from 'prop-types';
 
 import { likePost, unlikePost, savePost, unsavePost } from '../../../reduxStore/actions/post';
 
-const PostActions = ({ likePost, unlikePost, savePost, unsavePost, post, user }) => {
-	const [already, setAlready] = useState({
-		liked: false,
-		saved: false
-	});
+const PostActions = (props) => {
+	const { likePost, unlikePost, savePost, unsavePost, post, user } = props;
 
 	useEffect(() => {
 		setAlready({
@@ -37,10 +34,14 @@ const PostActions = ({ likePost, unlikePost, savePost, unsavePost, post, user })
 		setAlready({ ...already, saved: !already.saved });
 	};
 
+	const [already, setAlready] = useState({
+		liked: false,
+		saved: false
+	});
+
 	return (
 		<div className="feed-individual-post__post-actions">
 			<span
-				id="liked"
 				className={`material-symbols-outlined symbol--lg ${already.liked ? 'filled' : ''}`}
 				onClick={() => updateLiked()}
 			>
@@ -49,7 +50,6 @@ const PostActions = ({ likePost, unlikePost, savePost, unsavePost, post, user })
 			<span className="material-symbols-outlined symbol--lg">maps_ugc</span>
 			<span className="material-symbols-outlined symbol--lg">share</span>
 			<span
-				id="saved"
 				className={`material-symbols-outlined symbol--lg ${already.saved ? 'filled' : ''} btn-save`}
 				onClick={() => updateSaved()}
 			>

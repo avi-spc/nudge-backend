@@ -1,11 +1,15 @@
-import UserHeaderBar from '../../headerBars/UserHeaderBar';
+import PropTypes from 'prop-types';
 
 import { timestampInWords } from '../../../reduxStore/utils/timestampFormatter';
 
-const PostCaption = ({ post }) => {
+import UserHeaderBar from '../../headerBars/UserHeaderBar';
+
+const PostCaption = (props) => {
+	const { post } = props;
+
 	return (
 		<div className="individual-post__header-p-caption">
-			<UserHeaderBar username={post.user.username} imageId={post.user.profileImageId} />
+			<UserHeaderBar username={post.user.username} profileImageId={post.user.profileImageId} />
 			<div className="individual-post__caption-p-elapsed">
 				<p className="text-medium-R">{post.caption}</p>
 				<span className="elapsed absolute text-small-R">
@@ -14,6 +18,10 @@ const PostCaption = ({ post }) => {
 			</div>
 		</div>
 	);
+};
+
+PostCaption.propTypes = {
+	post: PropTypes.object.isRequired
 };
 
 export default PostCaption;

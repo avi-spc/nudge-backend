@@ -1,26 +1,21 @@
-import { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { addComment } from '../../reduxStore/actions/post';
+import { useForm } from '../../hooks/useForm';
+import { isEmpty } from '../../reduxStore/utils/validator';
 
-const CommentInput = ({ addComment, postId }) => {
-	const [formData, setFormData] = useState({
-		comment: ''
-	});
-
-	const { comment } = formData;
-
-	const onChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
+const CommentInput = (props) => {
+	const { addComment, postId } = props;
 
 	const submitComment = (e) => {
 		e.preventDefault();
 
-		addComment(comment.trim(), postId);
-		setFormData({ ...formData, comment: '' });
+		addComment(newComment.comment.trim(), postId);
+		resetForm();
 	};
+
+	const { formData: newComment, onChange, resetForm } = useForm({ comment: '' });
 
 	return (
 		<div className="comment-input">
@@ -28,7 +23,7 @@ const CommentInput = ({ addComment, postId }) => {
 				<input
 					type="text"
 					name="comment"
-					value={comment}
+					value={newComment.comment}
 					onChange={(e) => onChange(e)}
 					placeholder="Add a comment ..."
 					className="text-field text-field--lg text-medium-R"
@@ -37,7 +32,7 @@ const CommentInput = ({ addComment, postId }) => {
 					<button
 						className="btn text-small-R comment-input__btn-post"
 						onClick={(e) => submitComment(e)}
-						disabled={comment.trim() === ''}
+						disabled={isEmpty(newComment)}
 					>
 						POST
 					</button>

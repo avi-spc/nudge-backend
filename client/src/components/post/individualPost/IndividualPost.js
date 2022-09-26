@@ -3,22 +3,24 @@ import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { retrieveIndividualPost } from '../../../reduxStore/actions/post';
+
 import IndividualComment from './IndividualComment';
 import PostActions from './PostActions';
 import PostCaption from './PostCaption';
 import PostDetails from './PostDetails';
 import PostLikedUsers from './PostLikedUsers';
 
-import { retrieveIndividualPost } from '../../../reduxStore/actions/post';
+const IndividualPost = (props) => {
+	const { retrieveIndividualPost, post } = props;
 
-const IndividualPost = ({ retrieveIndividualPost, post }) => {
 	const { post_id } = useParams();
-
-	const [showPopup, setShowPopup] = useState(false);
 
 	useEffect(() => {
 		retrieveIndividualPost(post_id);
 	}, [post_id]);
+
+	const [showPopup, setShowPopup] = useState(false);
 
 	return (
 		post && (
@@ -29,9 +31,9 @@ const IndividualPost = ({ retrieveIndividualPost, post }) => {
 					</div>
 					<PostCaption post={post} />
 					<div className="individual-post__comments-list">
-						{post.comments.map((comment) => {
-							return <IndividualComment commentDetails={comment} key={comment._id} />;
-						})}
+						{post.comments.map((comment) => (
+							<IndividualComment commentDetails={comment} key={comment._id} />
+						))}
 					</div>
 					<PostActions post={post} />
 				</div>

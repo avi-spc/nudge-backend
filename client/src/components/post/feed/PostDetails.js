@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
-
-import CommentInput from '../CommentInput';
+import PropTypes from 'prop-types';
 
 import { timestampInWords } from '../../../reduxStore/utils/timestampFormatter';
 
-const PostDetails = ({ post }) => {
+import CommentInput from '../CommentInput';
+
+const PostDetails = (props) => {
+	const { post } = props;
+
 	return (
 		<div className="feed-individual-post__post-details">
 			<div className="details-m-input">
@@ -23,6 +26,10 @@ const PostDetails = ({ post }) => {
 			<CommentInput postId={post._id} />
 		</div>
 	);
+};
+
+PostDetails.propTypes = {
+	post: PropTypes.object.isRequired
 };
 
 export default PostDetails;

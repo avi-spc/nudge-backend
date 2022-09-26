@@ -27,9 +27,10 @@ const LogIn = (props) => {
 		e.preventDefault();
 
 		login(user);
+		resetForm();
 	};
 
-	const { formData: user, onChange } = useForm({ email: '', password: '' });
+	const { formData: user, onChange, resetForm } = useForm({ email: '', password: '' });
 
 	return (
 		<div className="container-small log-in">

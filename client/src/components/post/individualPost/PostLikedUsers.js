@@ -1,8 +1,12 @@
+import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
 
 import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 
-const PostLikedUsers = ({ setShowPopup, post }) => {
+const PostLikedUsers = (props) => {
+	const { setShowPopup, post } = props;
+
 	return (
 		<div className="popup">
 			<div className="padded individual-post__liked-users">
@@ -20,6 +24,11 @@ const PostLikedUsers = ({ setShowPopup, post }) => {
 			</div>
 		</div>
 	);
+};
+
+PostLikedUsers.propTypes = {
+	setShowPopup: PropTypes.func.isRequired,
+	post: PropTypes.object.isRequired
 };
 
 export default PostLikedUsers;

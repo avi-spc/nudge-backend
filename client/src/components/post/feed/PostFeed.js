@@ -2,15 +2,23 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import FeedIndividualPost from './FeedIndividualPost';
-
 import { retrieveAllPosts, discardPostImage } from '../../../reduxStore/actions/post';
 
-const PostFeed = ({ retrieveAllPosts, discardPostImage, post: { posts, createPostImageId } }) => {
+import FeedIndividualPost from './FeedIndividualPost';
+
+const PostFeed = (props) => {
+	const {
+		retrieveAllPosts,
+		discardPostImage,
+		post: { posts, createPostImageId }
+	} = props;
+
 	useEffect(() => {
 		retrieveAllPosts();
 
-		if (createPostImageId) discardPostImage(createPostImageId);
+		if (createPostImageId) {
+			discardPostImage(createPostImageId);
+		}
 	}, []);
 
 	return (

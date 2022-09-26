@@ -39,7 +39,7 @@ const ImageUpload = (props) => {
 };
 
 ImageUpload.propTypes = {
-	publishPost: PropTypes.func.isRequired,
+	uploadPostImage: PropTypes.func.isRequired,
 	createPostImageId: PropTypes.string.isRequired
 };
 

@@ -1,17 +1,15 @@
+import PropTypes from 'prop-types';
+
 import { timestampInWords } from '../../../reduxStore/utils/timestampFormatter';
 
-const IndividualComment = ({ commentDetails }) => {
+import Avatar from '../../Avatar';
+
+const IndividualComment = (props) => {
+	const { commentDetails } = props;
+
 	return (
 		<div className="individual-post__individual-comment">
-			{commentDetails.user.profileImageId ? (
-				<img
-					src={`http://localhost:5000/api/profile/image/${commentDetails.user.profileImageId}`}
-					alt=""
-					className="avatar"
-				/>
-			) : (
-				<div className="avatar"></div>
-			)}
+			<Avatar imageId={commentDetails.user.profileImageId} classType="avatar" />
 			<div className="text-medium-SB">{commentDetails.user.username}</div>
 			<span className="elapsed bordered text-small-R">
 				{timestampInWords(commentDetails.createdAt, 'short')}
@@ -21,6 +19,10 @@ const IndividualComment = ({ commentDetails }) => {
 			<div className="btn-reply text-small-R">Reply</div> */}
 		</div>
 	);
+};
+
+IndividualComment.propTypes = {
+	commentDetails: PropTypes.object.isRequired
 };
 
 export default IndividualComment;
