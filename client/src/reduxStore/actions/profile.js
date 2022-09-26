@@ -76,33 +76,31 @@ export const createProfile = (profile) => async (dispatch) => {
 	}
 };
 
-export const updateProfile =
-	({ name, username, bio }) =>
-	async (dispatch) => {
-		const config = {
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		};
-
-		const body = JSON.stringify({ name, username, bio });
-
-		try {
-			const res = await axios.put('/api/profile', body, config);
-
-			dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data });
-			dispatch(setAlert(res.data.msg, res.data.type));
-		} catch (err) {
-			const errors = err.response.data.errors;
-
-			console.log(err);
-			errors.forEach((error) => {
-				dispatch(setAlert(error.msg, 'error'));
-			});
-
-			dispatch({ type: UPDATE_PROFILE_ERROR });
+export const updateProfile = (profile) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
 		}
 	};
+
+	const body = JSON.stringify(profile);
+
+	try {
+		const res = await axios.put('/api/profile', body, config);
+
+		dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data });
+		dispatch(setAlert(res.data.msg, res.data.type));
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		console.log(err);
+		errors.forEach((error) => {
+			dispatch(setAlert(error.msg, 'error'));
+		});
+
+		dispatch({ type: UPDATE_PROFILE_ERROR });
+	}
+};
 
 export const followUser = (userId) => async (dispatch) => {
 	try {

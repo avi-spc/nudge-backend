@@ -3,26 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { updateProfile } from '../../reduxStore/actions/profile';
+import { useForm } from '../../hooks/useForm';
+import { isEmpty } from '../../reduxStore/utils/validator';
+
 import TitleHeaderBar from '../headerBars/TitleHeaderBar';
 import UpdateProfileImage from './UpdateProfileImage';
 
-import { updateProfile } from '../../reduxStore/actions/profile';
+const UpdateProfile = (props) => {
+	const {
+		updateProfile,
+		profile: { profileSelf }
+	} = props;
 
-const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 	const navigate = useNavigate();
-
-	const [formData, setFormData] = useState(profileSelf);
-	const [showPopup, setShowPopup] = useState(false);
-
-	const { name, username, bio } = formData;
 
 	useEffect(() => {
 		setShowPopup(false);
 	}, [profileSelf.imageId]);
 
-	const onChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
+	const [showPopup, setShowPopup] = useState(false);
+
+	const { name, username, bio } = profileSelf;
+	const { formData: profile, onChange } = useForm({ name, username, bio });
 
 	return (
 		<div className="container-medium padded update-profile">
@@ -36,7 +39,7 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 					<input
 						type="text"
 						name="name"
-						value={name}
+						value={profile.name}
 						onChange={(e) => onChange(e)}
 						className="text-field text-field--sm text-normal-R"
 					/>
@@ -44,20 +47,19 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 					<input
 						type="text"
 						name="username"
-						value={username}
+						value={profile.username}
 						onChange={(e) => onChange(e)}
 						className="text-field text-field--sm text-normal-R"
 					/>
 					<label htmlFor="">Bio</label>
 					<textarea
-						id=""
 						name="bio"
-						value={bio}
+						value={profile.bio}
 						onChange={(e) => onChange(e)}
 						cols="30"
 						rows="6"
 						className="text-field text-field--sm text-normal-R"
-					></textarea>
+					/>
 				</form>
 				<div className="update-profile__avatar-p-username">
 					<div className="update-profile__avatar" />
@@ -69,8 +71,8 @@ const UpdateProfile = ({ updateProfile, profile: { profileSelf } }) => {
 					</div>
 					<button
 						className="btn btn--rect-sm text-medium-R update-profile__btn-save"
-						onClick={() => updateProfile(formData)}
-						disabled={name.trim() === '' || username.trim() === ''}
+						disabled={isEmpty({ name: profile.name, username: profile.username })}
+						onClick={() => updateProfile(profile)}
 					>
 						Save
 					</button>

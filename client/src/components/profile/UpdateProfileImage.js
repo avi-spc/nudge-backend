@@ -1,12 +1,15 @@
 import { useRef } from 'react';
 import { connect } from 'react-redux';
-
-import TitleHeaderBar from '../headerBars/TitleHeaderBar';
+import PropTypes from 'prop-types';
 
 import { uploadProfileImage, removeProfileImage } from '../../reduxStore/actions/profile';
 
-const UpdateProfileImage = ({ setShowPopup, uploadProfileImage, removeProfileImage, profile }) => {
-	const form = useRef();
+import TitleHeaderBar from '../headerBars/TitleHeaderBar';
+
+const UpdateProfileImage = (props) => {
+	const { setShowPopup, uploadProfileImage, removeProfileImage, profile } = props;
+
+	const profileImageForm = useRef();
 
 	return (
 		<div className="popup">
@@ -14,13 +17,13 @@ const UpdateProfileImage = ({ setShowPopup, uploadProfileImage, removeProfileIma
 				<TitleHeaderBar title="Change profile photo" action={() => setShowPopup(false)} />
 				<ul className="text-medium-R">
 					<li>
-						<form ref={form}>
+						<form ref={profileImageForm}>
 							<label htmlFor="file">Change profile photo</label>
 							<input
 								type="file"
 								id="file"
 								name="file"
-								onChange={() => uploadProfileImage(form.current)}
+								onChange={() => uploadProfileImage(profileImageForm.current)}
 								className="hidden"
 							/>
 						</form>
@@ -39,6 +42,13 @@ const UpdateProfileImage = ({ setShowPopup, uploadProfileImage, removeProfileIma
 			</div>
 		</div>
 	);
+};
+
+UpdateProfileImage.propTypes = {
+	setShowPopup: PropTypes.func.isRequired,
+	uploadProfileImage: PropTypes.func.isRequired,
+	removeProfileImage: PropTypes.func.isRequired,
+	profile: PropTypes.object.isRequired
 };
 
 export default connect(null, { uploadProfileImage, removeProfileImage })(UpdateProfileImage);
