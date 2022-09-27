@@ -88,7 +88,9 @@ router.post('/follow/:user_id', auth, async (req, res) => {
 			{ new: true }
 		);
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'user followed', user });
+		res
+			.status(200)
+			.json({ type: ResponseTypes.SUCCESS, msg: 'user followed', follows: user.follows });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -123,7 +125,9 @@ router.delete('/unfollow/:user_id', auth, async (req, res) => {
 			{ new: true }
 		);
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'user unfollowed', user });
+		res
+			.status(200)
+			.json({ type: ResponseTypes.SUCCESS, msg: 'user unfollowed', follows: user.follows });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res

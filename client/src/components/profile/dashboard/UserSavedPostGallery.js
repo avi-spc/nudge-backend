@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const UserSavedPostGallery = (props) => {
-	const { retrieveSavedPosts, savedPosts } = props;
-	
+	const { getSavedPosts, savedPosts } = props;
+
 	useEffect(() => {
-		retrieveSavedPosts();
+		getSavedPosts();
 	}, []);
 
 	return (
@@ -29,7 +29,7 @@ const UserSavedPostGallery = (props) => {
 };
 
 UserSavedPostGallery.propTypes = {
-	retrieveSavedPosts: PropTypes.func.isRequired,
+	getSavedPosts: PropTypes.func.isRequired,
 	savedPosts: PropTypes.array.isRequired
 };
 

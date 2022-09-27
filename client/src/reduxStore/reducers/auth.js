@@ -7,7 +7,8 @@ import {
 	LOGIN_ERROR,
 	LOGOUT,
 	GET_SAVED_POSTS,
-	UPDATE_SAVED_POSTS
+	UPDATE_SAVED_POSTS,
+	UPDATE_FOLLOWS
 } from '../actions/types';
 
 const initialState = {
@@ -35,6 +36,8 @@ const authReducer = (state = initialState, action) => {
 			return { ...state, token: null, isAuthenticated: false, user: null, savedPosts: [] };
 		case GET_SAVED_POSTS:
 			return { ...state, savedPosts: payload.savedPosts };
+		case UPDATE_FOLLOWS:
+			return { ...state, user: { ...state.user, follows: payload.follows } };
 		case UPDATE_SAVED_POSTS:
 			return { ...state, user: { ...state.user, savedPosts: payload.savedPosts } };
 		default:

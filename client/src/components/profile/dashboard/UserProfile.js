@@ -3,9 +3,9 @@ import { Link, Outlet, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { retrieveSavedPosts } from '../../../reduxStore/actions/auth';
+import { getSavedPosts, followUser, unfollowUser } from '../../../reduxStore/actions/auth';
 import { discardPostImage } from '../../../reduxStore/actions/post';
-import { getUserProfile, followUser, unfollowUser } from '../../../reduxStore/actions/profile';
+import { getUserProfile } from '../../../reduxStore/actions/profile';
 
 import UserPostGallery from './UserPostGallery';
 import UserSavedPostGallery from './UserSavedPostGallery';
@@ -13,7 +13,7 @@ import Avatar from '../../Avatar';
 
 const UserProfile = (props) => {
 	const {
-		retrieveSavedPosts,
+		getSavedPosts,
 		discardPostImage,
 		getUserProfile,
 		followUser,
@@ -105,7 +105,7 @@ const UserProfile = (props) => {
 				</div>
 
 				{activeTab === 'saved' ? (
-					<UserSavedPostGallery retrieveSavedPosts={retrieveSavedPosts} savedPosts={savedPosts} />
+					<UserSavedPostGallery getSavedPosts={getSavedPosts} savedPosts={savedPosts} />
 				) : (
 					<UserPostGallery posts={userProfile.user.posts} />
 				)}
@@ -117,7 +117,7 @@ const UserProfile = (props) => {
 };
 
 UserProfile.propTypes = {
-	retrieveSavedPosts: PropTypes.func.isRequired,
+	getSavedPosts: PropTypes.func.isRequired,
 	discardPostImage: PropTypes.func.isRequired,
 	getUserProfile: PropTypes.func.isRequired,
 	followUser: PropTypes.func.isRequired,
@@ -134,7 +134,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-	retrieveSavedPosts,
+	getSavedPosts,
 	discardPostImage,
 	getUserProfile,
 	followUser,

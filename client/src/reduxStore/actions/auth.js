@@ -2,18 +2,19 @@ import axios from 'axios';
 
 import { setAuthToken } from '../utils/setAuthToken';
 import { setAlert } from './alert';
-import { getPersonalProfile } from './profile';
+import { getPersonalProfile, getUserProfile } from './profile';
 
 import {
-	REGISTER_SUCCESS,
-	REGISTER_ERROR,
 	AUTH_SUCCESS,
 	AUTH_ERROR,
+	REGISTER_SUCCESS,
+	REGISTER_ERROR,
 	LOGIN_SUCCESS,
 	LOGIN_ERROR,
 	LOGOUT,
 	CLEAR_PROFILE,
-	GET_SAVED_POSTS
+	GET_SAVED_POSTS,
+	UPDATE_FOLLOWS
 } from './types';
 
 export const retrieveUser = () => async (dispatch) => {
@@ -26,12 +27,6 @@ export const retrieveUser = () => async (dispatch) => {
 
 		dispatch({ type: AUTH_SUCCESS, payload: res.data });
 	} catch (err) {
-		const errors = err.response.data.errors;
-
-		errors.forEach((error) => {
-			dispatch(setAlert(error.msg, 'error'));
-		});
-
 		dispatch({ type: AUTH_ERROR });
 	}
 };
@@ -92,11 +87,33 @@ export const logout = () => (dispatch) => {
 	dispatch({ type: LOGOUT });
 };
 
-export const retrieveSavedPosts = () => async (dispatch) => {
+export const getSavedPosts = () => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/users/savedPosts');
 
 		dispatch({ type: GET_SAVED_POSTS, payload: res.data });
+	} catch (err) {
+		console.log(err.response.data.errors);
+	}
+};
+
+export const followUser = (userId) => async (dispatch) => {
+	try {
+		const res = await axios.post(`/api/users/follow/${userId}`);
+
+		dispatch({ type: UPDATE_FOLLOWS, payload: res.data });
+		dispatch(getUserProfile(userId));
+	} catch (err) {
+		console.log(err.response.data.errors);
+	}
+};
+
+export const unfollowUser = (userId) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/api/users/unfollow/${userId}`);
+
+		dispatch({ type: UPDATE_FOLLOWS, payload: res.data });
+		dispatch(getUserProfile(userId));
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}
