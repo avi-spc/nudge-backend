@@ -89,7 +89,7 @@ export const logout = () => (dispatch) => {
 
 export const getSavedPosts = () => async (dispatch) => {
 	try {
-		const res = await axios.get('/api/users/savedPosts');
+		const res = await axios.get('/api/users/save/me');
 
 		dispatch({ type: GET_SAVED_POSTS, payload: res.data });
 	} catch (err) {

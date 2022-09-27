@@ -11,8 +11,8 @@ import {
 
 const initialState = {
 	posts: [],
-	currentPost: null,
-	createPostImageId: null
+	individualPost: null,
+	newPostImageId: null
 };
 
 const postReducer = (state = initialState, action) => {
@@ -22,9 +22,9 @@ const postReducer = (state = initialState, action) => {
 		case GET_ALL_POSTS:
 			return { ...state, posts: payload.posts };
 		case GET_INDIVIDUAL_POST_SUCCESS:
-			return { ...state, currentPost: payload.post };
+			return { ...state, individualPost: payload.post };
 		case GET_INDIVIDUAL_POST_ERROR:
-			return { ...state, currentPost: null };
+			return { ...state, individualPost: null };
 		case UPDATE_LIKES:
 			return {
 				...state,
@@ -40,10 +40,10 @@ const postReducer = (state = initialState, action) => {
 				)
 			};
 		case POST_IMAGE_UPLOAD_SUCCESS:
-			return { ...state, createPostImageId: payload.imageId };
+			return { ...state, newPostImageId: payload.imageId };
 		case POST_UPLOAD_ERROR:
 		case POST_UPLOAD_SUCCESS:
-			return { ...state, createPostImageId: null };
+			return { ...state, newPostImageId: null };
 		default:
 			return state;
 	}

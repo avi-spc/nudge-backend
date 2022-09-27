@@ -8,16 +8,16 @@ import { uploadPostImage } from '../../../reduxStore/actions/post';
 import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 
 const ImageUpload = (props) => {
-	const { uploadPostImage, createPostImageId } = props;
+	const { uploadPostImage, newPostImageId } = props;
 
 	const navigate = useNavigate();
 	const postImageForm = useRef();
 
 	useEffect(() => {
-		if (createPostImageId) {
+		if (newPostImageId) {
 			navigate('/create/publish');
 		}
-	}, [createPostImageId]);
+	}, [newPostImageId]);
 
 	return (
 		<div className="container-medium padded image-upload">
@@ -40,11 +40,11 @@ const ImageUpload = (props) => {
 
 ImageUpload.propTypes = {
 	uploadPostImage: PropTypes.func.isRequired,
-	createPostImageId: PropTypes.string.isRequired
+	newPostImageId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	createPostImageId: state.post.createPostImageId
+	newPostImageId: state.post.newPostImageId
 });
 
 export default connect(mapStateToProps, { uploadPostImage })(ImageUpload);

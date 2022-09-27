@@ -20,7 +20,7 @@ const UserProfile = (props) => {
 		unfollowUser,
 		auth: { user, savedPosts },
 		profile: { userProfile, userProfileFollows },
-		createPostImageId
+		newPostImageId
 	} = props;
 
 	const { user_id } = useParams();
@@ -31,7 +31,9 @@ const UserProfile = (props) => {
 	}, [user_id]);
 
 	useEffect(() => {
-		if (createPostImageId) discardPostImage(createPostImageId);
+		if (newPostImageId) {
+			discardPostImage(newPostImageId);
+		}
 	}, []);
 
 	const [activeTab, setActiveTab] = useState('post');
@@ -124,13 +126,13 @@ UserProfile.propTypes = {
 	unfollowUser: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
-	createPostImageId: PropTypes.string.isRequired
+	newPostImageId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	auth: state.auth,
 	profile: state.profile,
-	createPostImageId: state.post.createPostImageId
+	newPostImageId: state.post.newPostImageId
 });
 
 export default connect(mapStateToProps, {

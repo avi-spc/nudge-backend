@@ -3,7 +3,7 @@ import axios from 'axios';
 import { setAlert } from './alert';
 
 import {
-	CREATE_PERSONAL_PROFILE,
+	CREATE_PROFILE,
 	GET_PERSONAL_PROFILE,
 	GET_USER_PROFILE_SUCCESS,
 	GET_USER_PROFILE_ERROR,
@@ -52,7 +52,7 @@ export const createProfile = (profile) => async (dispatch) => {
 	try {
 		const res = await axios.post('/api/profile', body, config);
 
-		dispatch({ type: CREATE_PERSONAL_PROFILE, payload: res.data });
+		dispatch({ type: CREATE_PROFILE, payload: res.data });
 		dispatch(setAlert(res.data.msg, res.data.type));
 	} catch (err) {
 		const errors = err.response.data.errors;

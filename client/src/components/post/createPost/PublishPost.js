@@ -15,25 +15,25 @@ const PublishPost = (props) => {
 		publishPost,
 		discardPostImage,
 		profile: { personalProfile },
-		createPostImageId
+		newPostImageId
 	} = props;
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!createPostImageId) {
+		if (!newPostImageId) {
 			navigate('/feed');
 		}
-	}, [createPostImageId]);
+	}, [newPostImageId]);
 
-	const { formData: newPost, onChange } = useForm({ caption: '', imageId: createPostImageId });
+	const { formData: newPost, onChange } = useForm({ caption: '', imageId: newPostImageId });
 
 	return (
 		<div className="container-medium padded create-post">
-			<TitleHeaderBar title="create new post" action={() => discardPostImage(createPostImageId)} />
+			<TitleHeaderBar title="create new post" action={() => discardPostImage(newPostImageId)} />
 			<div className="create-post__image-p-caption">
 				<div className="create-post__image">
-					<img src={`http://localhost:5000/api/posts/image/${createPostImageId}`}></img>
+					<img src={`http://localhost:5000/api/posts/image/${newPostImageId}`}></img>
 				</div>
 				<div className="create-post__user-p-caption">
 					<div className="user-details">
@@ -66,12 +66,12 @@ PublishPost.propTypes = {
 	publishPost: PropTypes.func.isRequired,
 	discardPostImage: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
-	createPostImageId: PropTypes.string.isRequired
+	newPostImageId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	profile: state.profile,
-	createPostImageId: state.post.createPostImageId
+	newPostImageId: state.post.newPostImageId
 });
 
 export default connect(mapStateToProps, { publishPost, discardPostImage })(PublishPost);

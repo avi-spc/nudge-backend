@@ -6,15 +6,15 @@ import {
 	GET_ALL_POSTS,
 	GET_INDIVIDUAL_POST_SUCCESS,
 	GET_INDIVIDUAL_POST_ERROR,
-	UPDATE_COMMENTS,
-	UPDATE_LIKES,
-	UPDATE_SAVED_POSTS,
 	POST_IMAGE_UPLOAD_SUCCESS,
 	POST_UPLOAD_SUCCESS,
-	POST_UPLOAD_ERROR
+	POST_UPLOAD_ERROR,
+	UPDATE_COMMENTS,
+	UPDATE_LIKES,
+	UPDATE_SAVED_POSTS
 } from './types';
 
-export const retrieveAllPosts = () => async (dispatch) => {
+export const getAllPosts = () => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/posts');
 
@@ -24,7 +24,7 @@ export const retrieveAllPosts = () => async (dispatch) => {
 	}
 };
 
-export const retrieveIndividualPost = (postId) => async (dispatch) => {
+export const getIndividualPost = (postId) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/api/posts/${postId}`);
 
@@ -44,8 +44,8 @@ export const likePost = (postId) => async (dispatch) => {
 	try {
 		const res = await axios.post(`/api/posts/like/${postId}`);
 
-		dispatch(retrieveIndividualPost(postId));
 		dispatch({ type: UPDATE_LIKES, payload: { postId, likes: res.data.likes } });
+		dispatch(getIndividualPost(postId));
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}
@@ -55,8 +55,8 @@ export const unlikePost = (postId) => async (dispatch) => {
 	try {
 		const res = await axios.delete(`/api/posts/unlike/${postId}`);
 
-		dispatch(retrieveIndividualPost(postId));
 		dispatch({ type: UPDATE_LIKES, payload: { postId, likes: res.data.likes } });
+		dispatch(getIndividualPost(postId));
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}
@@ -96,11 +96,11 @@ export const addComment = (comment, postId) => async (dispatch) => {
 	try {
 		const res = await axios.post(`/api/posts/comment/${postId}`, body, config);
 
-		dispatch(retrieveIndividualPost(postId));
 		dispatch({
 			type: UPDATE_COMMENTS,
 			payload: { postId, comments: res.data.comments }
 		});
+		dispatch(getIndividualPost(postId));
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}
@@ -133,8 +133,8 @@ export const discardPostImage = (imageId) => async (dispatch) => {
 	try {
 		const res = await axios.delete(`/api/posts/image/${imageId}`);
 
-		dispatch(setAlert(res.data.msg, res.data.type));
 		dispatch({ type: POST_UPLOAD_ERROR });
+		dispatch(setAlert(res.data.msg, res.data.type));
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}
@@ -152,8 +152,8 @@ export const publishPost = (newPost) => async (dispatch) => {
 	try {
 		const res = await axios.post('/api/posts', body, config);
 
-		dispatch(setAlert(res.data.msg, res.data.type));
 		dispatch({ type: POST_UPLOAD_SUCCESS });
+		dispatch(setAlert(res.data.msg, res.data.type));
 	} catch (err) {
 		const errors = err.response.data.errors;
 

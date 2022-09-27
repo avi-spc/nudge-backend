@@ -2,22 +2,22 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { retrieveAllPosts, discardPostImage } from '../../../reduxStore/actions/post';
+import { getAllPosts, discardPostImage } from '../../../reduxStore/actions/post';
 
 import FeedIndividualPost from './FeedIndividualPost';
 
 const PostFeed = (props) => {
 	const {
-		retrieveAllPosts,
+		getAllPosts,
 		discardPostImage,
-		post: { posts, createPostImageId }
+		post: { posts, newPostImageId }
 	} = props;
 
 	useEffect(() => {
-		retrieveAllPosts();
+		getAllPosts();
 
-		if (createPostImageId) {
-			discardPostImage(createPostImageId);
+		if (newPostImageId) {
+			discardPostImage(newPostImageId);
 		}
 	}, []);
 
@@ -31,7 +31,7 @@ const PostFeed = (props) => {
 };
 
 PostFeed.propTypes = {
-	retrieveAllPosts: PropTypes.func.isRequired,
+	getAllPosts: PropTypes.func.isRequired,
 	discardPostImage: PropTypes.func.isRequired,
 	post: PropTypes.object.isRequired
 };
@@ -40,4 +40,4 @@ const mapStateToProps = (state) => ({
 	post: state.post
 });
 
-export default connect(mapStateToProps, { retrieveAllPosts, discardPostImage })(PostFeed);
+export default connect(mapStateToProps, { getAllPosts, discardPostImage })(PostFeed);

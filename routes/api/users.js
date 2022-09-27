@@ -142,7 +142,7 @@ router.delete('/unfollow/:user_id', auth, async (req, res) => {
 // @route		GET: api/users/savedPosts
 // @desc		Retrieve current user's saved posts
 // @access		Private
-router.get('/savedPosts', auth, async (req, res) => {
+router.get('/save/me', auth, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id).populate({
 			path: 'savedPosts.post',

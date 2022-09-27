@@ -517,19 +517,6 @@ router.delete('/comment/reply/:post_id/:comment_id/:reply_id', auth, async (req,
 	}
 });
 
-// @route		GET: api/posts/save/me
-// @desc		Retrieve saved posts for current user
-// @access		Private
-router.get('/save/me', auth, async (req, res) => {
-	try {
-		const savedPosts = await User.findById(req.user.id).select(['-_id', 'savedPosts']);
-
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: savedPosts });
-	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
-	}
-});
-
 // @route		POST: api/posts/save/:post_id
 // @desc		Adding post to saves
 // @access		Private

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { retrieveIndividualPost } from '../../../reduxStore/actions/post';
+import { getIndividualPost } from '../../../reduxStore/actions/post';
 
 import IndividualComment from './IndividualComment';
 import PostActions from './PostActions';
@@ -12,12 +12,12 @@ import PostDetails from './PostDetails';
 import PostLikedUsers from './PostLikedUsers';
 
 const IndividualPost = (props) => {
-	const { retrieveIndividualPost, post } = props;
+	const { getIndividualPost, post } = props;
 
 	const { post_id } = useParams();
 
 	useEffect(() => {
-		retrieveIndividualPost(post_id);
+		getIndividualPost(post_id);
 	}, [post_id]);
 
 	const [showPopup, setShowPopup] = useState(false);
@@ -45,12 +45,12 @@ const IndividualPost = (props) => {
 };
 
 IndividualPost.propTypes = {
-	retrieveIndividualPost: PropTypes.func.isRequired,
+	getIndividualPost: PropTypes.func.isRequired,
 	post: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	post: state.post.currentPost
+	post: state.post.individualPost
 });
 
-export default connect(mapStateToProps, { retrieveIndividualPost })(IndividualPost);
+export default connect(mapStateToProps, { getIndividualPost })(IndividualPost);

@@ -1,5 +1,5 @@
 import {
-	CREATE_PERSONAL_PROFILE,
+	CREATE_PROFILE,
 	GET_PERSONAL_PROFILE,
 	GET_USER_PROFILE_SUCCESS,
 	GET_USER_PROFILE_ERROR,
@@ -17,7 +17,7 @@ const profileReducer = (state = initialState, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case CREATE_PERSONAL_PROFILE:
+		case CREATE_PROFILE:
 		case GET_PERSONAL_PROFILE:
 		case UPDATE_PROFILE:
 			return { ...state, personalProfile: payload.profile };
