@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { publishPost, discardPostImage } from '../../../reduxStore/actions/post';
 import { useForm } from '../../../hooks/useForm';
-import { isEmpty } from '../../../reduxStore/utils/validator';
+import { isEmpty } from '../../../utils/validator';
 
 import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 import Avatar from '../../Avatar';

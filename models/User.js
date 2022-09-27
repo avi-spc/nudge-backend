@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mongooseAutopulate = require('mongoose-autopopulate');
 
 const UserSchema = new mongoose.Schema(
 	{
@@ -64,7 +63,5 @@ const UserSchema = new mongoose.Schema(
 		timestamps: true
 	}
 );
-
-UserSchema.plugin(mongooseAutopulate);
 
 module.exports = User = mongoose.model('user', UserSchema);

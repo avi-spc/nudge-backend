@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { addComment } from '../../reduxStore/actions/post';
 import { useForm } from '../../hooks/useForm';
-import { isEmpty } from '../../reduxStore/utils/validator';
+import { isEmpty } from '../../utils/validator';
 
 const CommentInput = (props) => {
 	const { addComment, postId } = props;

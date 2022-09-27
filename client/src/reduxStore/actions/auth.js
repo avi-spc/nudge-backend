@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { setAuthToken } from '../utils/setAuthToken';
+import { setAuthToken } from '../../utils/setAuthToken';
 import { setAlert } from './alert';
 import { getPersonalProfile, getUserProfile } from './profile';
 

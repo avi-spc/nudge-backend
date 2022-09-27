@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { updateProfile } from '../../reduxStore/actions/profile';
 import { useForm } from '../../hooks/useForm';
-import { isEmpty } from '../../reduxStore/utils/validator';
+import { isEmpty } from '../../utils/validator';
 
 import TitleHeaderBar from '../headerBars/TitleHeaderBar';
 import UpdateProfileImage from './UpdateProfileImage';

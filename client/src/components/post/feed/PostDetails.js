@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { timestampInWords } from '../../../reduxStore/utils/timestampFormatter';
+import { timestampInWords } from '../../../utils/timestampFormatter';
 
 import CommentInput from '../CommentInput';
 
