@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,7 +12,7 @@ const NavActions = (props) => {
 		logout,
 		profile: { personalProfile }
 	} = props;
-	
+
 	const location = useLocation();
 
 	useEffect(() => {
@@ -23,12 +23,12 @@ const NavActions = (props) => {
 
 	return (
 		<div className="navbar__actions">
-			<Link to="/feed">
+			<NavLink to="/feed">
 				<span className="material-symbols-outlined symbol--lg">cottage</span>
-			</Link>
-			<Link to="/create">
+			</NavLink>
+			<NavLink to="/create">
 				<span className="material-symbols-outlined symbol--lg">loupe</span>
-			</Link>
+			</NavLink>
 			<span className="material-symbols-outlined symbol--lg">favorite</span>
 			<div className="profile-actions" onClick={() => setShowDropdown(!showDropdown)}>
 				<Avatar imageId={personalProfile.imageId} classType="avatar" />

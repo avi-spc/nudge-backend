@@ -96,6 +96,8 @@
 			background-color: $color-surface-quarternary;
 			border-radius: $border-radius-normal;
 
+			cursor: pointer;
+
 			&:not(:first-child) {
 				margin-left: 1rem;
 			}

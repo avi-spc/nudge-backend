@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const Avatar = (props) => {
 	const { imageId, classType } = props;
 
@@ -6,6 +8,11 @@ const Avatar = (props) => {
 	) : (
 		<div className={classType} />
 	);
+};
+
+Avatar.propTypes = {
+	imageId: PropTypes.string.isRequired,
+	classType: PropTypes.string.isRequired
 };
 
 export default Avatar;

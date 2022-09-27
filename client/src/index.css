@@ -133,6 +133,9 @@ img {
 .hidden {
   display: none; }
 
+.active [class*='symbol'] {
+  font-variation-settings: 'FILL' 1; }
+
 .alerts-group {
   display: flex;
   flex-direction: column;
@@ -303,6 +306,8 @@ img {
   color: #d9d9d9;
   background-color: #242424;
   border-radius: 2.5rem; }
+  .feed-individual-post__post-actions span {
+    cursor: pointer; }
   .feed-individual-post__post-actions .btn-save {
     justify-self: right; }
 
@@ -435,6 +440,8 @@ img {
     padding: 2rem;
     background-color: #2c2c2c;
     border-radius: 2.5rem; }
+    .individual-post__post-actions span {
+      cursor: pointer; }
     .individual-post__post-actions .btn-save {
       justify-self: right; }
   .individual-post__post-details {
@@ -455,7 +462,8 @@ img {
     .individual-post__post-details .meta {
       margin-left: 2.5rem; }
     .individual-post__post-details .likes-info {
-      color: #d9d9d9; }
+      color: #d9d9d9;
+      cursor: pointer; }
     .individual-post__post-details .post-date {
       margin-top: 1rem;
       color: #989899;
@@ -537,7 +545,8 @@ img {
     align-items: center;
     grid-gap: 0 2rem; }
     .navbar__actions .profile-actions {
-      position: relative; }
+      position: relative;
+      cursor: pointer; }
       .navbar__actions .profile-actions ul {
         position: absolute;
         top: 125%;
@@ -615,7 +624,8 @@ img {
       padding: 1.6rem;
       color: #d9d9d9;
       background-color: #121212;
-      border-radius: 2rem; }
+      border-radius: 2rem;
+      cursor: pointer; }
       .user-profile__gallery-tabs > div:not(:first-child) {
         margin-left: 1rem; }
     .user-profile__gallery-tabs > .active {

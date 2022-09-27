@@ -9,6 +9,7 @@ import { isEmpty } from '../../reduxStore/utils/validator';
 
 import TitleHeaderBar from '../headerBars/TitleHeaderBar';
 import UpdateProfileImage from './UpdateProfileImage';
+import Avatar from '../Avatar';
 
 const UpdateProfile = (props) => {
 	const {
@@ -62,7 +63,7 @@ const UpdateProfile = (props) => {
 					/>
 				</form>
 				<div className="update-profile__avatar-p-username">
-					<div className="update-profile__avatar" />
+					<Avatar imageId={personalProfile.imageId} classType="update-profile__avatar" />
 					<div>
 						<div className="text-large-M">{personalProfile.username}</div>
 						<button className="btn btn--rect-es text-small-R" onClick={() => setShowPopup(true)}>

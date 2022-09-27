@@ -79,3 +79,9 @@
 .hidden {
 	display: none;
 }
+
+.active {
+	[class*='symbol'] {
+		font-variation-settings: 'FILL' 1;
+	}
+}

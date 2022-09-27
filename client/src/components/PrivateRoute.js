@@ -1,10 +1,15 @@
 import { Fragment } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Navbar from './navbar/Navbar';
 
-const PrivateRoute = ({ auth: { isAuthenticated } }) => {
+const PrivateRoute = (props) => {
+	const {
+		auth: { isAuthenticated }
+	} = props;
+
 	return isAuthenticated ? (
 		<Fragment>
 			<Navbar />
@@ -13,6 +18,10 @@ const PrivateRoute = ({ auth: { isAuthenticated } }) => {
 	) : (
 		<Navigate to="/" />
 	);
+};
+
+PrivateRoute.propTypes = {
+	auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

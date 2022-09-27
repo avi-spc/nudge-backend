@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Alert = ({ alerts }) => {
+const Alert = (props) => {
+	const { alerts } = props;
+
 	return (
 		alerts !== null &&
 		alerts.length > 0 && (

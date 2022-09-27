@@ -12,7 +12,7 @@
 		.image {
 			margin-top: 1rem;
 			width: 100%;
-			
+
 			background-color: $color-surface-tertiary;
 			border-radius: $border-radius-medium;
 		}
@@ -33,6 +33,10 @@
 
 		background-color: $color-surface-secondary;
 		border-radius: $border-radius-medium;
+
+		span {
+			cursor: pointer;
+		}
 
 		.btn-save {
 			justify-self: right;
