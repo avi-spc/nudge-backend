@@ -64,22 +64,7 @@
 		.username-p-caption {
 			display: grid;
 			grid-template-columns: 1fr;
-
-			// padding: 1rem;
-
-			background-color: $color-surface-secondary;
-			border-radius: $border-radius-normal;
-
-			.username {
-				justify-self: center;
-				padding: 1.5rem 2.5rem;
-				background-color: $color-surface-quarternary;
-				border-radius: 0 0 $border-radius-small $border-radius-small;
-			}
-
-			.caption {
-				padding: 2rem 3rem 3rem 3rem;
-			}
+			grid-gap: 2rem 0;
 		}
 
 		.comments-count {

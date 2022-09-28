@@ -169,6 +169,7 @@ img {
 .btn {
   color: #1e1e1e;
   background-color: #6cb6ff;
+  border-style: none;
   cursor: pointer; }
   .btn:disabled {
     color: #989899;
@@ -326,15 +327,7 @@ img {
   .feed-individual-post__post-details .username-p-caption {
     display: grid;
     grid-template-columns: 1fr;
-    background-color: #242424;
-    border-radius: 2rem; }
-    .feed-individual-post__post-details .username-p-caption .username {
-      justify-self: center;
-      padding: 1.5rem 2.5rem;
-      background-color: #121212;
-      border-radius: 0 0 1.5rem 1.5rem; }
-    .feed-individual-post__post-details .username-p-caption .caption {
-      padding: 2rem 3rem 3rem 3rem; }
+    grid-gap: 2rem 0; }
   .feed-individual-post__post-details .comments-count {
     color: #989899; }
   .feed-individual-post__post-details .elapsed-time {
