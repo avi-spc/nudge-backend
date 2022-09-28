@@ -14,7 +14,9 @@ import {
 	LOGOUT,
 	CLEAR_PROFILE,
 	GET_SAVED_POSTS,
-	UPDATE_FOLLOWS
+	UPDATE_FOLLOWS,
+	USER_SEARCH,
+	CLEAR_SEARCH
 } from './types';
 
 export const retrieveUser = () => async (dispatch) => {
@@ -117,4 +119,18 @@ export const unfollowUser = (userId) => async (dispatch) => {
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}
+};
+
+export const searchUsers = (user) => async (dispatch) => {
+	try {
+		const res = await axios.get(`/api/users/${user}`);
+
+		dispatch({ type: USER_SEARCH, payload: res.data });
+	} catch (err) {
+		console.log(err.response.data.errors);
+	}
+};
+
+export const clearSearch = () => (dispatch) => {
+	dispatch({ type: CLEAR_SEARCH });
 };

@@ -1,6 +1,7 @@
 import { Link, useOutletContext, useLocation, useNavigate } from 'react-router-dom';
 
 import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
+import Avatar from '../../Avatar';
 
 const Follows = () => {
 	const location = useLocation();
@@ -20,9 +21,9 @@ const Follows = () => {
 				<TitleHeaderBar title={followsType} action={() => navigate(`/profile/${user}`)} />
 				<ul className="follows-list">
 					{follows.map((follow) => (
-						<li key={follow.user}>
+						<li key={follow.user._id}>
 							<Link to={`/profile/${follow.user._id}`}>
-								<div className="avatar"></div>
+								<Avatar imageId={follow.user.profileImageId} classType="avatar" />
 								<div className="text-medium-SB">{follow.user.username}</div>
 							</Link>
 						</li>

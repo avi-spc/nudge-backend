@@ -8,14 +8,17 @@ import {
 	LOGOUT,
 	GET_SAVED_POSTS,
 	UPDATE_SAVED_POSTS,
-	UPDATE_FOLLOWS
+	UPDATE_FOLLOWS,
+	USER_SEARCH,
+	CLEAR_SEARCH
 } from '../actions/types';
 
 const initialState = {
 	token: localStorage.getItem('token'),
 	isAuthenticated: false,
 	user: null,
-	savedPosts: []
+	savedPosts: [],
+	searchedUsers: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -33,13 +36,24 @@ const authReducer = (state = initialState, action) => {
 		case LOGIN_ERROR:
 		case LOGOUT:
 			localStorage.removeItem('token');
-			return { ...state, token: null, isAuthenticated: false, user: null, savedPosts: [] };
+			return {
+				...state,
+				token: null,
+				isAuthenticated: false,
+				user: null,
+				savedPosts: [],
+				searchedUsers: []
+			};
 		case GET_SAVED_POSTS:
 			return { ...state, savedPosts: payload.savedPosts };
 		case UPDATE_FOLLOWS:
 			return { ...state, user: { ...state.user, follows: payload.follows } };
 		case UPDATE_SAVED_POSTS:
 			return { ...state, user: { ...state.user, savedPosts: payload.savedPosts } };
+		case USER_SEARCH:
+			return { ...state, searchedUsers: payload.users };
+		case CLEAR_SEARCH:
+			return { ...state, searchedUsers: [] };
 		default:
 			return state;
 	}

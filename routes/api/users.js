@@ -10,7 +10,7 @@ const ResponseTypes = require('../../utils/responseTypes');
 
 const auth = require('../../middlewares/auth');
 
-const Profie = require('../../models/Profile');
+const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
 // @route		POST: api/users
@@ -163,11 +163,11 @@ router.get('/follows/:user_id', auth, async (req, res) => {
 		const user = await User.findById(req.params.user_id)
 			.populate({
 				path: 'follows.followers.user',
-				select: 'username'
+				select: 'username profileImageId'
 			})
 			.populate({
 				path: 'follows.following.user',
-				select: 'username'
+				select: 'username profileImageId'
 			});
 
 		if (!user) {
@@ -184,6 +184,24 @@ router.get('/follows/:user_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
 		}
 
+		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+	}
+});
+
+// @route		GET: api/users/:user_name
+// @desc		Search users by their name/username
+// @access		Private
+router.get('/:user_name', auth, async (req, res) => {
+	try {
+		const users = await Profile.find({
+			$or: [
+				{ name: { $regex: req.params.user_name, $options: 'i' } },
+				{ username: { $regex: req.params.user_name, $options: 'i' } }
+			]
+		});
+
+		res.status(200).json({ type: ResponseTypes.SUCCESS, users });
+	} catch (err) {
 		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
 	}
 });

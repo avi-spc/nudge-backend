@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
+import Avatar from '../../Avatar';
 
 import TitleHeaderBar from '../../headerBars/TitleHeaderBar';
 
@@ -15,7 +16,7 @@ const PostLikedUsers = (props) => {
 					{post.likes.map((like) => (
 						<li key={like.user._id}>
 							<Link to={`/profile/${like.user._id}`}>
-								<div className="avatar"></div>
+								<Avatar imageId={like.user.profileImageId} classType="avatar" />
 								<div className="text-medium-SB">{like.user.username}</div>
 							</Link>
 						</li>

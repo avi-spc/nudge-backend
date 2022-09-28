@@ -10,6 +10,8 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT = 'LOGOUT';
 export const UPDATE_FOLLOWS = 'UPDATE_FOLLOWS';
 export const GET_SAVED_POSTS = 'GET_SAVED_POSTS';
+export const USER_SEARCH = 'USER_SEARCH';
+export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 export const CREATE_PROFILE = 'CREATE_PROFILE';
 export const GET_PERSONAL_PROFILE = 'GET_PERSONAL_PROFILE';
