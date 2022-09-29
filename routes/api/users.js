@@ -10,6 +10,7 @@ const ResponseTypes = require('../../utils/responseTypes');
 
 const auth = require('../../middlewares/auth');
 
+const Notification = require('../../models/Notification');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
@@ -40,6 +41,12 @@ router.post(
 			user.password = await bcrypt.hash(password, salt);
 
 			await user.save();
+
+			const notification = new Notification({
+				user: user.id
+			});
+
+			await notification.save();
 
 			const payload = {
 				user: { id: user.id }
@@ -88,6 +95,19 @@ router.post('/follow/:user_id', auth, async (req, res) => {
 			{ new: true }
 		);
 
+		await Notification.findOneAndUpdate(
+			{ user: req.params.user_id },
+			{
+				$addToSet: {
+					notifications: {
+						user: req.user.id,
+						nType: 'follow'
+					}
+				}
+			},
+			{ new: true }
+		);
+
 		res
 			.status(200)
 			.json({ type: ResponseTypes.SUCCESS, msg: 'user followed', follows: user.follows });
@@ -122,6 +142,12 @@ router.delete('/unfollow/:user_id', auth, async (req, res) => {
 		user = await User.findByIdAndUpdate(
 			req.user.id,
 			{ $pull: { 'follows.following': { user: req.params.user_id } } },
+			{ new: true }
+		);
+
+		await Notification.findOneAndUpdate(
+			{ user: req.params.user_id },
+			{ $pull: { notifications: { user: req.user.id, nType: 'follow' } } },
 			{ new: true }
 		);
 

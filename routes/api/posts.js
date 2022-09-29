@@ -11,6 +11,7 @@ const ResponseTypes = require('../../utils/responseTypes');
 const auth = require('../../middlewares/auth');
 const imageUploadHandler = require('../../middlewares/upload');
 
+const Notification = require('../../models/Notification');
 const Post = require('../../models/Post');
 const User = require('../../models/User');
 
@@ -187,6 +188,14 @@ router.post('/like/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
+		await Notification.findOneAndUpdate(
+			{ user: post.user },
+			{
+				$addToSet: { notifications: { user: req.user.id, nType: 'like', post: post.id } }
+			},
+			{ new: true }
+		);
+
 		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post liked', likes: post.likes });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
@@ -215,6 +224,12 @@ router.delete('/unlike/:post_id', auth, async (req, res) => {
 				.status(400)
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
+
+		await Notification.findOneAndUpdate(
+			{ user: post.user },
+			{ $pull: { notifications: { user: req.user.id, nType: 'like', post: post.id } } },
+			{ new: true }
+		);
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post unliked', likes: post.likes });
 	} catch (err) {
@@ -257,6 +272,12 @@ router.post(
 
 			post.comments.unshift(commentObject);
 			await post.save();
+
+			await Notification.findOneAndUpdate(
+				{ user: post.user },
+				{ $addToSet: { notifications: { user: req.user.id, nType: 'comment', post: post.id } } },
+				{ new: true }
+			);
 
 			res
 				.status(200)
