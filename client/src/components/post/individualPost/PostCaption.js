@@ -12,7 +12,7 @@ const PostCaption = (props) => {
 			<UserHeaderBar username={post.user.username} profileImageId={post.user.profileImageId} />
 			<div className="individual-post__caption-p-elapsed">
 				<p className="text-medium-R">{post.caption}</p>
-				<span className="elapsed absolute text-small-R">
+				<span className="elapsed absolute bordered text-small-R">
 					{timestampInWords(post.createdAt, 'short')}
 				</span>
 			</div>

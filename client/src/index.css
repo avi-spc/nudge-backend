@@ -101,7 +101,6 @@ img {
 
 .absolute {
   position: absolute;
-  bottom: 1rem;
   right: 1rem; }
 
 .bordered {
@@ -355,7 +354,6 @@ img {
   z-index: 20;
   padding: 2rem;
   color: #d9d9d9;
-  background-color: #000000;
   border-radius: 2.5rem; }
   .user-header-bar__btn-more {
     color: #d9d9d9;
@@ -368,7 +366,7 @@ img {
 .individual-post {
   display: grid;
   grid-template-columns: max-content 1fr;
-  grid-template-rows: repeat(2, minmax(0, 1fr)) max-content;
+  grid-template-rows: min-content 1fr max-content;
   grid-gap: 0 1rem;
   position: relative;
   z-index: 5;
@@ -385,14 +383,12 @@ img {
     .individual-post__image img {
       width: 100%; }
   .individual-post__header-p-caption {
-    position: relative; }
+    position: relative;
+    margin-bottom: 5rem; }
   .individual-post__caption-p-elapsed {
-    position: absolute;
-    top: 0;
-    z-index: 10;
+    position: relative;
     width: 100%;
-    padding: 12rem 4.5rem 4.5rem 4.5rem;
-    background-color: #2c2c2c;
+    padding: 2rem 4.5rem 4rem 4rem;
     border-radius: 2.5rem; }
   .individual-post .elapsed {
     justify-self: start;
@@ -403,7 +399,7 @@ img {
   .individual-post__comments-list {
     display: flex;
     flex-direction: column;
-    height: 25rem;
+    height: 30rem;
     overflow: auto; }
     .individual-post__comments-list::-webkit-scrollbar {
       display: none; }
@@ -432,7 +428,6 @@ img {
     grid-gap: 0 2.5rem;
     align-self: end;
     padding: 2rem;
-    background-color: #2c2c2c;
     border-radius: 2.5rem; }
     .individual-post__post-actions span {
       cursor: pointer; }
@@ -486,15 +481,15 @@ img {
     padding: 2rem; }
 
 .loader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 0vh;
-  z-index: 3000;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  width: 100vw;
+  height: 0vh;
   background-color: #6cb6ff;
   transition: all 0.4s; }
   .loader div {

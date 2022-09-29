@@ -1,7 +1,7 @@
 .individual-post {
 	display: grid;
 	grid-template-columns: max-content 1fr;
-	grid-template-rows: repeat(2, minmax(0, 1fr)) max-content;
+	grid-template-rows: min-content 1fr max-content;
 	grid-gap: 0 1rem;
 
 	position: relative;
@@ -29,17 +29,15 @@
 
 	&__header-p-caption {
 		position: relative;
+		margin-bottom: 5rem;
 	}
 
 	&__caption-p-elapsed {
-		position: absolute;
-		top: 0;
-		z-index: 10;
+		position: relative;
 
 		width: 100%;
-		padding: 12rem 4.5rem 4.5rem 4.5rem;
+		padding: 2rem 4.5rem 4rem 4rem;
 
-		background-color: $color-surface-tertiary;
 		border-radius: $border-radius-medium;
 	}
 
@@ -56,7 +54,7 @@
 	&__comments-list {
 		display: flex;
 		flex-direction: column;
-		height: 25rem;
+		height: 30rem;
 
 		&::-webkit-scrollbar {
 			display: none;
@@ -106,7 +104,6 @@
 		align-self: end;
 		padding: 2rem;
 
-		background-color: $color-surface-tertiary;
 		border-radius: $border-radius-medium;
 
 		span {
