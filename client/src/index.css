@@ -8,7 +8,8 @@
   box-sizing: border-box; }
 
 html {
-  font-size: 45%; }
+  font-size: 45%;
+  overflow-x: hidden; }
 
 body {
   font-family: 'Fredoka', sans-serif;
@@ -484,6 +485,25 @@ img {
   .text-field--sm {
     padding: 2rem; }
 
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 0vh;
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #6cb6ff;
+  transition: all 0.4s; }
+  .loader div {
+    opacity: 0; }
+  .loader.visible {
+    height: 100vh; }
+    .loader.visible div {
+      opacity: 1; }
+
 .log-in__logo-p-form,
 .sign-up__logo-p-form {
   display: grid;
@@ -562,7 +582,7 @@ img {
       grid-gap: 3rem 0;
       position: absolute;
       top: 120%;
-      z-index: 3000;
+      z-index: 2500;
       padding: 3rem;
       width: 100%;
       background-color: #2c2c2c;

@@ -15,17 +15,17 @@ const SignUp = (props) => {
 		setAlert,
 		register,
 		createProfile,
-		auth: { isAuthenticated },
+		auth: { isAuthenticated, loading },
 		profile: { personalProfile }
 	} = props;
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (isAuthenticated && personalProfile) {
+		if (!loading && isAuthenticated && personalProfile) {
 			navigate('/feed');
 		}
-	}, [isAuthenticated, personalProfile]);
+	}, [isAuthenticated, personalProfile, loading]);
 
 	return (
 		<div className="container-small sign-up">
@@ -38,7 +38,7 @@ const SignUp = (props) => {
 						register={register}
 					/>
 				)}
-				{isAuthenticated && !personalProfile && (
+				{!loading && isAuthenticated && !personalProfile && (
 					<UserDetails setAlert={setAlert} createProfile={createProfile} />
 				)}
 			</div>

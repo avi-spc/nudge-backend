@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { setAlert } from './alert';
+import { setLoading } from './auth';
 
 import {
 	CREATE_PROFILE,
@@ -15,8 +16,10 @@ export const getPersonalProfile = () => async (dispatch) => {
 		const res = await axios.get('api/profile/me');
 
 		dispatch({ type: GET_PERSONAL_PROFILE, payload: res.data });
+		dispatch(setLoading(false));
 	} catch (err) {
 		console.log(err.response.data.errors);
+		dispatch(setLoading(false));
 	}
 };
 
@@ -29,6 +32,7 @@ export const getUserProfile = (userId) => async (dispatch) => {
 			type: GET_USER_PROFILE_SUCCESS,
 			payload: { profile: resProfile.data.profile, follows: resFollows.data.follows }
 		});
+		dispatch(setLoading(false));
 	} catch (err) {
 		const errors = err.response.data.errors;
 
@@ -37,6 +41,7 @@ export const getUserProfile = (userId) => async (dispatch) => {
 		});
 
 		dispatch({ type: GET_USER_PROFILE_ERROR });
+		dispatch(setLoading(false));
 	}
 };
 

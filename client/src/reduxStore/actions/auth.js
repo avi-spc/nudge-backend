@@ -16,10 +16,13 @@ import {
 	GET_SAVED_POSTS,
 	UPDATE_FOLLOWS,
 	USER_SEARCH,
-	CLEAR_SEARCH
+	CLEAR_SEARCH,
+	SET_LOADING
 } from './types';
 
 export const retrieveUser = () => async (dispatch) => {
+	dispatch(setLoading(true));
+
 	if (localStorage.token) {
 		setAuthToken(localStorage.token);
 	}
@@ -28,6 +31,7 @@ export const retrieveUser = () => async (dispatch) => {
 		const res = await axios.get('/api/auth');
 
 		dispatch({ type: AUTH_SUCCESS, payload: res.data });
+		dispatch(getPersonalProfile());
 	} catch (err) {
 		dispatch({ type: AUTH_ERROR });
 	}
@@ -133,4 +137,8 @@ export const searchUsers = (user) => async (dispatch) => {
 
 export const clearSearch = () => (dispatch) => {
 	dispatch({ type: CLEAR_SEARCH });
+};
+
+export const setLoading = (isLoading) => (dispatch) => {
+	dispatch({ type: SET_LOADING, payload: isLoading });
 };

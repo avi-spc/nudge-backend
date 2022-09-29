@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getSavedPosts, followUser, unfollowUser } from '../../../reduxStore/actions/auth';
+import {
+	getSavedPosts,
+	followUser,
+	unfollowUser,
+	setLoading
+} from '../../../reduxStore/actions/auth';
 import { discardPostImage } from '../../../reduxStore/actions/post';
 import { getUserProfile } from '../../../reduxStore/actions/profile';
 
@@ -18,6 +23,7 @@ const UserProfile = (props) => {
 		getUserProfile,
 		followUser,
 		unfollowUser,
+		setLoading,
 		auth: { user, savedPosts },
 		profile: { userProfile, userProfileFollows },
 		newPostImageId
@@ -26,6 +32,7 @@ const UserProfile = (props) => {
 	const { user_id } = useParams();
 
 	useEffect(() => {
+		setLoading(true);
 		getUserProfile(user_id);
 		setActiveTab('post');
 	}, [user_id]);
@@ -124,6 +131,7 @@ UserProfile.propTypes = {
 	getUserProfile: PropTypes.func.isRequired,
 	followUser: PropTypes.func.isRequired,
 	unfollowUser: PropTypes.func.isRequired,
+	setLoading: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
 	newPostImageId: PropTypes.string.isRequired
@@ -140,5 +148,6 @@ export default connect(mapStateToProps, {
 	discardPostImage,
 	getUserProfile,
 	followUser,
-	unfollowUser
+	unfollowUser,
+	setLoading
 })(UserProfile);

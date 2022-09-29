@@ -9,7 +9,7 @@ import { useForm } from '../../hooks/useForm';
 const LogIn = (props) => {
 	const {
 		login,
-		auth: { isAuthenticated },
+		auth: { isAuthenticated, loading },
 		profile: { personalProfile }
 	} = props;
 
@@ -18,10 +18,10 @@ const LogIn = (props) => {
 	useEffect(() => {
 		if (isAuthenticated && personalProfile) {
 			navigate('/feed');
-		} else if (isAuthenticated && !personalProfile) {
+		} else if (!loading && isAuthenticated && !personalProfile) {
 			navigate('/register');
 		}
-	}, [isAuthenticated, personalProfile]);
+	}, [isAuthenticated, personalProfile, loading]);
 
 	const submitLogin = (e) => {
 		e.preventDefault();

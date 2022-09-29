@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import store from './reduxStore/store';
 
+import Loader from './components/Loader';
 import Alert from './components/Alert';
 import LogIn from './components/logIn/LogIn';
 import SignUp from './components/signUp/SignUp';
@@ -17,13 +18,11 @@ import PublishPost from './components/post/createPost/PublishPost';
 import PrivateRoute from './components/PrivateRoute';
 
 import { retrieveUser } from './reduxStore/actions/auth';
-import { getPersonalProfile } from './reduxStore/actions/profile';
 
 const App = () => {
 	useEffect(() => {
 		if (localStorage.token) {
 			store.dispatch(retrieveUser());
-			store.dispatch(getPersonalProfile());
 		}
 	}, []);
 
@@ -31,6 +30,7 @@ const App = () => {
 		<div className="App">
 			<Provider store={store}>
 				<Router>
+					<Loader />
 					<Alert />
 					<Routes>
 						<Route path="/" element={<LogIn />} />

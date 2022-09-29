@@ -10,7 +10,8 @@ import {
 	UPDATE_SAVED_POSTS,
 	UPDATE_FOLLOWS,
 	USER_SEARCH,
-	CLEAR_SEARCH
+	CLEAR_SEARCH,
+	SET_LOADING
 } from '../actions/types';
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
 	isAuthenticated: false,
 	user: null,
 	savedPosts: [],
-	searchedUsers: []
+	searchedUsers: [],
+	loading: false
 };
 
 const authReducer = (state = initialState, action) => {
@@ -54,6 +56,8 @@ const authReducer = (state = initialState, action) => {
 			return { ...state, searchedUsers: payload.users };
 		case CLEAR_SEARCH:
 			return { ...state, searchedUsers: [] };
+		case SET_LOADING:
+			return { ...state, loading: payload };
 		default:
 			return state;
 	}
