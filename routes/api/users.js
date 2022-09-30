@@ -96,12 +96,21 @@ router.post('/follow/:user_id', auth, async (req, res) => {
 		);
 
 		await Notification.findOneAndUpdate(
-			{ user: req.params.user_id },
 			{
-				$addToSet: {
+				user: req.params.user_id,
+				notifications: { $not: { $elemMatch: { id: `${req.user.id}follow` } } }
+			},
+			{
+				$push: {
 					notifications: {
-						user: req.user.id,
-						nType: 'follow'
+						$each: [
+							{
+								id: `${req.user.id}follow`,
+								user: req.user.id,
+								nType: 'follow'
+							}
+						],
+						$position: 0
 					}
 				}
 			},
@@ -147,7 +156,7 @@ router.delete('/unfollow/:user_id', auth, async (req, res) => {
 
 		await Notification.findOneAndUpdate(
 			{ user: req.params.user_id },
-			{ $pull: { notifications: { user: req.user.id, nType: 'follow' } } },
+			{ $pull: { notifications: { id: `${req.user.id}follow` } } },
 			{ new: true }
 		);
 

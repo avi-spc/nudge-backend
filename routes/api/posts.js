@@ -190,9 +190,24 @@ router.post('/like/:post_id', auth, async (req, res) => {
 
 		if (post.user.toString() !== req.user.id) {
 			await Notification.findOneAndUpdate(
-				{ user: post.user },
 				{
-					$addToSet: { notifications: { user: req.user.id, nType: 'like', post: post.id } }
+					user: post.user,
+					notifications: { $not: { $elemMatch: { id: `${req.user.id}${post.id}like` } } }
+				},
+				{
+					$push: {
+						notifications: {
+							$each: [
+								{
+									id: `${req.user.id}${post.id}like`,
+									user: req.user.id,
+									nType: 'like',
+									post: post.id
+								}
+							],
+							$position: 0
+						}
+					}
 				},
 				{ new: true }
 			);
@@ -227,13 +242,11 @@ router.delete('/unlike/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		if (post.user.toString() !== req.user.id) {
-			await Notification.findOneAndUpdate(
-				{ user: post.user },
-				{ $pull: { notifications: { user: req.user.id, nType: 'like', post: post.id } } },
-				{ new: true }
-			);
-		}
+		await Notification.findOneAndUpdate(
+			{ user: post.user },
+			{ $pull: { notifications: { id: `${req.user.id}${post.id}like` } } },
+			{ new: true }
+		);
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post unliked', likes: post.likes });
 	} catch (err) {
@@ -280,7 +293,21 @@ router.post(
 			if (post.user.toString() !== req.user.id) {
 				await Notification.findOneAndUpdate(
 					{ user: post.user },
-					{ $addToSet: { notifications: { user: req.user.id, nType: 'comment', post: post.id } } },
+					{
+						$push: {
+							notifications: {
+								$each: [
+									{
+										id: `${req.user.id}${post.id}comment`,
+										user: req.user.id,
+										nType: 'comment',
+										post: post.id
+									}
+								],
+								$position: 0
+							}
+						}
+					},
 					{ new: true }
 				);
 			}

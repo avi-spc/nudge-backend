@@ -11,6 +11,10 @@ const NotificationSchema = new mongoose.Schema(
 			{
 				type: new mongoose.Schema(
 					{
+						id: {
+							type: String,
+							unique: true
+						},
 						user: {
 							type: mongoose.Schema.Types.ObjectId,
 							ref: 'user'
@@ -21,6 +25,10 @@ const NotificationSchema = new mongoose.Schema(
 						post: {
 							type: mongoose.Schema.Types.ObjectId,
 							ref: 'post'
+						},
+						read: {
+							type: Boolean,
+							default: false
 						},
 						_id: false
 					},
