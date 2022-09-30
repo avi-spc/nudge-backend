@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { setAlert } from './alert';
 import { setLoading } from './auth';
+import { getNotifications } from './notification';
 
 import {
 	CREATE_PROFILE,
@@ -16,6 +17,7 @@ export const getPersonalProfile = () => async (dispatch) => {
 		const res = await axios.get('api/profile/me');
 
 		dispatch({ type: GET_PERSONAL_PROFILE, payload: res.data });
+		dispatch(getNotifications());
 		dispatch(setLoading(false));
 	} catch (err) {
 		console.log(err.response.data.errors);

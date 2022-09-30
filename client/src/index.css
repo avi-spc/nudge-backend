@@ -597,6 +597,44 @@ img {
       .navbar__user-search .btn-clear-search:hover {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 100, 'opsz' 20; }
 
+.notification-actions {
+  position: relative; }
+
+.navbar__notifications {
+  position: absolute;
+  top: 150%;
+  z-index: 1000;
+  width: 50rem;
+  color: #d9d9d9; }
+  .navbar__notifications .indicator {
+    position: absolute;
+    top: -5%;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: #d9d9d9;
+    border-radius: 50%; }
+  .navbar__notifications .individual-notification:not(:last-child) {
+    margin-bottom: 1rem; }
+  .navbar__notifications li a {
+    display: flex;
+    align-items: flex-start;
+    padding: 2.5rem;
+    background-color: #242424;
+    border-radius: 2.5rem; }
+    .navbar__notifications li a .avatar {
+      align-self: center; }
+    .navbar__notifications li a .username-p-message {
+      flex-grow: 1;
+      margin-left: 2.5rem; }
+    .navbar__notifications li a .message {
+      margin-top: 1rem; }
+    .navbar__notifications li a .elapsed {
+      justify-self: flex-end;
+      padding: 0.8rem 1rem;
+      color: #989899;
+      background-color: #1e1e1e;
+      border-radius: 3rem; }
+
 .user-profile {
   display: grid;
   grid-template-columns: max-content 1fr;

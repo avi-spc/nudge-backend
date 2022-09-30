@@ -188,13 +188,15 @@ router.post('/like/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		await Notification.findOneAndUpdate(
-			{ user: post.user },
-			{
-				$addToSet: { notifications: { user: req.user.id, nType: 'like', post: post.id } }
-			},
-			{ new: true }
-		);
+		if (post.user.toString() !== req.user.id) {
+			await Notification.findOneAndUpdate(
+				{ user: post.user },
+				{
+					$addToSet: { notifications: { user: req.user.id, nType: 'like', post: post.id } }
+				},
+				{ new: true }
+			);
+		}
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post liked', likes: post.likes });
 	} catch (err) {
@@ -225,11 +227,13 @@ router.delete('/unlike/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		await Notification.findOneAndUpdate(
-			{ user: post.user },
-			{ $pull: { notifications: { user: req.user.id, nType: 'like', post: post.id } } },
-			{ new: true }
-		);
+		if (post.user.toString() !== req.user.id) {
+			await Notification.findOneAndUpdate(
+				{ user: post.user },
+				{ $pull: { notifications: { user: req.user.id, nType: 'like', post: post.id } } },
+				{ new: true }
+			);
+		}
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post unliked', likes: post.likes });
 	} catch (err) {
@@ -273,11 +277,13 @@ router.post(
 			post.comments.unshift(commentObject);
 			await post.save();
 
-			await Notification.findOneAndUpdate(
-				{ user: post.user },
-				{ $addToSet: { notifications: { user: req.user.id, nType: 'comment', post: post.id } } },
-				{ new: true }
-			);
+			if (post.user.toString() !== req.user.id) {
+				await Notification.findOneAndUpdate(
+					{ user: post.user },
+					{ $addToSet: { notifications: { user: req.user.id, nType: 'comment', post: post.id } } },
+					{ new: true }
+				);
+			}
 
 			res
 				.status(200)

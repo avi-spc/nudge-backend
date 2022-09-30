@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import { logout } from '../../reduxStore/actions/auth';
 
+import NavNotifications from './NavNotifications';
 import Avatar from '../Avatar';
 
 const NavActions = (props) => {
@@ -29,7 +30,10 @@ const NavActions = (props) => {
 			<NavLink to="/create">
 				<span className="material-symbols-outlined symbol--lg">loupe</span>
 			</NavLink>
-			<span className="material-symbols-outlined symbol--lg">favorite</span>
+			<div className="notification-actions">
+				<span className="material-symbols-outlined symbol--lg">favorite</span>
+				<NavNotifications />
+			</div>
 			<div className="profile-actions" onClick={() => setShowDropdown(!showDropdown)}>
 				<Avatar imageId={personalProfile.imageId} classType="avatar" />
 				{showDropdown && (
