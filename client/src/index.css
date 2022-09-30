@@ -619,8 +619,9 @@ img {
     display: flex;
     align-items: flex-start;
     padding: 2.5rem;
-    background-color: #242424;
     border-radius: 2.5rem; }
+    .navbar__notifications li a.unread {
+      background-color: #242424; }
     .navbar__notifications li a .avatar {
       align-self: center; }
     .navbar__notifications li a .username-p-message {

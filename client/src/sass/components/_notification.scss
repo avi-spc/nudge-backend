@@ -31,8 +31,11 @@
 		align-items: flex-start;
 		padding: 2.5rem;
 
-		background-color: $color-surface-secondary;
 		border-radius: $border-radius-medium;
+
+		&.unread {
+			background-color: $color-surface-secondary;
+		}
 
 		.avatar {
 			align-self: center;
