@@ -1,5 +1,25 @@
 .notification-actions {
 	position: relative;
+
+	label {
+		cursor: pointer;
+
+		&:hover {
+			color: $color-accent-primary;
+		}
+	}
+
+	input[type='checkbox'] {
+		display: none;
+
+		&:checked ~ label span {
+			font-variation-settings: 'FILL' 1;
+		}
+
+		&:not(:checked) ~ .navbar__notifications {
+			display: none;
+		}
+	}
 }
 
 .navbar__notifications {

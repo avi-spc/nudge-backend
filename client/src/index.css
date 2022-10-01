@@ -599,6 +599,16 @@ img {
 
 .notification-actions {
   position: relative; }
+  .notification-actions label {
+    cursor: pointer; }
+    .notification-actions label:hover {
+      color: #6cb6ff; }
+  .notification-actions input[type='checkbox'] {
+    display: none; }
+    .notification-actions input[type='checkbox']:checked ~ label span {
+      font-variation-settings: 'FILL' 1; }
+    .notification-actions input[type='checkbox']:not(:checked) ~ .navbar__notifications {
+      display: none; }
 
 .navbar__notifications {
   position: absolute;

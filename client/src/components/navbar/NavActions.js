@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -15,9 +15,11 @@ const NavActions = (props) => {
 	} = props;
 
 	const location = useLocation();
+	const notificationRef = useRef();
 
 	useEffect(() => {
 		setShowDropdown(false);
+		notificationRef.current.checked = false;
 	}, [location]);
 
 	const [showDropdown, setShowDropdown] = useState(false);
@@ -31,7 +33,10 @@ const NavActions = (props) => {
 				<span className="material-symbols-outlined symbol--lg">loupe</span>
 			</NavLink>
 			<div className="notification-actions">
-				<span className="material-symbols-outlined symbol--lg">favorite</span>
+				<input type="checkbox" id="notification-dropdown" ref={notificationRef} />
+				<label htmlFor="notification-dropdown">
+					<span className="material-symbols-outlined symbol--lg">favorite</span>
+				</label>
 				<NavNotifications />
 			</div>
 			<div className="profile-actions" onClick={() => setShowDropdown(!showDropdown)}>
