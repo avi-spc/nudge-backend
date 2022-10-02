@@ -16,7 +16,7 @@ const LogIn = (props) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (isAuthenticated && personalProfile) {
+		if (!loading && isAuthenticated && personalProfile) {
 			navigate('/feed');
 		} else if (!loading && isAuthenticated && !personalProfile) {
 			navigate('/register');

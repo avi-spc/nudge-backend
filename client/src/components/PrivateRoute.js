@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Fragment, useEffect } from 'react';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -7,16 +7,25 @@ import Navbar from './navbar/Navbar';
 
 const PrivateRoute = (props) => {
 	const {
-		auth: { isAuthenticated }
+		auth: { isAuthenticated, loading }
 	} = props;
 
-	return isAuthenticated ? (
-		<Fragment>
-			<Navbar />
-			<Outlet />
-		</Fragment>
-	) : (
-		<Navigate to="/" />
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!isAuthenticated && !loading) {
+			navigate('/');
+		}
+	}, [isAuthenticated, loading]);
+
+	return (
+		isAuthenticated &&
+		!loading && (
+			<Fragment>
+				<Navbar />
+				<Outlet />
+			</Fragment>
+		)
 	);
 };
 

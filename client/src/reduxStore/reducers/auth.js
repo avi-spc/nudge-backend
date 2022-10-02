@@ -20,7 +20,7 @@ const initialState = {
 	user: null,
 	savedPosts: [],
 	searchedUsers: [],
-	loading: false
+	loading: true
 };
 
 const authReducer = (state = initialState, action) => {
@@ -44,7 +44,8 @@ const authReducer = (state = initialState, action) => {
 				isAuthenticated: false,
 				user: null,
 				savedPosts: [],
-				searchedUsers: []
+				searchedUsers: [],
+				loading: false
 			};
 		case GET_SAVED_POSTS:
 			return { ...state, savedPosts: payload.savedPosts };

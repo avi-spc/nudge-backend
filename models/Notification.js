@@ -12,8 +12,7 @@ const NotificationSchema = new mongoose.Schema(
 				type: new mongoose.Schema(
 					{
 						id: {
-							type: String,
-							unique: true
+							type: String
 						},
 						user: {
 							type: mongoose.Schema.Types.ObjectId,

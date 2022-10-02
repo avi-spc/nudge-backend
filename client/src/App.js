@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import store from './reduxStore/store';
+import { retrieveUser } from './reduxStore/actions/auth';
 
 import Loader from './components/Loader';
 import Alert from './components/Alert';
@@ -17,13 +18,9 @@ import ImageUpload from './components/post/createPost/ImageUpload';
 import PublishPost from './components/post/createPost/PublishPost';
 import PrivateRoute from './components/PrivateRoute';
 
-import { retrieveUser } from './reduxStore/actions/auth';
-
 const App = () => {
 	useEffect(() => {
-		if (localStorage.token) {
-			store.dispatch(retrieveUser());
-		}
+		store.dispatch(retrieveUser());
 	}, []);
 
 	return (
