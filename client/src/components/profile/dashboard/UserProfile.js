@@ -32,7 +32,7 @@ const UserProfile = (props) => {
 	const { user_id } = useParams();
 
 	useEffect(() => {
-		setLoading(true);
+		// setLoading(true);
 		getUserProfile(user_id);
 		setActiveTab('post');
 	}, [user_id]);

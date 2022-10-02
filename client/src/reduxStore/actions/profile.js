@@ -14,7 +14,7 @@ import {
 
 export const getPersonalProfile = () => async (dispatch) => {
 	try {
-		const res = await axios.get('api/profile/me');
+		const res = await axios.get('/api/profile/me');
 
 		dispatch({ type: GET_PERSONAL_PROFILE, payload: res.data });
 		dispatch(getNotifications());
@@ -34,7 +34,7 @@ export const getUserProfile = (userId) => async (dispatch) => {
 			type: GET_USER_PROFILE_SUCCESS,
 			payload: { profile: resProfile.data.profile, follows: resFollows.data.follows }
 		});
-		dispatch(setLoading(false));
+		// dispatch(setLoading(false));
 	} catch (err) {
 		const errors = err.response.data.errors;
 
@@ -43,7 +43,7 @@ export const getUserProfile = (userId) => async (dispatch) => {
 		});
 
 		dispatch({ type: GET_USER_PROFILE_ERROR });
-		dispatch(setLoading(false));
+		// dispatch(setLoading(false));
 	}
 };
 

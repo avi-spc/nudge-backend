@@ -16,13 +16,13 @@ import {
 } from './types';
 
 export const getAllPosts = () => async (dispatch) => {
-	dispatch(setLoading(true));
+	// dispatch(setLoading(true));
 
 	try {
 		const res = await axios.get('/api/posts');
 
 		dispatch({ type: GET_ALL_POSTS, payload: res.data });
-		dispatch(setLoading(false));
+		// dispatch(setLoading(false));
 	} catch (err) {
 		console.log(err.response.data.errors);
 	}

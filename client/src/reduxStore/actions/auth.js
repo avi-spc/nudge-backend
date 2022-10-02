@@ -76,7 +76,6 @@ export const login = (user) => async (dispatch) => {
 
 		dispatch({ type: LOGIN_SUCCESS, payload: res.data });
 		dispatch(retrieveUser());
-		dispatch(getPersonalProfile());
 	} catch (err) {
 		const errors = err.response.data.errors;
 
