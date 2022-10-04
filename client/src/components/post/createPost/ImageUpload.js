@@ -32,7 +32,9 @@ const ImageUpload = (props) => {
 				<button
 					className="btn btn--cir text-medium-R image-upload__btn-next"
 					onClick={() => uploadPostImage(postImageForm.current)}
-				></button>
+				>
+					<span className="material-symbols-outlined symbol--md">arrow_forward</span>
+				</button>
 			</div>
 		</div>
 	);

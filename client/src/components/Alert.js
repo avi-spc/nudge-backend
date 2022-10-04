@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { removeAlert } from '../reduxStore/actions/alert';
+
 const Alert = (props) => {
-	const { alerts } = props;
+	const { removeAlert, alerts } = props;
 
 	return (
 		alerts !== null &&
@@ -14,7 +16,12 @@ const Alert = (props) => {
 							{alert.category === 'success' ? 'check_circle' : 'block'}
 						</span>
 						<span className="text-medium-M">{alert.message}</span>
-						<span className="material-symbols-outlined symbol--md alert__btn-close">close</span>
+						<span
+							className="material-symbols-outlined symbol--md alert__btn-close"
+							onClick={() => removeAlert(alert.id)}
+						>
+							close
+						</span>
 					</div>
 				))}
 			</div>
@@ -23,6 +30,7 @@ const Alert = (props) => {
 };
 
 Alert.propTypes = {
+	removeAlert: PropTypes.func.isRequired,
 	alerts: PropTypes.array.isRequired
 };
 
@@ -30,4 +38,4 @@ const mapStateToProps = (state) => ({
 	alerts: state.alert
 });
 
-export default connect(mapStateToProps)(Alert);
+export default connect(mapStateToProps, { removeAlert })(Alert);

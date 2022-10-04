@@ -11,3 +11,7 @@ export const setAlert = (message, category) => (dispatch) => {
 		dispatch({ type: REMOVE_ALERT, payload: id });
 	}, 3000);
 };
+
+export const removeAlert = (alertId) => (dispatch) => {
+	dispatch({ type: REMOVE_ALERT, payload: alertId });
+};

@@ -164,7 +164,8 @@ img {
     background-color: #8ddb8c; }
   .alert__btn-close {
     margin-left: 5rem;
-    justify-self: end; }
+    justify-self: end;
+    cursor: pointer; }
 
 .btn {
   color: #1e1e1e;
@@ -281,8 +282,8 @@ img {
   height: 53rem; }
 
 .image-upload__btn-next {
-  margin-top: 3rem;
-  padding: 3rem; }
+  margin-top: 5rem;
+  padding: 2rem; }
 
 .feed > div:not(:first-child) {
   margin-top: 4rem; }
