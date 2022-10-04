@@ -48,7 +48,7 @@ const PostActions = (props) => {
 			>
 				favorite
 			</span>
-			<span className="material-symbols-outlined symbol--lg">maps_ugc</span>
+			{/* <span className="material-symbols-outlined symbol--lg">maps_ugc</span> */}
 			<span className="material-symbols-outlined symbol--lg">share</span>
 			<span
 				className={`material-symbols-outlined symbol--lg ${already.saved ? 'filled' : ''} btn-save`}

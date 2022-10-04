@@ -425,7 +425,7 @@ img {
       color: #989899; }
   .individual-post__post-actions {
     display: grid;
-    grid-template-columns: repeat(3, min-content) 1fr;
+    grid-template-columns: repeat(2, min-content) 1fr;
     grid-gap: 0 2.5rem;
     align-self: end;
     padding: 2rem;
@@ -447,8 +447,13 @@ img {
       display: flex;
       align-items: center;
       margin-left: 1.5rem; }
-    .individual-post__post-details .liked-avatars div {
-      padding: 2.5rem; }
+    .individual-post__post-details .liked-avatars {
+      display: flex; }
+      .individual-post__post-details .liked-avatars > div,
+      .individual-post__post-details .liked-avatars img {
+        border: 0.5rem solid #2c2c2c; }
+      .individual-post__post-details .liked-avatars img:not(:first-child) {
+        margin-left: -1.5rem; }
     .individual-post__post-details .meta {
       margin-left: 2.5rem; }
     .individual-post__post-details .likes-info {
