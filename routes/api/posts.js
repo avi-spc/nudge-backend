@@ -329,7 +329,9 @@ router.post(
 							notifications: {
 								$each: [
 									{
-										id: `${req.user.id}${post.id}comment`,
+										id: `${req.user.id}${post.id}comment${Date.parse(
+											new Date()
+										)}`,
 										user: req.user.id,
 										nType: 'comment',
 										post: post.id
