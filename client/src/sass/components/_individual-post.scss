@@ -65,7 +65,7 @@
 
 	&__individual-comment {
 		display: grid;
-		grid-template-columns: min-content max-content 1fr;
+		grid-template-columns: min-content max-content 1fr min-content;
 		align-items: center;
 		grid-gap: 1rem 2.5rem;
 
@@ -93,6 +93,23 @@
 
 				color: $color-text-secondary;
 			}
+
+			&-remove {
+				display: none;
+				border-radius: 50%;
+				grid-row: 1/2;
+				grid-column: 4/-1;
+
+				cursor: pointer;
+
+				&:hover {
+					background-color: $color-surface-secondary;
+				}
+			}
+		}
+
+		&:hover > .btn-remove {
+			display: inline-block;
 		}
 	}
 

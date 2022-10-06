@@ -32,7 +32,11 @@ const IndividualPost = (props) => {
 					<PostCaption post={post} />
 					<div className="individual-post__comments-list">
 						{post.comments.map((comment) => (
-							<IndividualComment commentDetails={comment} key={comment._id} />
+							<IndividualComment
+								post={post}
+								commentDetails={comment}
+								key={comment._id}
+							/>
 						))}
 					</div>
 					<PostActions post={post} />

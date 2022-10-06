@@ -52,9 +52,10 @@ router.post(
 
 			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post created', post });
 		} catch (err) {
-			res
-				.status(500)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res.status(500).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+			});
 		}
 	}
 );
@@ -70,7 +71,10 @@ router.get('/', auth, async (req, res) => {
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, posts });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -88,9 +92,10 @@ router.get('/:post_id', auth, async (req, res) => {
 			.populate({ path: 'comments.user', select: 'username profileImageId' });
 
 		if (!post) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_ALREADY_EXISTS }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.USER_ALREADY_EXISTS }]
+			});
 		}
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, post });
@@ -101,7 +106,10 @@ router.get('/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -127,7 +135,10 @@ router.get('/user/:user_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -144,9 +155,10 @@ router.delete('/:post_id', auth, async (req, res) => {
 		}
 
 		if (post.user._id.toString() !== req.user.id) {
-			return res
-				.status(401)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }] });
+			return res.status(401).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }]
+			});
 		}
 
 		await PostStream().delete(post.imageId, (err, result) => {
@@ -167,7 +179,10 @@ router.delete('/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -221,7 +236,10 @@ router.post('/like/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -248,7 +266,11 @@ router.delete('/unlike/:post_id', auth, async (req, res) => {
 			{ new: true }
 		);
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post unliked', likes: post.likes });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			msg: 'post unliked',
+			likes: post.likes
+		});
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -256,7 +278,10 @@ router.delete('/unlike/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -282,9 +307,10 @@ router.post(
 		try {
 			const post = await Post.findById(req.params.post_id);
 			if (!post) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.POST_NOT_FOUND }]
+				});
 			}
 
 			const commentObject = {
@@ -317,19 +343,23 @@ router.post(
 				);
 			}
 
-			res
-				.status(200)
-				.json({ type: ResponseTypes.SUCCESS, msg: 'comment created', comments: post.comments });
+			res.status(200).json({
+				type: ResponseTypes.SUCCESS,
+				msg: 'comment created',
+				comments: post.comments
+			});
 		} catch (err) {
 			if (err.kind === 'ObjectId') {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.POST_NOT_FOUND }]
+				});
 			}
 
-			res
-				.status(500)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res.status(500).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+			});
 		}
 	}
 );
@@ -351,15 +381,17 @@ router.delete('/comment/:post_id/:comment_id', auth, async (req, res) => {
 		});
 
 		if (!comment) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }]
+			});
 		}
 
 		if (comment.user.toString() !== req.user.id && post.user.toString() !== req.user.id) {
-			return res
-				.status(401)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }] });
+			return res.status(401).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }]
+			});
 		}
 
 		const removeIndex = post.comments.findIndex((comment) => {
@@ -369,7 +401,11 @@ router.delete('/comment/:post_id/:comment_id', auth, async (req, res) => {
 		post.comments.splice(removeIndex, 1);
 		await post.save();
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'comment deleted', post } });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			msg: 'comment deleted',
+			comments: post.comments
+		});
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -377,7 +413,10 @@ router.delete('/comment/:post_id/:comment_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -412,14 +451,21 @@ router.post('/comment/like/:post_id/:comment_id', auth, async (req, res) => {
 		).select('comments');
 
 		if (!comments) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }]
+			});
 		}
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'comment liked', comments } });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			data: { msg: 'comment liked', comments }
+		});
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -454,16 +500,21 @@ router.delete('/comment/unlike/:post_id/:comment_id', auth, async (req, res) => 
 		).select('comments');
 
 		if (!comments) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }]
+			});
 		}
 
-		res
-			.status(200)
-			.json({ type: ResponseTypes.SUCCESS, data: { msg: 'comment unliked', comments } });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			data: { msg: 'comment unliked', comments }
+		});
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -489,18 +540,20 @@ router.post(
 		try {
 			const post = await Post.findById(req.params.post_id);
 			if (!post) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.POST_NOT_FOUND }]
+				});
 			}
 
 			const commentIndex = post.comments.findIndex((comment) => {
 				return comment._id.toString() === req.params.comment_id;
 			});
 			if (commentIndex === -1) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }]
+				});
 			}
 
 			const replyObject = {
@@ -511,17 +564,22 @@ router.post(
 			post.comments[commentIndex].replies.unshift(replyObject);
 			await post.save();
 
-			res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'reply added', post } });
+			res.status(200).json({
+				type: ResponseTypes.SUCCESS,
+				data: { msg: 'reply added', post }
+			});
 		} catch (err) {
 			if (err.kind === 'ObjectId') {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.POST_NOT_FOUND }]
+				});
 			}
 
-			res
-				.status(500)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res.status(500).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+			});
 		}
 	}
 );
@@ -542,9 +600,10 @@ router.delete('/comment/reply/:post_id/:comment_id/:reply_id', auth, async (req,
 			return comment._id.toString() === req.params.comment_id;
 		});
 		if (commentIndex === -1) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.COMMENT_NOT_FOUND }]
+			});
 		}
 
 		const reply = post.comments[commentIndex].replies.find((reply) => {
@@ -557,9 +616,10 @@ router.delete('/comment/reply/:post_id/:comment_id/:reply_id', auth, async (req,
 		}
 
 		if (reply.user.toString() !== req.user.id && post.user.toString() !== req.user.id) {
-			return res
-				.status(401)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }] });
+			return res.status(401).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.USER_NOT_AUTHORIZED }]
+			});
 		}
 
 		const removeIndex = post.comments[commentIndex].replies.findIndex((reply) => {
@@ -577,7 +637,10 @@ router.delete('/comment/reply/:post_id/:comment_id/:reply_id', auth, async (req,
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -611,7 +674,10 @@ router.post('/save/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -645,7 +711,10 @@ router.delete('/unsave/:post_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.POST_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -674,7 +743,10 @@ router.get('/image/:image_id', async (req, res) => {
 
 		stream.pipe(res);
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -691,7 +763,10 @@ router.post('/image', [auth, imageUploadHandler], async (req, res) => {
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, imageId: req.file.id });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -716,7 +791,10 @@ router.delete('/image/:image_id', auth, async (req, res) => {
 			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post discarded' });
 		});
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 

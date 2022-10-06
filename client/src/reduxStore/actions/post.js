@@ -12,7 +12,8 @@ import {
 	POST_UPLOAD_ERROR,
 	UPDATE_COMMENTS,
 	UPDATE_LIKES,
-	UPDATE_SAVED_POSTS
+	UPDATE_SAVED_POSTS,
+	CLEAR_INDIVIDUAL_POST
 } from './types';
 
 export const getAllPosts = () => async (dispatch) => {
@@ -104,6 +105,17 @@ export const addComment = (comment, postId) => async (dispatch) => {
 			type: UPDATE_COMMENTS,
 			payload: { postId, comments: res.data.comments }
 		});
+		dispatch(getIndividualPost(postId));
+	} catch (err) {
+		console.log(err.response.data.errors);
+	}
+};
+
+export const removeComment = (postId, commentId) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
+
+		dispatch({ type: UPDATE_COMMENTS, payload: { postId, comments: res.data.comments } });
 		dispatch(getIndividualPost(postId));
 	} catch (err) {
 		console.log(err.response.data.errors);
