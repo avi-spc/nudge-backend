@@ -13,7 +13,8 @@ import {
 	UPDATE_COMMENTS,
 	UPDATE_LIKES,
 	UPDATE_SAVED_POSTS,
-	UPDATE_POST_OPTIONS
+	UPDATE_POST_OPTIONS,
+	UPDATE_ALL_POSTS
 } from './types';
 
 export const getAllPosts = () => async (dispatch) => {
@@ -176,6 +177,17 @@ export const publishPost = (newPost) => async (dispatch) => {
 		errors.forEach((error) => {
 			dispatch(setAlert(error.msg, 'error'));
 		});
+	}
+};
+
+export const deletePost = (postId) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/api/posts/${postId}`);
+
+		dispatch({ type: UPDATE_ALL_POSTS, payload: postId });
+		dispatch(setAlert(res.data.msg, res.data.type));
+	} catch (err) {
+		console.log(err.response.data.errors);
 	}
 };
 

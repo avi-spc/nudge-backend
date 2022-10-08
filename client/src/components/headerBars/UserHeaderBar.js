@@ -6,18 +6,19 @@ import { updatePostOptions } from '../../reduxStore/actions/post';
 import Avatar from '../Avatar';
 
 const UserHeaderBar = (props) => {
-	const { updatePostOptions, postOptions, personalProfile, username, profileImageId } = props;
+	const { updatePostOptions, postId, user } = props;
 
 	return (
 		<div className="user-header-bar">
-			<Avatar imageId={profileImageId} classType="avatar" />
-			<div className="text-medium-SB">{username}</div>
+			<Avatar imageId={user.profileImageId} classType="avatar" />
+			<div className="text-medium-SB">{user.username}</div>
 			<span
 				className="material-symbols-outlined symbol--md user-header-bar__btn-more"
 				onClick={() =>
 					updatePostOptions({
 						isVisible: true,
-						isMine: username === personalProfile.username
+						postId,
+						userId: user._id
 					})
 				}
 			>
@@ -29,15 +30,8 @@ const UserHeaderBar = (props) => {
 
 UserHeaderBar.propTypes = {
 	updatePostOptions: PropTypes.func.isRequired,
-	postOptions: PropTypes.object.isRequired,
-	personalProfile: PropTypes.object.isRequired,
-	username: PropTypes.string.isRequired,
-	profileImageId: PropTypes.string.isRequired
+	postId: PropTypes.string.isRequired,
+	user: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-	postOptions: state.post.postOptions,
-	personalProfile: state.profile.personalProfile
-});
-
-export default connect(mapStateToProps, { updatePostOptions })(UserHeaderBar);
+export default connect(null, { updatePostOptions })(UserHeaderBar);

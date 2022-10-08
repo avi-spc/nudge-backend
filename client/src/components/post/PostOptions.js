@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { updatePostOptions } from '../../reduxStore/actions/post';
+import { deletePost, updatePostOptions } from '../../reduxStore/actions/post';
 
 const PostOptions = (props) => {
-	const { updatePostOptions, postIsMine } = props;
+	const { deletePost, updatePostOptions, postOptions, personalProfile } = props;
 
 	return (
 		<div className="popup">
@@ -18,9 +18,14 @@ const PostOptions = (props) => {
 							<span className="material-symbols-outlined">close</span>
 						</button>
 					</li>
-					{postIsMine ? (
+					{postOptions.userId === personalProfile.user ? (
 						<li>
-							<button className="btn--danger text-medium-R">Delete Post</button>
+							<button
+								className="btn--danger text-medium-R"
+								onClick={() => deletePost(postOptions.postId)}
+							>
+								Delete Post
+							</button>
 						</li>
 					) : (
 						<li>
@@ -36,8 +41,15 @@ const PostOptions = (props) => {
 };
 
 PostOptions.propTypes = {
+	deletePost: PropTypes.func.isRequired,
 	updatePostOptions: PropTypes.func.isRequired,
-	postIsMine: PropTypes.bool.isRequired
+	postOptions: PropTypes.object.isRequired,
+	personalProfile: PropTypes.object.isRequired
 };
 
-export default connect(null, { updatePostOptions })(PostOptions);
+const mapStateToProps = (state) => ({
+	postOptions: state.post.postOptions,
+	personalProfile: state.profile.personalProfile
+});
+
+export default connect(mapStateToProps, { deletePost, updatePostOptions })(PostOptions);

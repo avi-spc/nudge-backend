@@ -9,7 +9,7 @@ const PostCaption = (props) => {
 
 	return (
 		<div className="individual-post__header-p-caption">
-			<UserHeaderBar username={post.user.username} profileImageId={post.user.profileImageId} />
+			<UserHeaderBar postId={post._id} user={post.user} />
 			<div className="individual-post__caption-p-elapsed">
 				<p className="text-medium-R">{post.caption}</p>
 				<span className="elapsed absolute bordered text-small-R">

@@ -7,8 +7,11 @@ const PostVisual = (props) => {
 
 	return (
 		<div className="padded feed-individual-post__post-visual">
-			<UserHeaderBar username={post.user.username} profileImageId={post.user.profileImageId} />
-			<img src={`http://localhost:5000/api/posts/image/${post.imageId}`} className="image"></img>
+			<UserHeaderBar postId={post._id} user={post.user} />
+			<img
+				src={`http://localhost:5000/api/posts/image/${post.imageId}`}
+				className="image"
+			></img>
 		</div>
 	);
 };

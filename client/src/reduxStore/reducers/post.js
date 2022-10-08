@@ -7,7 +7,8 @@ import {
 	POST_UPLOAD_ERROR,
 	UPDATE_COMMENTS,
 	UPDATE_LIKES,
-	UPDATE_POST_OPTIONS
+	UPDATE_POST_OPTIONS,
+	UPDATE_ALL_POSTS
 } from '../actions/types';
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
 	newPostImageId: null,
 	postOptions: {
 		isVisible: false,
-		isMine: false
+		postId: '',
+		userId: ''
 	}
 };
 
@@ -26,6 +28,16 @@ const postReducer = (state = initialState, action) => {
 	switch (type) {
 		case GET_ALL_POSTS:
 			return { ...state, posts: payload.posts };
+		case UPDATE_ALL_POSTS:
+			return {
+				...state,
+				posts: state.posts.filter((post) => post._id !== payload),
+				postOptions: {
+					isVisible: false,
+					postId: '',
+					userId: ''
+				}
+			};
 		case GET_INDIVIDUAL_POST_SUCCESS:
 			return { ...state, individualPost: payload.post };
 		case GET_INDIVIDUAL_POST_ERROR:

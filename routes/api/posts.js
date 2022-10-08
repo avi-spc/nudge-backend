@@ -94,7 +94,7 @@ router.get('/:post_id', auth, async (req, res) => {
 		if (!post) {
 			return res.status(400).json({
 				type: ResponseTypes.ERROR,
-				errors: [{ msg: ErrorTypes.USER_ALREADY_EXISTS }]
+				errors: [{ msg: ErrorTypes.POST_NOT_FOUND }]
 			});
 		}
 
@@ -171,7 +171,13 @@ router.delete('/:post_id', auth, async (req, res) => {
 
 		await post.deleteOne();
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'post deleted', post } });
+		await User.findByIdAndUpdate(
+			req.user.id,
+			{ $pull: { posts: { post: post._id } } },
+			{ new: true }
+		);
+		
+		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post deleted' });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
