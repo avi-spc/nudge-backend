@@ -13,7 +13,7 @@ import {
 	UPDATE_COMMENTS,
 	UPDATE_LIKES,
 	UPDATE_SAVED_POSTS,
-	CLEAR_INDIVIDUAL_POST
+	UPDATE_POST_OPTIONS
 } from './types';
 
 export const getAllPosts = () => async (dispatch) => {
@@ -177,4 +177,8 @@ export const publishPost = (newPost) => async (dispatch) => {
 			dispatch(setAlert(error.msg, 'error'));
 		});
 	}
+};
+
+export const updatePostOptions = (postOptions) => (dispatch) => {
+	dispatch({ type: UPDATE_POST_OPTIONS, payload: postOptions });
 };

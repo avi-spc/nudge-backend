@@ -10,9 +10,13 @@ import PostActions from './PostActions';
 import PostCaption from './PostCaption';
 import PostDetails from './PostDetails';
 import PostLikedUsers from './PostLikedUsers';
+import PostOptions from '../PostOptions';
 
 const IndividualPost = (props) => {
-	const { getIndividualPost, post } = props;
+	const {
+		getIndividualPost,
+		post: { individualPost, postOptions }
+	} = props;
 
 	const { post_id } = useParams();
 
@@ -23,26 +27,29 @@ const IndividualPost = (props) => {
 	const [showPopup, setShowPopup] = useState(false);
 
 	return (
-		post && (
+		individualPost && (
 			<div className="container-large">
 				<div className="padded individual-post">
 					<div className="individual-post__image">
-						<img src={`http://localhost:5000/api/posts/image/${post.imageId}`}></img>
+						<img
+							src={`http://localhost:5000/api/posts/image/${individualPost.imageId}`}
+						></img>
 					</div>
-					<PostCaption post={post} />
+					<PostCaption post={individualPost} />
 					<div className="individual-post__comments-list">
-						{post.comments.map((comment) => (
+						{individualPost.comments.map((comment) => (
 							<IndividualComment
-								post={post}
+								post={individualPost}
 								commentDetails={comment}
 								key={comment._id}
 							/>
 						))}
 					</div>
-					<PostActions post={post} />
+					<PostActions post={individualPost} />
 				</div>
-				<PostDetails post={post} setShowPopup={setShowPopup} />
-				{showPopup && <PostLikedUsers post={post} setShowPopup={setShowPopup} />}
+				<PostDetails post={individualPost} setShowPopup={setShowPopup} />
+				{showPopup && <PostLikedUsers post={individualPost} setShowPopup={setShowPopup} />}
+				{postOptions.isVisible && <PostOptions postIsMine={postOptions.isMine} />}
 			</div>
 		)
 	);
@@ -54,7 +61,7 @@ IndividualPost.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	post: state.post.individualPost
+	post: state.post
 });
 
 export default connect(mapStateToProps, { getIndividualPost })(IndividualPost);

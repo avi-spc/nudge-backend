@@ -41,11 +41,21 @@
 
 		line-height: 0;
 	}
+}
 
-	&--danger {
-		width: 100%;
-		color: $color-text-error;
-		background-color: $color-surface-error;
+.btn--danger {
+	padding: 1.5rem 3rem;
+	width: 100%;
+
+	color: $color-text-error;
+	background-color: $color-surface-error;
+	border-radius: $border-radius-small;
+	border-style: none;
+
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ffb8b0;
 	}
 }
 

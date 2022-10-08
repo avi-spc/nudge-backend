@@ -1,5 +1,5 @@
 .feed {
-	& > div:not(:first-child) {
+	& > .feed-individual-post:not(:first-child) {
 		margin-top: 4rem;
 	}
 }
@@ -74,6 +74,29 @@
 		.elapsed-time {
 			color: $color-text-secondary;
 			text-transform: uppercase;
+		}
+	}
+}
+
+.post-options {
+	width: 50rem;
+
+	color: $color-text-primary;
+
+	ul {
+		padding: 2rem;
+		text-align: center;
+
+		background-color: $color-surface-tertiary;
+		border-radius: $border-radius-medium;
+
+		li:first-child {
+			text-align: right;
+			margin-bottom: 3rem;
+		}
+
+		li:not(:first-child) {
+			margin-top: 3rem;
 		}
 	}
 }

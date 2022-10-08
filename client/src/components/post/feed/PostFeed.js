@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import { getAllPosts, discardPostImage } from '../../../reduxStore/actions/post';
 
 import FeedIndividualPost from './FeedIndividualPost';
+import PostOptions from '../PostOptions';
 
 const PostFeed = (props) => {
 	const {
 		getAllPosts,
 		discardPostImage,
-		post: { posts, newPostImageId }
+		post: { posts, newPostImageId, postOptions }
 	} = props;
 
 	useEffect(() => {
@@ -26,6 +27,7 @@ const PostFeed = (props) => {
 			{posts.map((post) => {
 				return <FeedIndividualPost post={post} key={post._id} />;
 			})}
+			{postOptions.isVisible && <PostOptions postIsMine={postOptions.isMine} />}
 		</div>
 	);
 };

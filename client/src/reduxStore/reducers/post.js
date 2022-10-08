@@ -6,13 +6,18 @@ import {
 	POST_UPLOAD_SUCCESS,
 	POST_UPLOAD_ERROR,
 	UPDATE_COMMENTS,
-	UPDATE_LIKES
+	UPDATE_LIKES,
+	UPDATE_POST_OPTIONS
 } from '../actions/types';
 
 const initialState = {
 	posts: [],
 	individualPost: null,
-	newPostImageId: null
+	newPostImageId: null,
+	postOptions: {
+		isVisible: false,
+		isMine: false
+	}
 };
 
 const postReducer = (state = initialState, action) => {
@@ -44,6 +49,8 @@ const postReducer = (state = initialState, action) => {
 		case POST_UPLOAD_ERROR:
 		case POST_UPLOAD_SUCCESS:
 			return { ...state, newPostImageId: null };
+		case UPDATE_POST_OPTIONS:
+			return { ...state, postOptions: { ...state.postOptions, ...payload } };
 		default:
 			return state;
 	}
