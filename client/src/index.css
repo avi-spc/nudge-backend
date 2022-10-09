@@ -386,6 +386,7 @@ img {
     border: thin solid transparent;
     cursor: pointer; }
     .user-header-bar__btn-more:hover {
+      background-color: #242424;
       border: thin solid #383838; }
 
 .individual-post {

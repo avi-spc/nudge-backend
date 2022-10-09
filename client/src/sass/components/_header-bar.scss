@@ -36,6 +36,7 @@
 		cursor: pointer;
 
 		&:hover {
+			background-color: $color-surface-secondary;
 			border: thin solid $color-border-primary;
 		}
 	}
