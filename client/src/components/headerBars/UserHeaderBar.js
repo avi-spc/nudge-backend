@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -11,7 +12,9 @@ const UserHeaderBar = (props) => {
 	return (
 		<div className="user-header-bar">
 			<Avatar imageId={user.profileImageId} classType="avatar" />
-			<div className="text-medium-SB">{user.username}</div>
+			<Link to={`/profile/${user._id}`}>
+				<div className="text-medium-SB">{user.username}</div>
+			</Link>
 			<span
 				className="material-symbols-outlined symbol--md user-header-bar__btn-more"
 				onClick={() =>

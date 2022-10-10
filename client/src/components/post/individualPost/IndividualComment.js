@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,7 +13,9 @@ const IndividualComment = (props) => {
 	return (
 		<div className="individual-post__individual-comment">
 			<Avatar imageId={commentDetails.user.profileImageId} classType="avatar" />
-			<div className="text-medium-SB">{commentDetails.user.username}</div>
+			<Link to={`/profile/${commentDetails.user._id}`}>
+				<div className="text-medium-SB">{commentDetails.user.username}</div>
+			</Link>
 			<span className="elapsed bordered text-small-R">
 				{timestampInWords(commentDetails.createdAt, 'short')}
 			</span>
