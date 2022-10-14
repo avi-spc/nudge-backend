@@ -1,5 +1,10 @@
 .log-in,
 .sign-up {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
 	&__logo-p-form {
 		display: grid;
 		justify-items: center;
@@ -27,6 +32,16 @@
 		& > input[type='submit'] {
 			margin-top: 3rem;
 		}
+	}
+
+	&__profile-setup-info {
+		display: inline-block;
+		margin-bottom: 5rem;
+		padding: 1.5rem 3rem;
+		color: $color-text-secondary;
+
+		background-color: $color-surface-quarternary;
+		border-radius: $border-radius-large;
 	}
 }
 

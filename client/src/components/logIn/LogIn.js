@@ -53,7 +53,11 @@ const LogIn = (props) => {
 						placeholder="password"
 						className="text-field text-field--lg text-normal-R"
 					/>
-					<input type="submit" value="Log In" className="btn btn--rect-lg text-medium-SB" />
+					<input
+						type="submit"
+						value="Log In"
+						className="btn btn--rect-lg text-medium-SB"
+					/>
 				</form>
 			</div>
 			<Link to="/register">

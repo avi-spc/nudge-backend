@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setAlert } from '../../reduxStore/actions/alert';
-import { register } from '../../reduxStore/actions/auth';
+import { register, logout } from '../../reduxStore/actions/auth';
 import { createProfile } from '../../reduxStore/actions/profile';
 
 import UserRegistration from './UserRegistration';
@@ -14,6 +14,7 @@ const SignUp = (props) => {
 	const {
 		setAlert,
 		register,
+		logout,
 		createProfile,
 		auth: { isAuthenticated, loading },
 		profile: { personalProfile }
@@ -49,6 +50,11 @@ const SignUp = (props) => {
 					</button>
 				</Link>
 			)}
+			{!loading && isAuthenticated && !personalProfile && (
+				<button className="btn-alternate text-medium-R" onClick={logout}>
+					Want to switch accounts? <span className="text-medium-SB">Logout</span>
+				</button>
+			)}
 		</div>
 	);
 };
@@ -56,6 +62,7 @@ const SignUp = (props) => {
 SignUp.propTypes = {
 	setAlert: PropTypes.func.isRequired,
 	register: PropTypes.func.isRequired,
+	logout: PropTypes.func.isRequired,
 	createProfile: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired
@@ -66,4 +73,4 @@ const mapStateToProps = (state) => ({
 	profile: state.profile
 });
 
-export default connect(mapStateToProps, { setAlert, register, createProfile })(SignUp);
+export default connect(mapStateToProps, { setAlert, register, logout, createProfile })(SignUp);

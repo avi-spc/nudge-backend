@@ -7,6 +7,8 @@ const UserDetails = (props) => {
 	const { createProfile } = props;
 
 	const submitProfile = (e) => {
+		e.preventDefault();
+
 		createProfile(profile);
 	};
 
@@ -15,6 +17,9 @@ const UserDetails = (props) => {
 	return (
 		<Fragment>
 			<form className="sign-up__form" onSubmit={(e) => submitProfile(e)}>
+				<div className="sign-up__profile-setup-info text-normal-R">
+					Setup profile and get explored
+				</div>
 				<input
 					type="text"
 					name="name"

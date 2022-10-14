@@ -74,7 +74,7 @@ img {
 
 .container-small {
   max-width: 65rem;
-  margin: 8rem auto; }
+  margin: 0 auto; }
 
 .container-normal {
   max-width: 80rem;
@@ -540,30 +540,42 @@ img {
     .loader.visible div {
       opacity: 1; }
 
-.log-in__logo-p-form,
-.sign-up__logo-p-form {
-  display: grid;
-  justify-items: center;
-  padding: 8rem 8rem 5rem 8rem;
-  text-align: center;
-  background-color: #1e1e1e;
-  border-radius: 3rem; }
-
-.log-in__logo,
-.sign-up__logo {
-  font-family: 'Libre Barcode 39 Text', cursive;
-  font-size: 12.8rem;
-  color: #d9d9d9; }
-
-.log-in__form,
-.sign-up__form {
-  margin-top: 8rem; }
-  .log-in__form > input:not(:last-child),
-  .sign-up__form > input:not(:last-child) {
-    margin-bottom: 2rem; }
-  .log-in__form > input[type='submit'],
-  .sign-up__form > input[type='submit'] {
-    margin-top: 3rem; }
+.log-in,
+.sign-up {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  .log-in__logo-p-form,
+  .sign-up__logo-p-form {
+    display: grid;
+    justify-items: center;
+    padding: 8rem 8rem 5rem 8rem;
+    text-align: center;
+    background-color: #1e1e1e;
+    border-radius: 3rem; }
+  .log-in__logo,
+  .sign-up__logo {
+    font-family: 'Libre Barcode 39 Text', cursive;
+    font-size: 12.8rem;
+    color: #d9d9d9; }
+  .log-in__form,
+  .sign-up__form {
+    margin-top: 8rem; }
+    .log-in__form > input:not(:last-child),
+    .sign-up__form > input:not(:last-child) {
+      margin-bottom: 2rem; }
+    .log-in__form > input[type='submit'],
+    .sign-up__form > input[type='submit'] {
+      margin-top: 3rem; }
+  .log-in__profile-setup-info,
+  .sign-up__profile-setup-info {
+    display: inline-block;
+    margin-bottom: 5rem;
+    padding: 1.5rem 3rem;
+    color: #989899;
+    background-color: #121212;
+    border-radius: 3rem; }
 
 .sign-up__profile-avatar-upload {
   display: grid;

@@ -46,7 +46,7 @@ const NavActions = (props) => {
 						<li>
 							<Link to={`/profile/${personalProfile.user}`}>Profile</Link>
 						</li>
-						<li onClick={() => logout()}>Logout</li>
+						<li onClick={logout}>Logout</li>
 					</ul>
 				)}
 			</div>
