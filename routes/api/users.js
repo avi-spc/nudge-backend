@@ -131,7 +131,7 @@ router.post('/follow/:user_id', auth, async (req, res) => {
 	}
 });
 
-// @route		POST: api/users/unfollow/:user_id
+// @route		DELETE: api/users/unfollow/:user_id
 // @desc		Unfollow a user
 // @access		Private
 router.delete('/unfollow/:user_id', auth, async (req, res) => {
