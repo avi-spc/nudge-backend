@@ -309,7 +309,7 @@ img {
 
 .feed-individual-post__post-actions {
   display: grid;
-  grid-template-columns: repeat(3, min-content) 1fr;
+  grid-template-columns: repeat(2, min-content) 1fr;
   grid-gap: 0 2.5rem;
   position: relative;
   z-index: 5;

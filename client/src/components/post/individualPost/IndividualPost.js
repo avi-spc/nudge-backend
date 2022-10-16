@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { getIndividualPost } from '../../../reduxStore/actions/post';
 
 import IndividualComment from './IndividualComment';
-import PostActions from './PostActions';
+import PostActions from '../PostActions';
 import PostCaption from './PostCaption';
 import PostDetails from './PostDetails';
 import PostLikedUsers from './PostLikedUsers';
@@ -45,7 +45,7 @@ const IndividualPost = (props) => {
 							/>
 						))}
 					</div>
-					<PostActions post={individualPost} />
+					<PostActions post={individualPost} type="individual-post" />
 				</div>
 				<PostDetails post={individualPost} setShowPopup={setShowPopup} />
 				{showPopup && <PostLikedUsers post={individualPost} setShowPopup={setShowPopup} />}
