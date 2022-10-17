@@ -21,7 +21,10 @@ router.get('/', auth, async (req, res) => {
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, user });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -45,30 +48,31 @@ router.post(
 		try {
 			const user = await User.findOne({ email });
 			if (!user) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.INVALID_CREDENTIALS }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.INVALID_CREDENTIALS }]
+				});
 			}
 
 			const passwordHasMatched = await bcrypt.compare(password, user.password);
 			if (!passwordHasMatched) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.INVALID_CREDENTIALS }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.INVALID_CREDENTIALS }]
+				});
 			}
 
-			const payload = {
-				user: { id: user.id }
-			};
+			const payload = { user: { id: user.id } };
 
 			jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
 				if (err) throw err;
 				res.status(200).json({ type: ResponseTypes.SUCCESS, token });
 			});
 		} catch (err) {
-			res
-				.status(500)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res.status(500).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+			});
 		}
 	}
 );

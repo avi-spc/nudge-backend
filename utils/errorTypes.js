@@ -8,7 +8,9 @@ const ErrorTypes = {
 	USER_NOT_FOUND: 'user not found',
 	USER_NOT_AUTHORIZED: 'user not authorized',
 	COMMENT_NOT_FOUND: 'comment not found',
-	REPLY_NOT_FOUND: 'reply not found'
+	REPLY_NOT_FOUND: 'reply not found',
+	IMAGE_NOT_FOUND: 'image not found',
+	NOTIFICATION_NOT_FOUND: 'notification not found'
 };
 
 module.exports = ErrorTypes;

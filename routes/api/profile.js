@@ -21,14 +21,18 @@ router.get('/me', auth, async (req, res) => {
 	try {
 		const profile = await Profile.findOne({ user: req.user.id });
 		if (!profile) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }]
+			});
 		}
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, profile });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -76,9 +80,10 @@ router.post(
 				});
 			}
 
-			res
-				.status(500)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res.status(500).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+			});
 		}
 	}
 );
@@ -116,7 +121,9 @@ router.put(
 				{ new: true }
 			);
 
-			return res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile updated', profile });
+			return res
+				.status(200)
+				.json({ type: ResponseTypes.SUCCESS, msg: 'profile updated', profile });
 		} catch (err) {
 			if (err.code === 11000 && 'username' in err.keyPattern) {
 				return res.status(400).json({
@@ -125,9 +132,10 @@ router.put(
 				});
 			}
 
-			res
-				.status(500)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res.status(500).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+			});
 		}
 	}
 );
@@ -142,20 +150,25 @@ router.get('/user/:user_id', async (req, res) => {
 		const profile = await Profile.findOne({ user: user_id }).populate('user', 'posts');
 
 		if (!profile) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }]
+			});
 		}
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, profile });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.PROFILE_NOT_FOUND }]
+			});
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -169,9 +182,10 @@ router.delete('/', auth, async (req, res) => {
 		if (profile.imageId) {
 			await ProfileStream().delete(profile.imageId, (err, result) => {
 				if (err) {
-					return res
-						.status(400)
-						.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+					return res.status(400).json({
+						type: ResponseTypes.ERROR,
+						errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }]
+					});
 				}
 			});
 		}
@@ -180,7 +194,10 @@ router.delete('/', auth, async (req, res) => {
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, data: { msg: 'user deleted' } });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -191,7 +208,7 @@ router.get('/image/:image_id', async (req, res) => {
 	if (!mongoose.isObjectIdOrHexString(req.params.image_id)) {
 		return res
 			.status(400)
-			.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }] });
 	}
 
 	try {
@@ -202,14 +219,17 @@ router.get('/image/:image_id', async (req, res) => {
 		if (!images) {
 			return res
 				.status(404)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }] });
 		}
 
 		const stream = ProfileStream().openDownloadStreamByName(images[0].filename);
 
 		stream.pipe(res);
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -219,9 +239,10 @@ router.get('/image/:image_id', async (req, res) => {
 router.post('/image', [auth, imageUploadHandler], async (req, res) => {
 	try {
 		if (!req.file) {
-			return res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'choose an image to upload' }] });
+			return res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: 'choose an image to upload' }]
+			});
 		}
 
 		const profile = await Profile.findOneAndUpdate(
@@ -230,11 +251,15 @@ router.post('/image', [auth, imageUploadHandler], async (req, res) => {
 			{ new: true }
 		);
 
-		res
-			.status(200)
-			.json({ type: ResponseTypes.SUCCESS, data: { msg: 'profile image added', profile } });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			data: { msg: 'profile image added', profile }
+		});
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -255,9 +280,10 @@ router.put('/image', [auth, imageUploadHandler], async (req, res) => {
 		if (profile.imageId) {
 			await ProfileStream().delete(profile.imageId, (err, result) => {
 				if (err) {
-					return res
-						.status(400)
-						.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+					return res.status(400).json({
+						type: ResponseTypes.ERROR,
+						errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }]
+					});
 				}
 			});
 		}
@@ -274,9 +300,16 @@ router.put('/image', [auth, imageUploadHandler], async (req, res) => {
 			{ new: true }
 		);
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile image updated', profile });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			msg: 'profile image updated',
+			profile
+		});
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -289,9 +322,10 @@ router.delete('/image', auth, async (req, res) => {
 
 		await ProfileStream().delete(profile.imageId, (err, result) => {
 			if (err) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }]
+				});
 			}
 		});
 
@@ -307,9 +341,16 @@ router.delete('/image', auth, async (req, res) => {
 			{ new: true }
 		);
 
-		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'profile image removed', profile });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			msg: 'profile image removed',
+			profile
+		});
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 

@@ -22,7 +22,10 @@ router.get('/', auth, async (req, res) => {
 
 		res.json({ type: ResponseTypes.SUCCESS, notifications: user.notifications });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -43,14 +46,18 @@ router.put('/:notification_id', auth, async (req, res) => {
 		);
 
 		if (!user) {
-			res
-				.status(400)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'notification not found' }] });
+			res.status(400).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.NOTIFICATION_NOT_FOUND }]
+			});
 		}
 
 		res.json({ type: ResponseTypes.SUCCESS, notifications: user.notifications });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 

@@ -163,9 +163,10 @@ router.delete('/:post_id', auth, async (req, res) => {
 
 		await PostStream().delete(post.imageId, (err, result) => {
 			if (err) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }]
+				});
 			}
 		});
 
@@ -176,7 +177,7 @@ router.delete('/:post_id', auth, async (req, res) => {
 			{ $pull: { posts: { post: post._id } } },
 			{ new: true }
 		);
-		
+
 		res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post deleted' });
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
@@ -733,7 +734,7 @@ router.get('/image/:image_id', async (req, res) => {
 	if (!mongoose.isObjectIdOrHexString(req.params.image_id)) {
 		return res
 			.status(400)
-			.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }] });
 	}
 
 	try {
@@ -744,7 +745,7 @@ router.get('/image/:image_id', async (req, res) => {
 		if (!images) {
 			return res
 				.status(404)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }] });
 		}
 
 		const stream = PostStream().openDownloadStreamByName(images[0].filename);
@@ -785,15 +786,16 @@ router.delete('/image/:image_id', auth, async (req, res) => {
 	if (!mongoose.isObjectIdOrHexString(req.params.image_id)) {
 		return res
 			.status(400)
-			.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+			.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }] });
 	}
 
 	try {
 		await PostStream().delete(mongoose.Types.ObjectId(req.params.image_id), (err, result) => {
 			if (err) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: 'image not found' }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.IMAGE_NOT_FOUND }]
+				});
 			}
 
 			res.status(200).json({ type: ResponseTypes.SUCCESS, msg: 'post discarded' });
