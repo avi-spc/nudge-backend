@@ -60,8 +60,7 @@ router.post(
 			const profile = new Profile({
 				user: req.user.id,
 				name,
-				username,
-				bio: ''
+				username
 			});
 
 			await profile.save();

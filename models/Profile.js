@@ -18,7 +18,8 @@ const ProfileSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId
 	},
 	bio: {
-		type: String
+		type: String,
+		default: ''
 	}
 });
 
