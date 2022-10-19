@@ -39,7 +39,7 @@ const NavUserSearch = (props) => {
 				/>
 				<span
 					className="material-symbols-outlined symbol--sm btn-clear-search"
-					onClick={() => submitClear()}
+					onClick={submitClear}
 				>
 					close
 				</span>

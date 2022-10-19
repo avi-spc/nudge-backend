@@ -32,7 +32,7 @@ const UpdateProfileImage = (props) => {
 						<li>
 							<button
 								className="btn btn--rect-sm btn--danger text-medium-R"
-								onClick={() => removeProfileImage()}
+								onClick={removeProfileImage}
 							>
 								Remove
 							</button>
