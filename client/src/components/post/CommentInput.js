@@ -24,14 +24,14 @@ const CommentInput = (props) => {
 					type="text"
 					name="comment"
 					value={newComment.comment}
-					onChange={(e) => onChange(e)}
+					onChange={onChange}
 					placeholder="Add a comment ..."
 					className="text-field text-field--lg text-medium-R"
 				/>
 				<div className="comment-input__btn-post-container">
 					<button
 						className="btn text-small-R comment-input__btn-post"
-						onClick={(e) => submitComment(e)}
+						onClick={submitComment}
 						disabled={isEmpty(newComment)}
 					>
 						POST

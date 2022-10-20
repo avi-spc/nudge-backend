@@ -28,12 +28,12 @@ const NavUserSearch = (props) => {
 
 	return (
 		<div className="navbar__user-search">
-			<form className="" onSubmit={(e) => submitSearch(e)}>
+			<form className="" onSubmit={submitSearch}>
 				<input
 					type="text"
 					name="user"
 					value={formData.user}
-					onChange={(e) => onChange(e)}
+					onChange={onChange}
 					className="text-field text-field--sm text-normal-R"
 					placeholder="search people"
 				/>

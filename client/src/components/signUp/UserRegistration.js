@@ -14,7 +14,7 @@ const UserRegistration = (props) => {
 		}
 
 		const user = { email, password };
-		
+
 		register(user);
 	};
 
@@ -23,12 +23,12 @@ const UserRegistration = (props) => {
 
 	return (
 		<Fragment>
-			<form className="sign-up__form" onSubmit={(e) => submitRegister(e)}>
+			<form className="sign-up__form" onSubmit={submitRegister}>
 				<input
 					type="email"
 					name="email"
 					value={email}
-					onChange={(e) => onChange(e)}
+					onChange={onChange}
 					placeholder="email"
 					className="text-field text-field--lg text-normal-R"
 				/>
@@ -36,7 +36,7 @@ const UserRegistration = (props) => {
 					type="password"
 					name="password"
 					value={password}
-					onChange={(e) => onChange(e)}
+					onChange={onChange}
 					placeholder="password"
 					className="text-field text-field--lg text-normal-R"
 				/>
@@ -44,7 +44,7 @@ const UserRegistration = (props) => {
 					type="password"
 					name="confirm_password"
 					value={confirm_password}
-					onChange={(e) => onChange(e)}
+					onChange={onChange}
 					placeholder="confirm password"
 					className="text-field text-field--lg text-normal-R"
 				/>

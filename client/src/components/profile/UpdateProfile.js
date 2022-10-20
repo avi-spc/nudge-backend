@@ -41,7 +41,7 @@ const UpdateProfile = (props) => {
 						type="text"
 						name="name"
 						value={profile.name}
-						onChange={(e) => onChange(e)}
+						onChange={onChange}
 						className="text-field text-field--sm text-normal-R"
 					/>
 					<label htmlFor="">Username</label>
@@ -49,14 +49,14 @@ const UpdateProfile = (props) => {
 						type="text"
 						name="username"
 						value={profile.username}
-						onChange={(e) => onChange(e)}
+						onChange={onChange}
 						className="text-field text-field--sm text-normal-R"
 					/>
 					<label htmlFor="">Bio</label>
 					<textarea
 						name="bio"
 						value={profile.bio}
-						onChange={(e) => onChange(e)}
+						onChange={onChange}
 						cols="30"
 						rows="6"
 						className="text-field text-field--sm text-normal-R"
@@ -66,7 +66,10 @@ const UpdateProfile = (props) => {
 					<Avatar imageId={personalProfile.imageId} classType="update-profile__avatar" />
 					<div>
 						<div className="text-large-M">{personalProfile.username}</div>
-						<button className="btn btn--rect-es text-small-R" onClick={() => setShowPopup(true)}>
+						<button
+							className="btn btn--rect-es text-small-R"
+							onClick={() => setShowPopup(true)}
+						>
 							Change profile picture
 						</button>
 					</div>
@@ -79,7 +82,9 @@ const UpdateProfile = (props) => {
 					</button>
 				</div>
 			</div>
-			{showPopup && <UpdateProfileImage setShowPopup={setShowPopup} profile={personalProfile} />}
+			{showPopup && (
+				<UpdateProfileImage setShowPopup={setShowPopup} profile={personalProfile} />
+			)}
 		</div>
 	);
 };

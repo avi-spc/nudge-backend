@@ -30,7 +30,10 @@ const PublishPost = (props) => {
 
 	return (
 		<div className="container-medium padded create-post">
-			<TitleHeaderBar title="create new post" action={() => discardPostImage(newPostImageId)} />
+			<TitleHeaderBar
+				title="create new post"
+				action={() => discardPostImage(newPostImageId)}
+			/>
 			<div className="create-post__image-p-caption">
 				<div className="create-post__image">
 					<img src={`http://localhost:5000/api/posts/image/${newPostImageId}`}></img>
@@ -44,7 +47,7 @@ const PublishPost = (props) => {
 						className="text-medium-R create-post__caption-text"
 						name="caption"
 						value={newPost.caption}
-						onChange={(e) => onChange(e)}
+						onChange={onChange}
 						cols="25"
 						rows="10"
 						placeholder="write a caption ..."

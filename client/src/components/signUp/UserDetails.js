@@ -16,7 +16,7 @@ const UserDetails = (props) => {
 
 	return (
 		<Fragment>
-			<form className="sign-up__form" onSubmit={(e) => submitProfile(e)}>
+			<form className="sign-up__form" onSubmit={submitProfile}>
 				<div className="sign-up__profile-setup-info text-normal-R">
 					Setup profile and get explored
 				</div>
@@ -24,7 +24,7 @@ const UserDetails = (props) => {
 					type="text"
 					name="name"
 					value={profile.name}
-					onChange={(e) => onChange(e)}
+					onChange={onChange}
 					placeholder="name"
 					className="text-field text-field--lg text-normal-R"
 				/>
@@ -32,7 +32,7 @@ const UserDetails = (props) => {
 					type="text"
 					name="username"
 					value={profile.username}
-					onChange={(e) => onChange(e)}
+					onChange={onChange}
 					placeholder="username"
 					className="text-field text-field--lg text-normal-R"
 				/>
