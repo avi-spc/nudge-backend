@@ -8,7 +8,7 @@ const { GridFsStorage } = require('multer-gridfs-storage');
 const ResponseTypes = require('../utils/responseTypes');
 
 const storage = new GridFsStorage({
-	url: config.get('mongoURI'),
+	url: config.get('mongoURI') || process.env.MONGO_URI,
 	file: (req, file) => {
 		return new Promise((resolve, reject) => {
 			crypto.randomBytes(16, (err, buf) => {
@@ -75,7 +75,9 @@ const isFileTypeAllowed = (file) => {
 const imageUploadHandler = (req, res, next) => {
 	upload(req, res, (err) => {
 		if (err) {
-			return res.status(404).json({ type: ResponseTypes.ERROR, errors: [{ msg: err.message }] });
+			return res
+				.status(404)
+				.json({ type: ResponseTypes.ERROR, errors: [{ msg: err.message }] });
 		}
 
 		next();

@@ -52,20 +52,27 @@ router.post(
 				user: { id: user.id }
 			};
 
-			jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
-				if (err) throw err;
-				res.status(200).json({ type: ResponseTypes.SUCCESS, token });
-			});
+			jwt.sign(
+				payload,
+				config.get('jwtSecret') || process.env.JWT_SECRET,
+				{ expiresIn: 360000 },
+				(err, token) => {
+					if (err) throw err;
+					res.status(200).json({ type: ResponseTypes.SUCCESS, token });
+				}
+			);
 		} catch (err) {
 			if (err.code === 11000 && 'email' in err.keyPattern) {
-				return res
-					.status(400)
-					.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_ALREADY_EXISTS }] });
+				return res.status(400).json({
+					type: ResponseTypes.ERROR,
+					errors: [{ msg: ErrorTypes.USER_ALREADY_EXISTS }]
+				});
 			}
 
-			res
-				.status(500)
-				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+			res.status(500).json({
+				type: ResponseTypes.ERROR,
+				errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+			});
 		}
 	}
 );
@@ -117,9 +124,11 @@ router.post('/follow/:user_id', auth, async (req, res) => {
 			{ new: true }
 		);
 
-		res
-			.status(200)
-			.json({ type: ResponseTypes.SUCCESS, msg: 'user followed', follows: user.follows });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			msg: 'user followed',
+			follows: user.follows
+		});
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -127,7 +136,10 @@ router.post('/follow/:user_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -160,9 +172,11 @@ router.delete('/unfollow/:user_id', auth, async (req, res) => {
 			{ new: true }
 		);
 
-		res
-			.status(200)
-			.json({ type: ResponseTypes.SUCCESS, msg: 'user unfollowed', follows: user.follows });
+		res.status(200).json({
+			type: ResponseTypes.SUCCESS,
+			msg: 'user unfollowed',
+			follows: user.follows
+		});
 	} catch (err) {
 		if (err.kind === 'ObjectId') {
 			return res
@@ -170,7 +184,10 @@ router.delete('/unfollow/:user_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -186,7 +203,10 @@ router.get('/save/me', auth, async (req, res) => {
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, savedPosts: user.savedPosts });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -219,7 +239,10 @@ router.get('/follows/:user_id', auth, async (req, res) => {
 				.json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.USER_NOT_FOUND }] });
 		}
 
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
@@ -237,7 +260,10 @@ router.get('/:user_name', auth, async (req, res) => {
 
 		res.status(200).json({ type: ResponseTypes.SUCCESS, users });
 	} catch (err) {
-		res.status(500).json({ type: ResponseTypes.ERROR, errors: [{ msg: ErrorTypes.SERVER_ERROR }] });
+		res.status(500).json({
+			type: ResponseTypes.ERROR,
+			errors: [{ msg: ErrorTypes.SERVER_ERROR }]
+		});
 	}
 });
 
