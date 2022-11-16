@@ -1,12 +1,14 @@
 const express = require('express');
 const methodOverride = require('method-override');
 const path = require('path');
+const cors = require('cors');
 
 const { ConnectDB } = require('./config/db');
 
 const app = express();
 
 app.use(express.json({ extended: false }));
+app.use(cors());
 app.use(methodOverride('_method'));
 
 ConnectDB();

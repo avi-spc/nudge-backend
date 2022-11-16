@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../utils/axiosInstance';
 
 import { GET_NOTIFICATIONS, UPDATE_NOTIFICATIONS } from './types';
 

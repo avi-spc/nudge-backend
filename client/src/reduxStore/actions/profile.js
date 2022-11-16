@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../utils/axiosInstance';
 
 import { setAlert } from './alert';
 import { setLoading } from './auth';
