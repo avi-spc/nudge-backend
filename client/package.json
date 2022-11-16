@@ -21,7 +21,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "CI=false react-scripts build",
+		"build": "CI=false PUBLIC_BASE_URL=https://nudge.vercel.app react-scripts build",
 		"sass": "node-sass ./src/sass/main.scss ./src/index.css -w"
 	},
 	"eslintConfig": {
