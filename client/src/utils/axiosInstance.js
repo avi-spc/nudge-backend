@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-	baseURL: process.env.PUBLIC_BASE_URL || 'http://localhost:5000'
+	baseURL: 'https://nudge.vercel.app'
 });
 
 export default instance;
