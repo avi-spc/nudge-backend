@@ -8,7 +8,7 @@ const { GridFsStorage } = require('multer-gridfs-storage');
 const ResponseTypes = require('../utils/responseTypes');
 
 const storage = new GridFsStorage({
-	url: config.get('mongoURI') || process.env.MONGO_URI,
+	url:  process.env.MONGO_URI || config.get('mongoURI') ,
 	file: (req, file) => {
 		return new Promise((resolve, reject) => {
 			crypto.randomBytes(16, (err, buf) => {
