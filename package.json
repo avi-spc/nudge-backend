@@ -4,8 +4,8 @@
 	"description": "Social Media app",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server",
-		"server": "nodemon server",
+		"start": "node index",
+		"server": "nodemon index",
 		"client": "npm start --prefix client",
 		"ui": "concurrently \"npm run client\" \"npm run sass --prefix client\"",
 		"dev": "concurrently \"npm run server\" \"npm run client\"",
