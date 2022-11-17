@@ -2,7 +2,7 @@
 	"name": "nudge",
 	"version": "1.0.0",
 	"description": "Social Media app",
-	"main": "server.js",
+	"main": "index.js",
 	"scripts": {
 		"start": "node index",
 		"server": "nodemon index",
