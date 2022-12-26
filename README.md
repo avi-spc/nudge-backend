@@ -20,8 +20,8 @@ npm run server
 
 ```
 {
-	mongoURI: YOUR_LOCAL_MONGO_SERVER_URI,
-	secretOrKey: YOUR_SECRET
+	"mongoURI": "YOUR_LOCAL_MONGO_SERVER_URI",
+	"jwtSecret": "YOUR_SECRET"
 }
 ```
 
